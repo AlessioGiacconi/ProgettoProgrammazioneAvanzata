@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/issues"
   },
-  "homepage": "https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata#readme"
+  "homepage": "https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
 }

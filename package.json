@@ -1,0 +1,24 @@
+{
+  "name": "progett0_pa",
+  "version": "1.0.0",
+  "description": "progetto per l'esame di programmazione avanzata, anno accademico 2023/2024",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "typescript"
+  ],
+  "author": "Alessio Giacconi e Francesco Camplese",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/issues"
+  },
+  "homepage": "https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata#readme"
+}

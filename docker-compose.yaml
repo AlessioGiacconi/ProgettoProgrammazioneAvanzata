@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  dbpostgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=node-app-db
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  nodeapp:
+    #restart: always
+    container_name: node-app
+    image: node-app
+    build: .
+    ports: 
+      - 8080:8080
+    #env_file:
+    depends_on: 
+      - dbpostgres
+
+volumes:
+  db-data:

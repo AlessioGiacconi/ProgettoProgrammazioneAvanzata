@@ -10,8 +10,8 @@ const pgdbHost = process.env.PGDB_HOST || 'db';
 const pgdbPort = process.env.PGDB_PORT || 5432;
 
 
-export class dbConnector {
-    private static instance: dbConnector;
+export class DatabaseConnection {
+    private static instance: DatabaseConnection;
     private connection: Sequelize;
 
     private constructor() {
@@ -24,10 +24,10 @@ export class dbConnector {
     }
 
     public static getInstance(): Sequelize {
-        if(!dbConnector.instance){
-            this.instance = new dbConnector();
+        if(!DatabaseConnection.instance){
+            this.instance = new DatabaseConnection();
         }
-        return dbConnector.instance.connection;
+        return DatabaseConnection.instance.connection;
     }
 
 }

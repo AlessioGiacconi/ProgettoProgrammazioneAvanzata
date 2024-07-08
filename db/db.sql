@@ -1,0 +1,28 @@
+CREATE DATABASE dbpa;
+
+\c dbpa;
+
+CREATE TABLE IF NOT EXISTS users (
+    badgeId SERIAL PRIMARY KEY, 
+    email VARCHAR(100) NOT NULL,
+    passwd VARCHAR(40) NOT NULL,
+    isAdmin BOOLEAN NOT NULL,
+    authLevel INT NOT NULL,
+    isSuspended BOOLEAN NOT NULL,
+    tokens INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS passages (
+    passageId SERIAL PRIMARY KEY,
+    lvl INT NOT NULL,
+    needsDPI BOOLEAN NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS transits (
+    transitId SERIAL PRIMARY KEY,
+    passage INT NOT NULL,
+    user INT NOT NULL,
+    transitDate TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    isAuthorized BOOLEAN NOT NULL,
+    violationDPI BOOLEAN NOT NULL
+);

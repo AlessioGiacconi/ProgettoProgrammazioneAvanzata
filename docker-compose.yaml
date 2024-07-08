@@ -10,7 +10,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - ./db/db.sql:/docker-entrypoint-initdb.d/db.sql
   nodeapp:
     #restart: always
     container_name: node-app
@@ -22,5 +22,3 @@ services:
     depends_on: 
       - dbpostgres
 
-volumes:
-  db-data:

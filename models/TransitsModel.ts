@@ -27,11 +27,19 @@ export const UsersModel = sequelize.define('transits', {
     },
     passage: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: 'passages',
+            key: 'passageId',
+        }
     },
     badge: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: 'users',
+            key: 'badgeId',
+        }
     },
     transitDate: {
         type: DataTypes.DATE,

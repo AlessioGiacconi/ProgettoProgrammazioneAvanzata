@@ -28,7 +28,7 @@ export const getPassage = async (req: Request, res: Response) => {
 
 export const updatePassage = async (req: Request, res: Response) => {
     const {id} = req.params;
-    const {passage_id, level, needs_dpi} = req.body;
+    const {level, needs_dpi} = req.body;
     const passage = await PassagesModel.findByPk(id);
     if (passage) {
         passage.set({

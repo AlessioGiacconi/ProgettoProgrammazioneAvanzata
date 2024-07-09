@@ -2,6 +2,7 @@ import express, {Request, Response, NextFunction} from 'express';
 import dotenv from 'dotenv';
 import userRoutes from './routers/userRoutes';
 import passageRoutes from './routers/passageRoutes';
+import transitRoutes from './routers/transitRoutes';
 import { errorHandler } from './middleware/errorMiddleware';
 import { registerUser, loginUser } from './controllers/userController';
 
@@ -13,6 +14,7 @@ const host = String(process.env.HOST);
 app.use(express.json());
 app.use('/badges', userRoutes);
 app.use('/passages', passageRoutes);
+app.use('/transits', transitRoutes);
 app.use(errorHandler);
 
 app.get("/", (req: Request, res: Response) => {

@@ -19,7 +19,7 @@ sequelize.authenticate().then(() => {
  * 
  */
 export const TransitsModel = sequelize.define('transits', {
-    transitId: {
+    transit_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
@@ -41,16 +41,16 @@ export const TransitsModel = sequelize.define('transits', {
             key: 'badgeId',
         }
     },
-    transitDate: {
+    transit_date: {
         type: DataTypes.DATE,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
         allowNull: true
     },
-    isAuthorized: {
+    is_authorized: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     },
-    violationDPI: {
+    violation_dpi: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     }

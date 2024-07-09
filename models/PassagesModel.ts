@@ -19,17 +19,17 @@ sequelize.authenticate().then(() => {
  * 
  */
 export const PassagesModel = sequelize.define('passages', {
-    passageId: {
+    passage_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
     },
-    lvl: {
+    level: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    isSuspended: {
+    is_suspended: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     }

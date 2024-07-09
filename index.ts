@@ -1,7 +1,8 @@
-import express, {Request, Response} from 'express';
+import express, {Request, Response, NextFunction} from 'express';
 import dotenv from 'dotenv';
 import userRoutes from './routers/userRoutes';
 import { errorHandler } from './middleware/errorMiddleware';
+import { registerUser, loginUser } from './controllers/userController';
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,14 @@ app.use(errorHandler);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Bruh");
+});
+
+app.post("/register", (req: Request, res: Response, next: NextFunction) => {
+    registerUser(req, res, next);
+});
+
+app.post("/login", (req: Request, res: Response) =>{
+    loginUser(req, res);
 });
 
 app.listen(port, host, () => {

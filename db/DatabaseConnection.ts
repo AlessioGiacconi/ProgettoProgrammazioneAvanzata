@@ -6,7 +6,7 @@ dotenv.config();
 const pgdbUser = process.env.PGDB_USER || 'postgres';
 const pgdbPassword = process.env.PGDB_PASSWD;
 const pgdbName = process.env.PGDB_NAME || 'dbpa';
-const pgdbHost = process.env.PGDB_HOST || 'db';
+const pgdbHost = process.env.PGDB_HOST || 'dbpostgres';
 const pgdbPort = process.env.PGDB_PORT || 5432;
 
 

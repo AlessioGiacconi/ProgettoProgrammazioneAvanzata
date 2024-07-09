@@ -3,46 +3,46 @@ CREATE DATABASE dbpa;
 \c dbpa;
 
 CREATE TABLE IF NOT EXISTS users (
-    badgeId SERIAL PRIMARY KEY, 
+    badge_id SERIAL PRIMARY KEY, 
     email VARCHAR(100) NOT NULL,
     passwd VARCHAR(40) NOT NULL,
-    isAdmin BOOLEAN NOT NULL,
-    authLevel INT NOT NULL,
-    isSuspended BOOLEAN NOT NULL,
+    is_admin BOOLEAN NOT NULL,
+    auth_level INT NOT NULL,
+    is_suspended BOOLEAN NOT NULL,
     tokens INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS passages (
-    passageId SERIAL PRIMARY KEY,
+    passage_id SERIAL PRIMARY KEY,
     level INT NOT NULL,
-    needsDPI BOOLEAN NOT NULL
+    needs_dpi BOOLEAN NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS transits (
-    transitId SERIAL PRIMARY KEY,
+    transit_id SERIAL PRIMARY KEY,
     passage INT NOT NULL,
     badge INT NOT NULL,
-    transitDate TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    isAuthorized BOOLEAN NOT NULL,
-    violationDPI BOOLEAN NOT NULL,
-    FOREIGN KEY (badge) REFERENCES users(badgeId),
-    FOREIGN KEY (passage) REFERENCES passages(passageId)
+    transit_date TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    is_authorized BOOLEAN NOT NULL,
+    violation_dpi BOOLEAN NOT NULL,
+    FOREIGN KEY (badge) REFERENCES users(badge_id),
+    FOREIGN KEY (passage) REFERENCES passages(passage_id)
 );
 
-INSERT INTO users (email, passwd, isAdmin, authLevel, isSuspended, tokens) VALUES
+INSERT INTO users (email, passwd, is_admin, auth_level, is_suspended, tokens) VALUES
 ('alessio@gmail.com', 'password', false, 3, false, 100),
 ('francesco@gmail.com', 'password', false, 3, false, 100),
 ('carcarlo@gmail.com', 'password', false, 1, true, 100),
 ('admin@admin.com', 'password', true, 3, false, 100);
 
-INSERT INTO passages (level, needsDPI) VALUES
+INSERT INTO passages (level, needs_dpi) VALUES
 (1, false),
 (2, true),
 (3, true),
 (3, false),
 (1, true);
 
-INSERT INTO transits (passage, badge, transitDate, isAuthorized, violationDPI) VALUES
+INSERT INTO transits (passage, badge, transit_date, is_authorized, violation_dpi) VALUES
 (1, 1, '2023-07-01 08:30:00', true, false),
 (2, 1, '2023-07-02 09:15:00', false, true),
 (3, 2, '2023-07-03 10:45:00', true, false),

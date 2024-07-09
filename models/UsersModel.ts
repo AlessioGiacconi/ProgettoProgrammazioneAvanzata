@@ -19,7 +19,7 @@ sequelize.authenticate().then(() => {
  * 
  */
 export const UsersModel = sequelize.define('users', {
-    badgeId: {
+    badge_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
@@ -33,15 +33,15 @@ export const UsersModel = sequelize.define('users', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    isAdmin: {
+    is_admin: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     },
-    authLevel: {
+    auth_level: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    isSuspended: {
+    is_suspended: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     },

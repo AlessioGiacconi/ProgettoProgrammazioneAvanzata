@@ -18,7 +18,7 @@ sequelize.authenticate().then(() => {
  * Definizione del modello "users" relativo alla tabella del db corrispondente.
  * 
  */
-export const UsersModel = sequelize.define('passages', {
+export const PassagesModel = sequelize.define('passages', {
     passageId: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -1,12 +1,12 @@
 import { DataTypes} from 'sequelize';
-import { dbConnector } from '../db/DatabaseConnection';
+import { DatabaseConnection } from '../db/DatabaseConnection';
 
 
 /**
  * Connessione al database utilizzando Sequelize.
  * 
  */
-const sequelize = dbConnector.getInstance();
+const sequelize = DatabaseConnection.getInstance();
 sequelize.authenticate().then(() => {
   console.log('Connection has been established successfully.');
 }).catch((error: any) => {

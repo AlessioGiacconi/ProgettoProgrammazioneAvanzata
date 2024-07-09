@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { getAllPassages, createPassage, getPassage, updatePassage, deletePassage } from '../controllers/passageController';
 
-const router = Router();
+const passagesRouter = Router();
 
-router.get('/badges', getAllPassages);
-router.post('/badges', createPassage);
-router.get('/badges/:id', getPassage);
-router.put('/badges/:id', updatePassage);
-router.delete('/badges/:id', deletePassage);
+passagesRouter.get('/passages', getAllPassages);
+passagesRouter.post('/passage', createPassage);
+passagesRouter.get('/passage/:id', getPassage);
+passagesRouter.put('/passage/:id', updatePassage);
+passagesRouter.delete('/passage/:id', deletePassage);
 
-export default router;
+export default passagesRouter;

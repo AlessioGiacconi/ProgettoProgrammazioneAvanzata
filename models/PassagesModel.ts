@@ -15,7 +15,7 @@ sequelize.authenticate().then(() => {
 
 
 /**
- * Definizione del modello "users" relativo alla tabella del db corrispondente.
+ * Definizione del modello "passages" relativo alla tabella del db corrispondente.
  * 
  */
 export const PassagesModel = sequelize.define('passages', {
@@ -29,7 +29,7 @@ export const PassagesModel = sequelize.define('passages', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    is_suspended: {
+    needs_dpi: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     }

@@ -37,7 +37,7 @@ export const loginUser = async (req: Request, res: Response) => {
         return res.status(400).json({message: 'Email and password are required'});
     };
     const payload = {
-        email: email,
+        email: email
     };
     try {
         const jwtBearerToken =jwt.sign(payload, PK, { expiresIn: '1h'});

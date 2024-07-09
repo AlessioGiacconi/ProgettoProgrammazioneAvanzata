@@ -15,7 +15,7 @@ sequelize.authenticate().then(() => {
 
 
 /**
- * Definizione del modello "users" relativo alla tabella del db corrispondente.
+ * Definizione del modello "passages" relativo alla tabella del db corrispondente.
  * 
  */
 export const PassagesModel = sequelize.define('passages', {

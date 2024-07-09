@@ -1,20 +1,24 @@
 import { Request, Response, NextFunction } from 'express';
 import { PassagesModel } from '../models/PassagesModel';
 
-export const getAllPassages = async(req: Request, res: Response) => {
-    const passages = await PassagesModel.findAll();
-    res.json(passages);
+export const getAllPassages = async(req: Request, res: Response, next: NextFunction) => {
+    try {
+        const passages = await PassagesModel.findAll();
+        res.json(passages);
+    } catch (error) {
+        next(error);
+    }
 };
 
 export const createPassage = async (req: Request, res: Response) => {
-    const { passageId, level, isSuspended } = req.body;
-    const passage = await PassagesModel.create({passageId, level, isSuspended});
+    const { passage_id, level, is_suspended } = req.body;
+    const passage = await PassagesModel.create({passage_id, level, is_suspended});
     res.json(passage);
 };
 
 export const getPassage = async (req: Request, res: Response) => {
-    const {passageId} = req.params;
-    const passage = await PassagesModel.findByPk(passageId);
+    const {passage_id} = req.params;
+    const passage = await PassagesModel.findByPk(passage_id);
     if (passage) {
         res.json(passage);
     } else {
@@ -28,9 +32,9 @@ export const updatePassage = async (req: Request, res: Response) => {
     const passage = await PassagesModel.findByPk(id);
     if (passage) {
         passage.set({
-            passageId: passage_id,
+            passage_id: passage_id,
             level: level,
-            isSuspended: is_suspended
+            is_suspended: is_suspended
         });
         await passage.save();
         res.json(passage);

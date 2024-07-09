@@ -2,11 +2,13 @@ CREATE DATABASE dbpa;
 
 \c dbpa;
 
+CREATE TYPE ROLE AS ENUM('user', 'admin', 'passage');
+
 CREATE TABLE IF NOT EXISTS users (
     badge_id SERIAL PRIMARY KEY, 
     email VARCHAR(100) NOT NULL,
     passwd VARCHAR(40) NOT NULL,
-    is_admin BOOLEAN NOT NULL,
+    role ROLE NOT NULL,
     auth_level INT NOT NULL,
     is_suspended BOOLEAN NOT NULL,
     tokens INT NOT NULL
@@ -29,11 +31,11 @@ CREATE TABLE IF NOT EXISTS transits (
     FOREIGN KEY (passage) REFERENCES passages(passage_id)
 );
 
-INSERT INTO users (email, passwd, is_admin, auth_level, is_suspended, tokens) VALUES
-('alessio@gmail.com', 'password', false, 3, false, 100),
-('francesco@gmail.com', 'password', false, 3, false, 100),
-('carcarlo@gmail.com', 'password', false, 1, true, 100),
-('admin@admin.com', 'password', true, 3, false, 100);
+INSERT INTO users (email, passwd, role, auth_level, is_suspended, tokens) VALUES
+('alessio@gmail.com', 'password', 'user', 3, false, 100),
+('francesco@gmail.com', 'password', 'user', 3, false, 100),
+('carcarlo@gmail.com', 'password', 'user', 1, true, 100),
+('admin@admin.com', 'password', 'admin', 3, false, 100);
 
 INSERT INTO passages (level, needs_dpi) VALUES
 (1, false),

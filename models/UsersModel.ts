@@ -33,8 +33,8 @@ export const UsersModel = sequelize.define('users', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    is_admin: {
-        type: DataTypes.BOOLEAN,
+    role: {
+        type: DataTypes.STRING,
         allowNull: false
     },
     auth_level: {

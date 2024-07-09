@@ -24,13 +24,13 @@ export const getPassage = async (req: Request, res: Response) => {
 
 export const updatePassage = async (req: Request, res: Response) => {
     const {id} = req.params;
-    const {passageId, level, isSuspended} = req.body;
+    const {passage_id, level, is_suspended} = req.body;
     const passage = await PassagesModel.findByPk(id);
     if (passage) {
         passage.set({
-            passageId: passageId,
+            passageId: passage_id,
             level: level,
-            isSuspended: isSuspended
+            isSuspended: is_suspended
         });
         await passage.save();
         res.json(passage);

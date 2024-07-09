@@ -11,14 +11,14 @@ export const getAllPassages = async(req: Request, res: Response, next: NextFunct
 };
 
 export const createPassage = async (req: Request, res: Response) => {
-    const { passage_id, level, is_suspended } = req.body;
-    const passage = await PassagesModel.create({passage_id, level, is_suspended});
+    const { passage_id, level, needs_dpi } = req.body;
+    const passage = await PassagesModel.create({passage_id, level, needs_dpi});
     res.json(passage);
 };
 
 export const getPassage = async (req: Request, res: Response) => {
-    const {passage_id} = req.params;
-    const passage = await PassagesModel.findByPk(passage_id);
+    const {id} = req.params;
+    const passage = await PassagesModel.findByPk(id);
     if (passage) {
         res.json(passage);
     } else {
@@ -28,13 +28,12 @@ export const getPassage = async (req: Request, res: Response) => {
 
 export const updatePassage = async (req: Request, res: Response) => {
     const {id} = req.params;
-    const {passage_id, level, is_suspended} = req.body;
+    const {passage_id, level, needs_dpi} = req.body;
     const passage = await PassagesModel.findByPk(id);
     if (passage) {
         passage.set({
-            passage_id: passage_id,
             level: level,
-            is_suspended: is_suspended
+            is_suspended: needs_dpi
         });
         await passage.save();
         res.json(passage);

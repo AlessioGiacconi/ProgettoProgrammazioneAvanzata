@@ -29,7 +29,7 @@ export const PassagesModel = sequelize.define('passages', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    is_suspended: {
+    needs_dpi: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     }

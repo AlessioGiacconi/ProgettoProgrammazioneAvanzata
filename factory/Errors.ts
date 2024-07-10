@@ -169,3 +169,66 @@ class DefaultError implements Message {
         };
     }
 }
+
+export class ErrorFactory extends MessageFactory {
+    constructor() {super()}
+
+    getMessage(type: ErrorEnum): Message {
+
+        let errorClass: Message | null = null;
+        switch (type) {
+            case ErrorEnum.LoginFailed:
+                errorClass = new LoginFailed();
+                break;
+            case ErrorEnum.UserRegistrationFailed:
+                errorClass = new UserRegistrationFailed();
+                break;
+            case ErrorEnum.UserNotFound:
+                errorClass = new UserNotFound();
+                break;
+            case ErrorEnum.UserUpdateFailed:
+                errorClass = new UserUpdateFailed();
+                break;
+            case ErrorEnum.UserDeletionFailed:
+                errorClass = new UserDeletionFailed();
+                break;
+            case ErrorEnum.PassageCreationFailed:
+                errorClass = new PassageCreationFailed();
+                break;
+            case ErrorEnum.PassageNotFound:
+                errorClass = new PassageNotFound();
+                break;
+            case ErrorEnum.PassageUpdateFailed:
+                errorClass = new PassageUpdateFailed();
+                break;
+            case ErrorEnum.PassageDeletionFailed:
+                errorClass = new PassageDeletionFailed();
+                break;
+            case ErrorEnum.TransitNotFound:
+                errorClass = new TransitNotFound();
+                break;
+            case ErrorEnum.TransitUpdateFailed:
+                errorClass = new TransitUpdateFailed();
+                break;
+            case ErrorEnum.TransitDeletionFailed:
+                errorClass = new TransitDeletionFailed();
+                break;
+            case ErrorEnum.Unauthorized:
+                errorClass = new Unauthorized();
+                break;
+            case ErrorEnum.Forbidden:
+                errorClass = new Forbidden();
+                break;
+            case ErrorEnum.ValidationError:
+                errorClass = new ValidationError();
+                break;
+            case ErrorEnum.InternalServerError:
+                errorClass = new InternalServerError();
+                break;
+
+            default:
+                errorClass = new DefaultError()
+        }
+    return errorClass;
+    }
+}

@@ -24,7 +24,8 @@ export const AuthenticationModel = sequelize.define('authentications', {
         references: {
             model: 'users',
             key: 'badge_id',
-        }
+        },
+        primaryKey: true
     },
     passage: {
         type: DataTypes.INTEGER,
@@ -32,7 +33,8 @@ export const AuthenticationModel = sequelize.define('authentications', {
         references: {
             model: 'passages',
             key: 'passage_id',
-        }
+        },
+        primaryKey: true
     }
 }, {
     modelName: 'AuthenticationModel',

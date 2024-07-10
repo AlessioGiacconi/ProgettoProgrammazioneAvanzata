@@ -48,8 +48,10 @@ INSERT INTO passages (level, needs_dpi) VALUES
 
 INSERT INTO users (email, passwd, role, is_suspended, tokens, passage_reference) VALUES
 ('alessio@gmail.com', 'password', 'user', false, 100, null),
-('francesco@gmail.com', 'password', 'user', false, 100, null),
-('carcarlo@gmail.com', 'password', 'passage', true, 100, 1),
+('francesco@gmail.com', 'password', 'user', true, 100, null),
+('mariogiordano@gmail.com', 'password', 'user', true, 100, null),
+('varco5@gmail.com', 'password', 'passage', false, 100, 5),
+('varco1@gmail.com', 'password', 'passage', false, 100, 1),
 ('admin@admin.com', 'password', 'admin',false, 100, null);
 
 INSERT INTO authentications (badge, passage) VALUES

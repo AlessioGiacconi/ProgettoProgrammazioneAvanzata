@@ -65,17 +65,15 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        const { email, passwd, role, is_suspended, tokens, passage_reference} = req.body;
+        const { email, passwd, tokens, passage_reference} = req.body;
         const user = await UsersModel.findByPk(id);
         if (user) {
             user.set({
-                email: email,
-                passwd: passwd,
-                role: role,
-                is_suspended: is_suspended,
-                tokens: tokens,
-                passage_reference: passage_reference,
-            })
+                email: email !== undefined ? email: user.get('email'),
+                passwd: passwd !== undefined ? passwd: user.get('passwd'),
+                tokens: tokens !== undefined ? tokens: user.get('tokens'),
+                passage_reference: passage_reference !== undefined ? passage_reference: user.get('passage_reference')
+            });
             await user.save();
             res.json(user);
         } else {
@@ -96,6 +94,67 @@ export const deleteUser = async ( req: Request, res: Response, next: NextFunctio
         } else {
             res.status(404).json({error: 'User not found'});
         }
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getSuspendedBadges = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const suspendedUsers = await UsersModel.findAll({
+            where : {
+                is_suspended: true
+            },
+            attributes: ['badge_id', 'email']
+        });
+        const suspendedBadges = suspendedUsers.map(user => ({
+            badge_id: user.get('badge_id'),
+            email: user.get('email')
+        }));
+        res.status(200).json(suspendedBadges);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const reactivateBadges = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { badgeIds } = req.body;
+
+        // Trova tutti gli utenti sospesi con i badge specificati
+        const suspendedUsers = await UsersModel.findAll({
+            where: {
+                badge_id: badgeIds,
+                is_suspended: true
+            },
+            attributes: ['badge_id', 'email']  // Specifica le colonne che vuoi selezionare
+        });
+
+         // Se non ci sono utenti da riattivare, ritorna un messaggio di errore
+        if (suspendedUsers.length == 0) {
+            return res.status(404).json({message: 'No suspended badges found to reactivate'});
+        }
+        
+        // Ottieni gli ID dei badge degli utenti sospesi
+        const suspendedBadgesIds = suspendedUsers.map(user => user.get('badge_id'));
+
+        // Aggiorna is_suspended a false solo per gli utenti trovati
+        const updatedUsers = await UsersModel.update(
+            {is_suspended: false},
+            {where: { badge_id: suspendedBadgesIds}}
+        );
+
+         // Prepara la risposta con badge_id e email degli utenti riattivati
+        const reactivatedUsers = suspendedUsers.map(user => ({
+            badge_id: user.get('badge_id'),
+            email: user.get('email')
+        }));
+
+        res.status(200).json({
+            message: 'Badges reactivated succesfully', 
+            updatedCount: updatedUsers[0],
+            reactivatedUsers
+        });
     } catch (error) {
         next(error);
     }

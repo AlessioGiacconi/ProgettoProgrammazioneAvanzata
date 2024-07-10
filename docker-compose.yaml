@@ -3,11 +3,11 @@ services:
   dbpostgres:
     image: postgres
     restart: always
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    #healthcheck:
+    #  test: ["CMD", "pg_isready", "-U", "postgres"]
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 5
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -15,19 +15,18 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./db/db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./src/db/db.sql:/docker-entrypoint-initdb.d/db.sql
   nodeapp:
     #restart: always
     container_name: node-app
-    image: node-app
     build: .
     ports: 
       - 8080:8080
     env_file:
       - .env
     depends_on: 
-      dbpostgres:
-        condition: service_healthy
-    #volumes:
-    #  - .:/usr/src/app
+      - dbpostgres
+        #condition: service_healthy
+    volumes:
+      - .:/usr/app
 

@@ -37,10 +37,6 @@ export const UsersModel = sequelize.define('users', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    auth_level: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
     is_suspended: {
         type: DataTypes.BOOLEAN,
         allowNull: false
@@ -48,6 +44,14 @@ export const UsersModel = sequelize.define('users', {
     tokens: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    passage_reference: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'passages',
+            key: 'passage_id'
+        }
     }
 }, {
         modelName: 'UsersModel',

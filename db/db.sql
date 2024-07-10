@@ -9,9 +9,10 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(100) NOT NULL,
     passwd VARCHAR(40) NOT NULL,
     role ROLE NOT NULL,
-    auth_level INT NOT NULL,
     is_suspended BOOLEAN NOT NULL,
-    tokens INT NOT NULL
+    tokens INT NOT NULL,
+    passage_reference INT, 
+    FOREIGN KEY (passage_reference) REFERENCES passages(passage_id)
 );
 
 CREATE TABLE IF NOT EXISTS passages (
@@ -31,11 +32,11 @@ CREATE TABLE IF NOT EXISTS transits (
     FOREIGN KEY (passage) REFERENCES passages(passage_id)
 );
 
-INSERT INTO users (email, passwd, role, auth_level, is_suspended, tokens) VALUES
-('alessio@gmail.com', 'password', 'user', 3, false, 100),
-('francesco@gmail.com', 'password', 'user', 3, false, 100),
-('carcarlo@gmail.com', 'password', 'user', 1, true, 100),
-('admin@admin.com', 'password', 'admin', 3, false, 100);
+INSERT INTO users (email, passwd, role, is_suspended, tokens) VALUES
+('alessio@gmail.com', 'password', 'user', false, 100, null),
+('francesco@gmail.com', 'password', 'user', false, 100, null),
+('carcarlo@gmail.com', 'password', 'varco', true, 100, 1),
+('admin@admin.com', 'password', 'admin',false, 100, null);
 
 INSERT INTO passages (level, needs_dpi) VALUES
 (1, false),

@@ -30,7 +30,7 @@ export const TransitsModel = sequelize.define('transits', {
         allowNull: false,
         references: {
             model: 'passages',
-            key: 'passageId',
+            key: 'passage_id',
         }
     },
     badge: {
@@ -38,7 +38,7 @@ export const TransitsModel = sequelize.define('transits', {
         allowNull: false,
         references: {
             model: 'users',
-            key: 'badgeId',
+            key: 'badge_id',
         }
     },
     transit_date: {

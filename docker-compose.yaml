@@ -28,4 +28,6 @@ services:
     depends_on: 
       dbpostgres:
         condition: service_healthy
+    #volumes:
+    #  - .:/usr/src/app
 

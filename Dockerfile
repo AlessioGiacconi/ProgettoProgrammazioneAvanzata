@@ -1,4 +1,6 @@
 FROM node:lts-stretch-slim
+#WORKDIR /tmp
+#COPY package*.json ./
 WORKDIR /usr/src/app
 COPY . .
 EXPOSE 8080

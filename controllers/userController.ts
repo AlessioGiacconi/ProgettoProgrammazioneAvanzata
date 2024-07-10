@@ -20,7 +20,6 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
             email: req.body.email,
             passwd: req.body.passwd,
             role: req.body.role,
-            auth_level: 1,
             is_suspended: false,
             tokens: 100
         });
@@ -65,14 +64,13 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        const { email, passwd, role, auth_level, is_suspended, tokens} = req.body;
+        const { email, passwd, role, is_suspended, tokens} = req.body;
         const user = await UsersModel.findByPk(id);
         if (user) {
             user.set({
                 email: email,
                 passwd: passwd,
                 role: role,
-                auth_level: auth_level,
                 is_suspended: is_suspended,
                 tokens: tokens
             })

@@ -18,7 +18,7 @@ app.use('/transits', transitRoutes);
 app.use(errorHandler);
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Bruh");
+    res.send("Bruh arcoddio");
 });
 
 app.post("/register", (req: Request, res: Response, next: NextFunction) => {

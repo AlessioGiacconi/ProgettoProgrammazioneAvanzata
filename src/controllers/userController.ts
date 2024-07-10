@@ -21,7 +21,8 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
             passwd: req.body.passwd,
             role: req.body.role,
             is_suspended: false,
-            tokens: 100
+            tokens: 100,
+            passage_reference: req.body.passage_reference
         });
         res.json(user);
     } catch (error) {
@@ -64,7 +65,7 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { id } = req.params;
-        const { email, passwd, role, is_suspended, tokens} = req.body;
+        const { email, passwd, role, is_suspended, tokens, passage_reference} = req.body;
         const user = await UsersModel.findByPk(id);
         if (user) {
             user.set({
@@ -72,7 +73,8 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
                 passwd: passwd,
                 role: role,
                 is_suspended: is_suspended,
-                tokens: tokens
+                tokens: tokens,
+                passage_reference: passage_reference,
             })
             await user.save();
             res.json(user);

@@ -1,11 +1,16 @@
-FROM node:lts-stretch-slim
-#WORKDIR /tmp
-#COPY package*.json ./
-WORKDIR /usr/src/app
-COPY . .
+FROM node:alpine
 EXPOSE 8080
+VOLUME [ "/usr/app" ]
+WORKDIR /usr/app
+COPY ./package*.json .
 RUN npm install
-RUN npm install -g typescript nodemon
-RUN tsc
-CMD ["node", "index.js"]
-#CMD ["npx", "nodemon", "index.js", "-L"]
+RUN npm install -g typescript nodemon ts-node
+CMD ["npx", "nodemon", "src/index.ts", "-L"]
+
+#WORKDIR /usr/src/app
+#COPY . .
+#EXPOSE 8080
+#RUN npm install
+#RUN npm install -g typescript nodemon
+#RUN tsc
+#CMD ["node", "index.js"]

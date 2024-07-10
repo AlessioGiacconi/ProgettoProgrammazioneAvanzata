@@ -4,6 +4,12 @@ CREATE DATABASE dbpa;
 
 CREATE TYPE ROLE AS ENUM('user', 'admin', 'passage');
 
+CREATE TABLE IF NOT EXISTS passages (
+    passage_id SERIAL PRIMARY KEY,
+    level INT NOT NULL,
+    needs_dpi BOOLEAN NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS users (
     badge_id SERIAL PRIMARY KEY, 
     email VARCHAR(100) NOT NULL,
@@ -15,10 +21,11 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (passage_reference) REFERENCES passages(passage_id)
 );
 
-CREATE TABLE IF NOT EXISTS passages (
-    passage_id SERIAL PRIMARY KEY,
-    level INT NOT NULL,
-    needs_dpi BOOLEAN NOT NULL
+CREATE TABLE IF NOT EXISTS authentications (
+    badge INT NOT NULL,
+    passage INT NOT NULL,
+    FOREIGN KEY (badge) REFERENCES users(badge_id),
+    FOREIGN KEY (passage) REFERENCES passages(passage_id)
 );
 
 CREATE TABLE IF NOT EXISTS transits (
@@ -32,18 +39,25 @@ CREATE TABLE IF NOT EXISTS transits (
     FOREIGN KEY (passage) REFERENCES passages(passage_id)
 );
 
-INSERT INTO users (email, passwd, role, is_suspended, tokens) VALUES
-('alessio@gmail.com', 'password', 'user', false, 100, null),
-('francesco@gmail.com', 'password', 'user', false, 100, null),
-('carcarlo@gmail.com', 'password', 'varco', true, 100, 1),
-('admin@admin.com', 'password', 'admin',false, 100, null);
-
 INSERT INTO passages (level, needs_dpi) VALUES
 (1, false),
 (2, true),
 (3, true),
 (3, false),
 (1, true);
+
+INSERT INTO users (email, passwd, role, is_suspended, tokens, passage_reference) VALUES
+('alessio@gmail.com', 'password', 'user', false, 100, null),
+('francesco@gmail.com', 'password', 'user', false, 100, null),
+('carcarlo@gmail.com', 'password', 'passage', true, 100, 1),
+('admin@admin.com', 'password', 'admin',false, 100, null);
+
+INSERT INTO authentications (badge, passage) VALUES
+(1,1),
+(1,3),
+(2,2),
+(3,5),
+(4,4);
 
 INSERT INTO transits (passage, badge, transit_date, is_authorized, violation_dpi) VALUES
 (1, 1, '2023-07-01 08:30:00', true, false),

@@ -64,14 +64,11 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
 
 export const updateTransit = async (req: Request, res: Response) => {
     const {id} = req.params;
-    const {passage, badge, transit_date, is_authorized, violation_dpi} = req.body;
+    const {transit_date, violation_dpi} = req.body;
     const transit = await TransitsModel.findByPk(id);
     if (transit) {
         transit.set({
-            passage: passage,
-            badge: badge,
             transit_date: transit_date,
-            is_authorized: is_authorized,
             violation_dpi: violation_dpi
         });
         await transit.save();

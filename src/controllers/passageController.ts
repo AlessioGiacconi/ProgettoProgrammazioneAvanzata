@@ -11,8 +11,8 @@ export const getAllPassages = async(req: Request, res: Response, next: NextFunct
 };
 
 export const createPassage = async (req: Request, res: Response) => {
-    const { passage_id, level, needs_dpi } = req.body;
-    const passage = await PassagesModel.create({passage_id, level, needs_dpi});
+    const { level, needs_dpi } = req.body;
+    const passage = await PassagesModel.create({ level, needs_dpi});
     res.json(passage);
 };
 

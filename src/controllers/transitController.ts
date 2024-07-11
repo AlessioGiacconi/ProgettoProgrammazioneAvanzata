@@ -4,6 +4,8 @@ import logger from '../log/logger';
 import { UsersModel } from '../models/UsersModel';
 import { AuthorizationModel } from '../models/AuthorizationModel';
 
+const MAX_UNAUTHORIZED_ATTEMPTS = parseInt(process.env.MAX_UNAUTHORIZED_ATTEMPTS || '5');
+
 export const getAllTransit = async(req: Request, res: Response, next: NextFunction) => {
     try{
         const transits = await TransitsModel.findAll();
@@ -53,6 +55,22 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
             is_authorized: is_authorized,
             violation_dpi: violation_dpi
         });
+
+        if(!is_authorized) {
+            await user.increment('unauthorized_attempts');
+            await user.reload();
+
+            const unauthorizedAttempts = user.get('unauthorized_attempts') as number;
+
+            if (unauthorizedAttempts >= MAX_UNAUTHORIZED_ATTEMPTS) {
+                user.set({
+                    is_suspended: true,
+                    unauthorized_attempts: 0
+                })
+                await user.save();
+                logger.info(`User ${badge} suspended due to excessive unauthorized attempts`);
+            }
+        }
 
         logger.info(`Transit created: Badge ${badge}, Status: ${is_authorized ? 'authorized' : 'unauthorized'}`);
 

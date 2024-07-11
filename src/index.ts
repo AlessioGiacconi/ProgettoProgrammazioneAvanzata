@@ -6,6 +6,7 @@ import transitRoutes from './routers/transitRoutes';
 import authorizationRouter from './routers/authorizationRoutes';
 import { errorHandler, genericErrorHandler } from './middleware/errorMiddleware';
 import { registerUser, loginUser } from './controllers/userController';
+import './utils/cronJob';
 
 dotenv.config();
 const app = express();

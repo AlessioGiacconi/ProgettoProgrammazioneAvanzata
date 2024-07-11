@@ -52,10 +52,25 @@ export const UsersModel = sequelize.define('users', {
             model: 'passages',
             key: 'passage_id'
         }
+    },
+    unauthorized_attempts: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
+    created_at: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: false
+    },
+    updated_at: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: false
     }
 }, {
         modelName: 'UsersModel',
-        timestamps: false,
+        timestamps: true,
         freezeTableName: true,
         createdAt: false,
         updatedAt: false,

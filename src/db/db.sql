@@ -18,8 +18,27 @@ CREATE TABLE IF NOT EXISTS users (
     is_suspended BOOLEAN NOT NULL,
     tokens INT NOT NULL,
     passage_reference INT, 
+    unauthorized_attempts INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (passage_reference) REFERENCES passages(passage_id)
 );
+
+-- Crea una funzione per aggiornare la colonna updatedAt
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW."updated_at" = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Crea un trigger che chiama la funzione prima di ogni aggiornamento
+CREATE TRIGGER update_user_updated_at
+BEFORE UPDATE ON users
+FOR EACH ROW
+WHEN (NEW.is_suspended = TRUE)
+EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TABLE IF NOT EXISTS authorizations (
     badge INT NOT NULL,
@@ -46,13 +65,13 @@ INSERT INTO passages (level, needs_dpi) VALUES
 (3, false),
 (1, true);
 
-INSERT INTO users (email, passwd, role, is_suspended, tokens, passage_reference) VALUES
-('alessio@gmail.com', 'password', 'user', false, 100, null),
-('francesco@gmail.com', 'password', 'user', true, 100, null),
-('mariogiordano@gmail.com', 'password', 'user', true, 100, null),
-('varco5@gmail.com', 'password', 'passage', false, 100, 5),
-('varco1@gmail.com', 'password', 'passage', false, 100, 1),
-('admin@admin.com', 'password', 'admin',false, 100, null);
+INSERT INTO users (email, passwd, role, is_suspended, tokens, passage_reference, updated_at) VALUES
+('alessio@gmail.com', 'password', 'user', false, 100, null, '2024-07-11 11:00:00'),
+('francesco@gmail.com', 'password', 'user', true, 100, null, '2024-07-11 11:00:00'),
+('mariogiordano@gmail.com', 'password', 'user', true, 100, null, '2024-07-11 11:00:00'),
+('varco5@gmail.com', 'password', 'passage', false, 100, 5, '2024-07-11 11:00:00'),
+('varco1@gmail.com', 'password', 'passage', false, 100, 1, '2024-07-11 11:00:00'),
+('admin@admin.com', 'password', 'admin', false, 100, null, '2024-07-11 11:00:00');
 
 INSERT INTO authorizations (badge, passage) VALUES
 (1,1),

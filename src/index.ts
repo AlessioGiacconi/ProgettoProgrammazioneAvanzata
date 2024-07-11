@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routers/userRoutes';
 import passageRoutes from './routers/passageRoutes';
 import transitRoutes from './routers/transitRoutes';
-import authenticationRouter from './routers/authenticationRoutes';
+import authorizationRouter from './routers/authorizationRoutes';
 import { errorHandler, genericErrorHandler } from './middleware/errorMiddleware';
 import { registerUser, loginUser } from './controllers/userController';
 
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use('/badges', userRoutes);
 app.use('/passages', passageRoutes);
 app.use('/transits', transitRoutes);
-app.use('/auth', authenticationRouter);
+app.use('/auth', authorizationRouter);
 
 
 app.use(errorHandler);

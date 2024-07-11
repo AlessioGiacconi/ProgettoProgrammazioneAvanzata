@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users (
     FOREIGN KEY (passage_reference) REFERENCES passages(passage_id)
 );
 
-CREATE TABLE IF NOT EXISTS authentications (
+CREATE TABLE IF NOT EXISTS authorizations (
     badge INT NOT NULL,
     passage INT NOT NULL,
     FOREIGN KEY (badge) REFERENCES users(badge_id),
@@ -54,7 +54,7 @@ INSERT INTO users (email, passwd, role, is_suspended, tokens, passage_reference)
 ('varco1@gmail.com', 'password', 'passage', false, 100, 1),
 ('admin@admin.com', 'password', 'admin',false, 100, null);
 
-INSERT INTO authentications (badge, passage) VALUES
+INSERT INTO authorizations (badge, passage) VALUES
 (1,1),
 (1,3),
 (2,2),

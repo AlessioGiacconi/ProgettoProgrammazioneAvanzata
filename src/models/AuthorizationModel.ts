@@ -17,7 +17,7 @@ sequelize.authenticate().then(() => {
  * Definizione del modello "authentication" relativo alla tabella del db corrispondente.
  * 
  */
-export const AuthenticationModel = sequelize.define('authentications', {
+export const AuthorizationModel = sequelize.define('authorizations', {
     badge: {
         type: DataTypes.INTEGER,
         allowNull: false,

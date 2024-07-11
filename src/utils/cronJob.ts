@@ -7,7 +7,7 @@ dotenv.config();
 
 const SUSPENSION_DURATION = parseInt(process.env.SUSPENSION_DURATION || '10') * 1000;
 
-cron.schedule('* * * * * *', async () => {
+cron.schedule('* * * * *', async () => {
     try {
         console.log("Cron Job Started")
         const currentTime = new Date().getTime();

@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const SUSPENSION_DURATION = parseInt(process.env.SUSPENSION_DURATION || '10') * 1000;
+const SUSPENSION_DURATION = parseInt(process.env.SUSPENSION_DURATION || '3600') * 1000;
 
 cron.schedule('* * * * *', async () => {
     try {

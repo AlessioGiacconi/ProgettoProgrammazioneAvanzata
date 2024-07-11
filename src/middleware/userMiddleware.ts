@@ -4,7 +4,7 @@ import { ErrorFactory } from '../factory/Errors';
 import { ErrorEnum } from '../factory/Message';
 
 const errorFactory: ErrorFactory = new ErrorFactory();
-
+/*
 // Middleware per la verifica dell'email di input
 export const checkInputEmail = (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
@@ -34,7 +34,7 @@ export const checkInputPassword = (req: Request, res: Response, next: NextFuncti
 
   next();
 };
-
+*/
 // Middleware per la verifica del token JWT
 export const checkJWT = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];

@@ -1,16 +1,15 @@
-
 export interface Response {
-    message: string; //message of the response
-    status: number; //HTTP status code
-    data?: string; //data to return in the response
-    type: string; //type of Content-Type to set into header response
-}
-
-export interface Message {
-    getResponse(): Response; 
-}
-
-export enum SuccessEnum {
+    message: string; // message of the response
+    status: number; // HTTP status code
+    data?: string; // data to return in the response
+    type: string; // type of Content-Type to set into header response
+  }
+  
+  export interface Message {
+    getResponse(): Response;
+  }
+  
+  export enum SuccessEnum {
     LoginSuccess,
     UserRegisteredSuccess,
     UserRetrievedSuccess,
@@ -24,9 +23,9 @@ export enum SuccessEnum {
     TransitUpdatedSuccess,
     TransitDeletedSuccess,
     DefaultSuccess
-}
-
-export enum ErrorEnum {
+  }
+  
+  export enum ErrorEnum {
     LoginFailed,
     UserRegistrationFailed,
     UserNotFound,
@@ -43,16 +42,21 @@ export enum ErrorEnum {
     Forbidden,
     ValidationError,
     InternalServerError,
-    DefaultError
-}
-
-export enum HttpStatusEnum {
+    DefaultError,
+    EmailNotValidAddress,
+    LoginBadRequest,
+    JwtNotValid,
+    TokenChargeBadRequest,
+    ForbiddenRole
+  }
+  
+  export enum HttpStatusEnum {
     // Informational responses (100–199)
     CONTINUE = 100,
     SWITCHING_PROTOCOLS = 101,
     PROCESSING = 102,
     EARLY_HINTS = 103,
-
+  
     // Successful responses (200–299)
     OK = 200,
     CREATED = 201,
@@ -64,7 +68,7 @@ export enum HttpStatusEnum {
     MULTI_STATUS = 207,
     ALREADY_REPORTED = 208,
     IM_USED = 226,
-
+  
     // Redirection messages (300–399)
     MULTIPLE_CHOICES = 300,
     MOVED_PERMANENTLY = 301,
@@ -75,7 +79,7 @@ export enum HttpStatusEnum {
     SWITCH_PROXY = 306,
     TEMPORARY_REDIRECT = 307,
     PERMANENT_REDIRECT = 308,
-
+  
     // Client error responses (400–499)
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
@@ -106,7 +110,7 @@ export enum HttpStatusEnum {
     TOO_MANY_REQUESTS = 429,
     REQUEST_HEADER_FIELDS_TOO_LARGE = 431,
     UNAVAILABLE_FOR_LEGAL_REASONS = 451,
-
+  
     // Server error responses (500–599)
     INTERNAL_SERVER_ERROR = 500,
     NOT_IMPLEMENTED = 501,
@@ -119,12 +123,11 @@ export enum HttpStatusEnum {
     LOOP_DETECTED = 508,
     NOT_EXTENDED = 510,
     NETWORK_AUTHENTICATION_REQUIRED = 511
-}
-
-//abstract class to messageFactory, used by ErrorFactory and SuccessFactory
-export abstract class MessageFactory {
-    
+  }
+  
+  // Abstract class for the messageFactory, used by ErrorFactory and SuccessFactory
+  export abstract class MessageFactory {
     constructor() {}
   
-    abstract getMessage(type: number): Message 
-}
+    abstract getMessage(type: number): Message;
+  }

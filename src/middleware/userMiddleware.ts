@@ -4,37 +4,7 @@ import { ErrorFactory } from '../factory/Errors';
 import { ErrorEnum } from '../factory/Message';
 
 const errorFactory: ErrorFactory = new ErrorFactory();
-/*
-// Middleware per la verifica dell'email di input
-export const checkInputEmail = (req: Request, res: Response, next: NextFunction) => {
-  const { email } = req.body;
 
-  if (typeof email !== 'string') {
-    const errorResponse = errorFactory.getMessage(ErrorEnum.EmailNotValidAddress).getResponse();
-    return res.status(errorResponse.status).json(errorResponse);
-  }
-
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!pattern.test(email)) {
-    const errorResponse = errorFactory.getMessage(ErrorEnum.EmailNotValidAddress).getResponse();
-    return res.status(errorResponse.status).json(errorResponse);
-  }
-
-  next();
-};
-
-// Middleware per la verifica della password di input
-export const checkInputPassword = (req: Request, res: Response, next: NextFunction) => {
-  const { password } = req.body;
-
-  if (typeof password !== 'string' || password.length > 50) {
-    const errorResponse = errorFactory.getMessage(ErrorEnum.LoginBadRequest).getResponse();
-    return res.status(errorResponse.status).json(errorResponse);
-  }
-
-  next();
-};
-*/
 // Middleware per la verifica del token JWT
 export const checkJWT = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];

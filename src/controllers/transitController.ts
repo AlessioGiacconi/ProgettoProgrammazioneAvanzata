@@ -4,6 +4,8 @@ import logger from '../log/logger';
 import { UsersModel } from '../models/UsersModel';
 import { AuthorizationModel } from '../models/AuthorizationModel';
 import { Op } from 'sequelize';
+import PDFDocument from 'pdfkit';
+import { stringify } from 'csv-stringify';
 
 const MAX_UNAUTHORIZED_ATTEMPTS = parseInt(process.env.MAX_UNAUTHORIZED_ATTEMPTS || '5');
 
@@ -146,3 +148,65 @@ export const getAccessStats = async (req: Request, res: Response, next: NextFunc
         next(error);
     }
 };
+
+export const downloadReport = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { start_date, end_date, format } = req.query;
+
+        const transits = await TransitsModel.findAll({
+            where: {
+                transit_date: {
+                    [Op.between]: [new Date(start_date as string), new Date(end_date as string)]
+                }
+            },
+            attributes: ['passage', 'is_authorized', 'violation_dpi']
+        });
+
+        const reportData = transits.reduce((acc: { [key: number]: {passage: number, authorized: number, unauthorized: number, violations: number }}, transit) => {
+            const passage = transit.get('passage') as number;
+            if (!acc[passage]) {
+                acc[passage] = { passage: passage,  authorized: 0, unauthorized: 0, violations: 0};
+            }
+            if (transit.get('is_authorized')) {
+                acc[passage].authorized += 1;
+            } else {
+                acc[passage].unauthorized += 1;
+            }
+            if (transit.get('violation_dpi')) {
+                acc[passage].violations += 1;
+            }
+            return acc;
+        }, {});
+
+        const reportArray = Object.values(reportData);
+
+        if (format === 'csv') {
+            res.header('Content-Type', 'text/csv');
+            res.attachment('report.csv');
+
+            stringify(reportArray, { header: true}, (err, output) => {
+                if (err) {
+                    return next(err);
+                }
+                res.send(output);
+            });
+        } else if (format === 'pdf') {
+            const doc = new PDFDocument();
+            res.header('Content-Type', 'application/pdf');
+            res.attachment('report.pdf');
+
+            doc.pipe(res);
+            doc.text('Transit Report');
+            reportArray.forEach(row => {
+                doc.text(`Passage: ${row.passage}, Authorized: ${row.authorized}, Uauthorized: ${row.unauthorized}, Violations: ${row.violations}`);
+            });
+            doc.end();
+        } else {
+            res.header('Content-Type', 'application/json');
+            res.attachment('report.json');
+            return res.json(reportArray);
+        }
+    } catch (error) {
+        next(error);
+    }
+}

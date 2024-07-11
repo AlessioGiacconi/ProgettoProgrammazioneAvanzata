@@ -22,11 +22,13 @@
   },
   "homepage": "https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata#readme",
   "dependencies": {
+    "csv-stringify": "^6.5.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-validator": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "node-cron": "^3.0.3",
+    "pdfkit": "^0.15.0",
     "pg": "^8.12.0",
     "sequelize": "^6.37.3",
     "winston": "^3.13.1"
@@ -36,6 +38,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.9",
     "@types/node-cron": "^3.0.11",
+    "@types/pdfkit": "^0.13.4",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"

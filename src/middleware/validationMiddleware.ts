@@ -25,7 +25,7 @@ export const validateEmail = [
 export const validatePassword = [
   check('passwd')
     .isString()
-    .isLength({ max: 50 })
+    .isLength({ max: 30 })
     .withMessage('Password must be a string with maximum length of 50 characters'),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);

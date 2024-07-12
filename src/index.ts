@@ -7,7 +7,7 @@ import authorizationRouter from './routers/authorizationRoutes';
 import { errorHandler, genericErrorHandler } from './middleware/errorMiddleware';
 import { registerUser, loginUser } from './controllers/userController';
 import './utils/cronJob';
-import { validateEmail, validatePassword, validateRole } from './middleware/validationMiddleware';
+import { validateEmail, validatePassword, validateRole, validatePassageReference } from './middleware/validationMiddleware';
 
 dotenv.config();
 
@@ -28,7 +28,7 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Bruh arcoddio");
 });
 
-app.post("/register", validateEmail, validatePassword, validateRole, (req: Request, res: Response, next: NextFunction) => {
+app.post("/register", validateEmail, validatePassword, validateRole, validatePassageReference, (req: Request, res: Response, next: NextFunction) => {
     registerUser(req, res, next);
 });
 

@@ -3,6 +3,7 @@ import { check, validationResult } from 'express-validator';
 import { ErrorFactory } from '../factory/Errors';
 import { ErrorEnum } from '../factory/Message';
 import { Pool } from 'pg';
+import { error } from 'console';
 
 const errorFactory: ErrorFactory = new ErrorFactory();
 
@@ -87,4 +88,41 @@ export const validateRole = [
     }
     next();
   }
-]
+];
+
+export const validatePassageReference = [
+  check('passage_reference')
+  .custom(async (value, { req }) => {
+    if(req.body.role === 'passage') {
+      if(!value) {
+        return Promise.reject('Passage reference is required for role passage');
+      }
+      const client = await pool.connect();
+      try {
+        const result = await client.query('SELECT 1 FROM passages WHERE passage_id = $1', [value]);
+        if(result.rowCount === 0) {
+          return Promise.reject('Passage reference must refer to a valide passage_id');
+        }
+
+        const passageReferenced = await client.query('SELECT 1 FROM users WHERE passage_reference = $1', [value]);
+        if (passageReferenced.rowCount && passageReferenced.rowCount > 0) {
+          return Promise.reject('This passage reference is already used by another passage');
+        }
+      } finally {
+        client.release();
+      }
+    }
+    return true;
+  }),
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()) {
+      const errorResponse = errorFactory.getMessage(ErrorEnum.UserRegistrationFailed).getResponse();
+      return res.status(errorResponse.status).json({
+        ...errorResponse,
+        errors: errors.array()
+      });
+    }
+    next();
+  }
+];

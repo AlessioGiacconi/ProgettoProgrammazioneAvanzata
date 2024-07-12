@@ -23,7 +23,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
       role: req.body.role,
       is_suspended: false,
       tokens: 100,
-      passage_reference: req.body.passage_reference
+      passage_reference: req.body.role === 'passage' ? req.body.passage_reference : null
     });
     res.json(user);
   } catch (error) {

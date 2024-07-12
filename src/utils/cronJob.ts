@@ -24,8 +24,6 @@ cron.schedule('* * * * *', async () => {
             const suspensionTime = updatedAt.getTime();
             const elapsedTime = currentTime - suspensionTime;
 
-            logger.info(`User ${user.get('badge_id')} has been suspended for ${elapsedTime / 1000} seconds`);
-
             if (elapsedTime >= SUSPENSION_DURATION) {
                 user.set({
                     is_suspended: false

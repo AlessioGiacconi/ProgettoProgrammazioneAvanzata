@@ -23,7 +23,22 @@ export const validateEmail = [
     .notEmpty()
     .withMessage('Email is required.')
     .isEmail()
-    .withMessage('Invalid email address')
+    .withMessage('Invalid email address'),
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const errorResponse = errorFactory.getMessage(ErrorEnum.EmailNotValidAddress).getResponse();
+      return res.status(errorResponse.status).json({
+        ...errorResponse,
+        errors: errors.array()
+      });
+    }
+    next();
+  }
+];
+
+export const validateUsedEmail = [
+  check('email')
     .custom(async (email) => {
       const client = await pool.connect();
       try {

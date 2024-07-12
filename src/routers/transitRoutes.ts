@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { getAllTransit, getTransit, createTransit, updateTransit, deleteTransit, getAccessStats, downloadReport } from '../controllers/transitController';
+import { checkRoleAdmin, checkJWT } from '../middleware/userMiddleware';
 
 const TransitRouter = Router();
 
-TransitRouter.get('/transits', getAllTransit);
+TransitRouter.get('/transits', checkJWT,checkRoleAdmin, getAllTransit);
 TransitRouter.get('/transit/:id', getTransit);
 TransitRouter.post('/transit', createTransit);
 TransitRouter.put('/transit/:id', updateTransit);

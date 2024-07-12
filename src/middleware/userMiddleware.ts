@@ -15,7 +15,7 @@ export const checkJWT = (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    jwt.verify(token, process.env.SECRET_KEY as string, (err, decoded) => {
+    jwt.verify(token, process.env.PK as string, (err, decoded) => {
       if (err) {
         const errorResponse = errorFactory.getMessage(ErrorEnum.JwtNotValid).getResponse();
         return res.status(errorResponse.status).json(errorResponse);

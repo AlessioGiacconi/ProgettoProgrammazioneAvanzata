@@ -42,11 +42,14 @@ export interface Response {
     Forbidden,
     ValidationError,
     InternalServerError,
-    DefaultError,
     EmailNotValidAddress,
     LoginBadRequest,
     JwtNotValid,
     TokenChargeBadRequest,
+    ForbiddenAdminRole,
+    ForbiddenAdminOrPassageRole,
+    ForbiddenSuspended,
+    DefaultError
     ForbiddenRole,
     RoleNotValid
   }

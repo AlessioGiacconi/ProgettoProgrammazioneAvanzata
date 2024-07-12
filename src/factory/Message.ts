@@ -49,7 +49,7 @@ export interface Response {
     ForbiddenAdminRole,
     ForbiddenAdminOrPassageRole,
     ForbiddenSuspended,
-    DefaultError
+    DefaultError,
     ForbiddenRole,
     RoleNotValid
   }

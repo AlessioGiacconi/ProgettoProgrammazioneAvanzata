@@ -41,6 +41,18 @@ export const checkRoleAdmin = (req: Request, res: Response, next: NextFunction) 
   }
 };
 
+export const checkRoleAdminOrPassage = (req: Request, res: Response, next: NextFunction) => {
+  const decoded: any = (req as any).decodedToken;
+  console.log('Decoded Token:', decoded); // Debug: stampa il token decodificato
+
+  if (decoded && (decoded.role === 'admin' || decoded.role === 'passage')) {
+    next();
+  } else {
+    const errorResponse = errorFactory.getMessage(ErrorEnum.Forbidden).getResponse();
+    res.status(errorResponse.status).json(errorResponse);
+  }
+};
+
 // Middleware per la verifica del token di input
 export const checkInputToken = (req: Request, res: Response, next: NextFunction) => {
   const { token } = req.body;

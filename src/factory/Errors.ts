@@ -4,7 +4,7 @@ class LoginFailed implements Message {
   getResponse(): Response {
     return {
       status: HttpStatusEnum.UNAUTHORIZED,
-      message: 'Login Failed',
+      message: 'Login Failed: incorrect email or password ',
       type: 'application/json'
     };
   }
@@ -140,11 +140,31 @@ class Forbidden implements Message {
   }
 }
 
-class ForbiddenRole implements Message {
+class ForbiddenAdminRole implements Message {
   getResponse(): Response {
     return {
       status: HttpStatusEnum.FORBIDDEN,
-      message: 'Role Forbidden',
+      message: 'Access denied. Admin privileges are required.',
+      type: 'application/json'
+    };
+  }
+}
+
+class ForbiddenAdminOrPassageRole implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.FORBIDDEN,
+      message: 'Access denied. Admin or passage user privileges are required.',
+      type: 'application/json'
+    };
+  }
+}
+
+class ForbiddenSuspended implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.FORBIDDEN,
+      message: 'Access denied. User suspended.',
       type: 'application/json'
     };
   }
@@ -289,9 +309,16 @@ export class ErrorFactory extends MessageFactory {
       case ErrorEnum.TokenChargeBadRequest:
         errorClass = new TokenChargeBadRequest();
         break;
-      case ErrorEnum.ForbiddenRole:
-        errorClass = new ForbiddenRole();
+      case ErrorEnum.ForbiddenAdminRole:
+        errorClass = new ForbiddenAdminRole();
         break;
+      case ErrorEnum.ForbiddenAdminOrPassageRole:
+        errorClass = new ForbiddenAdminOrPassageRole();
+        break;
+      case ErrorEnum.ForbiddenSuspended:
+        errorClass = new ForbiddenSuspended();
+        break;
+
       default:
         errorClass = new DefaultError();
     }

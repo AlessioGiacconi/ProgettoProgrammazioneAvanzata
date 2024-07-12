@@ -42,12 +42,14 @@ export interface Response {
     Forbidden,
     ValidationError,
     InternalServerError,
-    DefaultError,
     EmailNotValidAddress,
     LoginBadRequest,
     JwtNotValid,
     TokenChargeBadRequest,
-    ForbiddenRole
+    ForbiddenAdminRole,
+    ForbiddenAdminOrPassageRole,
+    ForbiddenSuspended,
+    DefaultError
   }
   
   export enum HttpStatusEnum {

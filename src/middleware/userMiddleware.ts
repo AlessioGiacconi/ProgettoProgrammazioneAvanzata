@@ -36,7 +36,7 @@ export const checkRoleAdmin = (req: Request, res: Response, next: NextFunction) 
   if (decoded && decoded.role === 'admin') {
     next();
   } else {
-    const errorResponse = errorFactory.getMessage(ErrorEnum.Forbidden).getResponse();
+    const errorResponse = errorFactory.getMessage(ErrorEnum.ForbiddenAdminRole).getResponse();
     res.status(errorResponse.status).json(errorResponse);
   }
 };
@@ -48,7 +48,7 @@ export const checkRoleAdminOrVarco = (req: Request, res: Response, next: NextFun
   if (decoded && (decoded.role === 'admin' || decoded.role === 'passage')) {
     next();
   } else {
-    const errorResponse = errorFactory.getMessage(ErrorEnum.Forbidden).getResponse();
+    const errorResponse = errorFactory.getMessage(ErrorEnum.ForbiddenAdminOrPassageRole).getResponse();
     res.status(errorResponse.status).json(errorResponse);
   }
 };
@@ -70,8 +70,8 @@ export const checkSuspended = (req: Request, res: Response, next: NextFunction) 
   console.log('Decoded Token:', decoded); // Debug: stampa il token decodificato
 
   if (decoded && decoded.is_suspended) {
-    const errorResponse = errorFactory.getMessage(ErrorEnum.Forbidden).getResponse();
-    return res.status(errorResponse.status).json({ message: 'User is suspended' });
+    const errorResponse = errorFactory.getMessage(ErrorEnum.ForbiddenSuspended).getResponse();
+    return res.status(errorResponse.status).json(errorResponse);
   }
   next();
 };

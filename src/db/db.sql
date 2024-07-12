@@ -73,7 +73,8 @@ INSERT INTO users (email, passwd, role, is_suspended, tokens, passage_reference,
 ('varco1@gmail.com', 'Password1', 'passage', false, 100, 1, '2024-07-11 11:00:00'),
 ('admin@admin.com', 'Password1', 'admin', false, 100, null, '2024-07-11 11:00:00'),
 ('alberto@gmail.com', 'Password1', 'user', true, 100, null, '2024-07-11 11:00:00'),
-('rosario@gmail.com', 'Password1', 'user', true, 100, null, '2024-07-12 14:39:00');
+('rosario@gmail.com', 'Password1', 'user', true, 100, null, '2024-07-12 14:39:00'),
+('muniz@gmail.com', 'Password1', 'user', true, 100, null, '2024-07-12 17:42:00');
 
 
 INSERT INTO authorizations (badge, passage) VALUES

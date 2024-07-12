@@ -3,13 +3,15 @@ import { UsersModel } from '../models/UsersModel';
 import jwt from 'jsonwebtoken';
 import { ErrorEnum, SuccessEnum } from '../factory/Message';
 import { ErrorFactory } from '../factory/Errors';
+import { SuccessFactory} from '../factory/Successes';
 
 const PK = process.env.PK || 'default_secret_key';
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await UsersModel.findAll();
-    res.json(users);
+    const response = new SuccessFactory().getMessage(SuccessEnum.UserRetrievedSuccess).getResponse();
+    res.status(response.status).json({ ...response, data: users });
   } catch (error) {
     next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
   }
@@ -25,7 +27,8 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
       tokens: 100,
       passage_reference: req.body.role === 'passage' ? req.body.passage_reference : null
     });
-    res.json(user);
+    const response = new SuccessFactory().getMessage(SuccessEnum.UserRegisteredSuccess).getResponse();
+    res.status(response.status).json({ ...response, data: user });
   } catch (error) {
     next(new ErrorFactory().getMessage(ErrorEnum.UserRegistrationFailed).getResponse());
   }
@@ -54,7 +57,8 @@ export const loginUser = async (req: Request, res: Response) => {
     };
 
     const jwtBearerToken = jwt.sign(payload, PK, { expiresIn: '1h' });
-    res.json({ jwt: jwtBearerToken });
+    const response = new SuccessFactory().getMessage(SuccessEnum.LoginSuccess).getResponse();
+    res.status(response.status).json({ ...response, jwt: jwtBearerToken });
   } catch (error) {
     const response = new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse();
     console.error('Error signing JWT:', error);
@@ -67,7 +71,8 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
     const { id } = req.params;
     const user = await UsersModel.findByPk(id);
     if (user) {
-      res.json(user);
+        const response = new SuccessFactory().getMessage(SuccessEnum.UserRetrievedSuccess).getResponse();
+        res.status(response.status).json({ ...response, data: user });
     } else {
       const response = new ErrorFactory().getMessage(ErrorEnum.UserNotFound).getResponse();
       res.status(response.status).json(response);
@@ -90,7 +95,8 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
         passage_reference: passage_reference !== undefined ? passage_reference : user.get('passage_reference')
       });
       await user.save();
-      res.json(user);
+      const response = new SuccessFactory().getMessage(SuccessEnum.UserUpdatedSuccess).getResponse();
+      res.status(response.status).json({ ...response, data: user });
     } else {
       const response = new ErrorFactory().getMessage(ErrorEnum.UserNotFound).getResponse();
       res.status(response.status).json(response);
@@ -106,7 +112,8 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
     const user = await UsersModel.findByPk(id);
     if (user) {
       await user.destroy();
-      res.json({ message: 'User deleted' });
+      const response = new SuccessFactory().getMessage(SuccessEnum.UserDeletedSuccess).getResponse();
+      res.status(response.status).json(response);
     } else {
       const response = new ErrorFactory().getMessage(ErrorEnum.UserNotFound).getResponse();
       res.status(response.status).json(response);
@@ -128,7 +135,8 @@ export const getSuspendedBadges = async (req: Request, res: Response, next: Next
       badge_id: user.get('badge_id'),
       email: user.get('email')
     }));
-    res.json(suspendedBadges);
+    const response = new SuccessFactory().getMessage(SuccessEnum.UsersSuspendedSuccess).getResponse();
+    res.status(response.status).json({ ...response, data: suspendedBadges });
   } catch (error) {
     next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
   }
@@ -162,11 +170,8 @@ export const reactivateBadges = async (req: Request, res: Response, next: NextFu
       badge_id: user.get('badge_id'),
       email: user.get('email')
     }));
-
-    res.json({
-      updatedCount: updatedUsers[0],
-      reactivatedUsers
-    });
+    const response = new SuccessFactory().getMessage(SuccessEnum.UserActivatedSuccess).getResponse();
+    res.status(response.status).json({ ...response, updatedCount: updatedUsers[0], data: reactivatedUsers });
   } catch (error) {
     next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
   }

@@ -40,6 +40,26 @@ class UserUpdatedSuccess implements Message {
     }
 }
 
+class UserActivatedSuccess implements Message {
+    getResponse(): Response {
+        return {
+            status: HttpStatusEnum.OK,
+            message: "User activated successfully",
+            type: "application/json"
+        };
+    }
+}
+
+class UsersSuspendedSuccess implements Message {
+    getResponse(): Response {
+        return {
+            status: HttpStatusEnum.OK,
+            message: "Suspended users returned successfully",
+            type: "application/json"
+        };
+    }
+}
+
 class UserDeletedSuccess implements Message {
     getResponse(): Response {
         return {
@@ -149,8 +169,14 @@ export class SuccessFactory extends MessageFactory {
             case SuccessEnum.UserUpdatedSuccess:
                 successClass = new UserUpdatedSuccess();
                 break;
+            case SuccessEnum.UserActivatedSuccess:
+                successClass = new UserActivatedSuccess();
+                break;
             case SuccessEnum.UserDeletedSuccess:
                 successClass = new UserDeletedSuccess();
+                break;
+            case SuccessEnum.UsersSuspendedSuccess:
+                successClass = new UsersSuspendedSuccess();
                 break;
             case SuccessEnum.PassageCreatedSuccess:
                 successClass = new PassageCreatedSuccess();

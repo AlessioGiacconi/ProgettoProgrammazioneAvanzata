@@ -15,6 +15,7 @@ export interface Response {
     UserRetrievedSuccess,
     UserUpdatedSuccess,
     UserDeletedSuccess,
+    UserActivatedSuccess,
     PassageCreatedSuccess,
     PassageRetrievedSuccess,
     PassageUpdatedSuccess,
@@ -22,6 +23,7 @@ export interface Response {
     TransitRetrievedSuccess,
     TransitUpdatedSuccess,
     TransitDeletedSuccess,
+    UsersSuspendedSuccess,
     DefaultSuccess
   }
   

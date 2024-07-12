@@ -41,7 +41,7 @@ export const checkRoleAdmin = (req: Request, res: Response, next: NextFunction) 
   }
 };
 
-export const checkRoleAdminOrPassage = (req: Request, res: Response, next: NextFunction) => {
+export const checkRoleAdminOrVarco = (req: Request, res: Response, next: NextFunction) => {
   const decoded: any = (req as any).decodedToken;
   console.log('Decoded Token:', decoded); // Debug: stampa il token decodificato
 
@@ -63,4 +63,15 @@ export const checkInputToken = (req: Request, res: Response, next: NextFunction)
     const errorResponse = errorFactory.getMessage(ErrorEnum.TokenChargeBadRequest).getResponse();
     res.status(errorResponse.status).json(errorResponse);
   }
+};
+
+export const checkSuspended = (req: Request, res: Response, next: NextFunction) => {
+  const decoded: any = (req as any).decodedToken;
+  console.log('Decoded Token:', decoded); // Debug: stampa il token decodificato
+
+  if (decoded && decoded.is_suspended) {
+    const errorResponse = errorFactory.getMessage(ErrorEnum.Forbidden).getResponse();
+    return res.status(errorResponse.status).json({ message: 'User is suspended' });
+  }
+  next();
 };

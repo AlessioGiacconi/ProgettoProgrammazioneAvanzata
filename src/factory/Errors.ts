@@ -221,6 +221,16 @@ class TokenChargeBadRequest implements Message {
   }
 }
 
+class RoleNotValid implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Role Not Valid',
+      type: 'application/json'
+    };
+  }
+}
+
 export class ErrorFactory extends MessageFactory {
   constructor() {
     super();
@@ -292,6 +302,8 @@ export class ErrorFactory extends MessageFactory {
       case ErrorEnum.ForbiddenRole:
         errorClass = new ForbiddenRole();
         break;
+      case ErrorEnum.RoleNotValid:
+        
       default:
         errorClass = new DefaultError();
     }

@@ -47,7 +47,8 @@ export interface Response {
     LoginBadRequest,
     JwtNotValid,
     TokenChargeBadRequest,
-    ForbiddenRole
+    ForbiddenRole,
+    RoleNotValid
   }
   
   export enum HttpStatusEnum {

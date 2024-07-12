@@ -47,6 +47,7 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 
     const payload = {
+      badge_id: user.get('badge_id'),
       email: user.get('email'),
       role: user.get('role')
     };

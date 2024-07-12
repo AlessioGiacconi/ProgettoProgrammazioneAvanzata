@@ -149,7 +149,7 @@ export const getAccessStats = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const downloadReport = async (req: Request, res: Response, next: NextFunction) => {
+export const downloadPassageReport = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { start_date, end_date, format } = req.query;
 
@@ -182,14 +182,16 @@ export const downloadReport = async (req: Request, res: Response, next: NextFunc
 
         if (format === 'csv') {
             res.header('Content-Type', 'text/csv');
-            res.attachment('report.csv');
+            //res.attachment('report.csv');
+            res.setHeader('Content-Disposition', 'attachment; filename="passages_report.csv" ');
 
-            stringify(reportArray, { header: true}, (err, output) => {
+            /*stringify(reportArray, { header: true}, (err, output) => {
                 if (err) {
                     return next(err);
                 }
                 res.send(output);
-            });
+            });*/
+            stringify(reportArray, { header: true}).pipe(res);
         } else if (format === 'pdf') {
             const doc = new PDFDocument();
             res.header('Content-Type', 'application/pdf');
@@ -209,4 +211,87 @@ export const downloadReport = async (req: Request, res: Response, next: NextFunc
     } catch (error) {
         next(error);
     }
-}
+};
+
+export const downloadUserReport = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { start_date, end_date, format} = req.query;
+        const decodedToken = (req as any).decodedToken;
+
+        if (!decodedToken) {
+            return res.status(401).json({message: 'Unauthorized access'});
+        }
+
+        const userRole = decodedToken.role;
+        const userBadge = decodedToken.badge_id;
+
+        console.log(`User Role: ${userRole}, User Badge: ${userBadge}`);
+
+         // Se l'utente non è amministratore, imposta il filtro per il proprio badge
+        let badgeFilter = {};
+        if (userRole !== 'admin') {
+            if(!userBadge) {
+                return res.status(400).json({ message: 'Badge ID not found in token' });
+            }
+            badgeFilter = { badge: userBadge};
+        }
+
+        const transits = await TransitsModel.findAll({
+            where: {
+                ...badgeFilter,
+                transit_date: {
+                    [Op.between]: [new Date(start_date as string), new Date(end_date as string)]
+                }  
+            },
+            attributes: ['badge', 'passage', 'is_authorized', 'violation_dpi']
+        });
+
+        const reportData = transits.reduce((acc: { [key: string]: {badge: string, authorized: number, unauthorized: number, violations: number, status: string}}, transit) => {
+            const badge = transit.get('badge') as string;
+            if (!acc[badge]) {
+                acc[badge] = { badge, authorized: 0, unauthorized: 0, violations: 0, status: 'active'};  
+            }
+            if (transit.get('is_authorized')) {
+                acc[badge].authorized += 1;
+            } else {
+                acc[badge].unauthorized += 1;
+            }
+            if (transit.get('violation_dpi')) {
+                acc[badge].violations += 1;
+            }
+            return acc;
+        }, {});
+
+        for (const badge in reportData) {
+            const user = await UsersModel.findByPk(badge);
+            if(user && user.get('is_suspended')) {
+                reportData[badge].status = 'suspended';
+            }
+        }
+
+        const reportArray = Object.values(reportData);
+
+        if (format === 'csv') {
+            res.setHeader('Content-Type', 'text/csv');
+            res.setHeader('Content-Disposition', 'attachment; filename="user_report.pdf"');
+            stringify(reportArray, { header: true}).pipe(res);
+        } else if (format === 'pdf') {
+            const doc = new PDFDocument();
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', 'attachment; filename="user_report.pdf"');
+            //res.attachment('report.pdf');
+            doc.pipe(res);
+            doc.text('User Report');
+            reportArray.forEach(row => {
+                doc.text(`Badge: ${row.badge}, Authorized: ${row.authorized}, Unauthorized: ${row.unauthorized}, Violations: ${row.violations}, Status: ${row.status}`);
+            });
+            doc.end();
+        } else {
+            res.setHeader('Content-Type', 'application/json');
+            res.attachment('report.json');
+            return res.json(reportArray);
+        }
+    } catch (error) {
+        next(error);
+    }
+};

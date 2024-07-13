@@ -130,11 +130,41 @@ class TransitUpdatedSuccess implements Message {
     }
 }
 
+class TransitCreatedSuccess implements Message {
+    getResponse(): Response {
+        return {
+            status: HttpStatusEnum.OK,
+            message: "Transit created successfully",
+            type: "application/json"
+        };
+    }
+}
+
 class TransitDeletedSuccess implements Message {
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
             message: "Transit deleted successfully",
+            type: "application/json"
+        };
+    }
+}
+
+class AccessStatsRetrievedSuccess implements Message {
+    getResponse(): Response {
+        return {
+            status: HttpStatusEnum.OK,
+            message: "Access statistics retrieved successfully",
+            type: "application/json"
+        };
+    }
+}
+
+class ReportGeneratedSuccess implements Message {
+    getResponse(): Response {
+        return {
+            status: HttpStatusEnum.OK,
+            message: "Report generated successfully",
             type: "application/json"
         };
     }
@@ -193,11 +223,20 @@ export class SuccessFactory extends MessageFactory {
             case SuccessEnum.TransitRetrievedSuccess:
                 successClass = new TransitRetrievedSuccess();
                 break;
+            case SuccessEnum.TransitCreatedSuccess:
+                successClass = new TransitCreatedSuccess();
+                break;
             case SuccessEnum.TransitUpdatedSuccess:
                 successClass = new TransitUpdatedSuccess();
                 break;
             case SuccessEnum.TransitDeletedSuccess:
                 successClass = new TransitDeletedSuccess();
+                break;
+            case SuccessEnum.AccessStatsRetrievedSuccess:
+                successClass = new AccessStatsRetrievedSuccess();
+                break;
+            case SuccessEnum.ReportGeneratedSuccess:
+                successClass = new ReportGeneratedSuccess();
                 break;
 
             default:

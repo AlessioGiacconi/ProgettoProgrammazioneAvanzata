@@ -16,14 +16,17 @@ export interface Response {
     UserUpdatedSuccess,
     UserDeletedSuccess,
     UserActivatedSuccess,
+    UsersSuspendedSuccess,
     PassageCreatedSuccess,
     PassageRetrievedSuccess,
     PassageUpdatedSuccess,
     PassageDeletedSuccess,
     TransitRetrievedSuccess,
+    TransitCreatedSuccess,
     TransitUpdatedSuccess,
     TransitDeletedSuccess,
-    UsersSuspendedSuccess,
+    AccessStatsRetrievedSuccess,
+    ReportGeneratedSuccess,
     DefaultSuccess
   }
   
@@ -40,6 +43,8 @@ export interface Response {
     TransitNotFound,
     TransitUpdateFailed,
     TransitDeletionFailed,
+    TransitCreationFailed,
+    AccessStatsRetrieveFailed,
     Unauthorized,
     Forbidden,
     ValidationError,
@@ -51,9 +56,10 @@ export interface Response {
     ForbiddenAdminRole,
     ForbiddenAdminOrPassageRole,
     ForbiddenSuspended,
-    DefaultError,
+    PassageRoleNotValid,
+    RoleNotValid,
     ForbiddenRole,
-    RoleNotValid
+    DefaultError
   }
   
   export enum HttpStatusEnum {

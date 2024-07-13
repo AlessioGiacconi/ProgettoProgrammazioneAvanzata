@@ -6,7 +6,7 @@ const userRouter = Router();
 
 userRouter.get('/users', checkJWT, checkRoleAdmin, getAllUsers);
 userRouter.get('/user/:id', checkJWT, checkRoleAdmin, getUser);
-userRouter.put('/user/:id', checkJWT, checkRoleAdmin, validateEmail, validateUsedEmail, validatePassword, updateUser);
+userRouter.put('/user/:id', checkJWT, checkRoleAdmin, validateEmail, validateUsedEmail, validatePassword, validatePassageReference, updateUser);
 userRouter.delete('/user/:id', checkJWT, checkRoleAdmin, deleteUser);
 
 userRouter.get('/suspended-badges', checkJWT, checkRoleAdmin, getSuspendedBadges);

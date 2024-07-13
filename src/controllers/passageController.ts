@@ -41,15 +41,19 @@ export const getPassage = async (req: Request, res: Response, next: NextFunction
 };
 
   export const updatePassage = async (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;
-    const { level, needs_dpi } = req.body;
     try {
+      const { id } = req.params;
+      const { level, needs_dpi } = req.body;
+
       const passage = await PassagesModel.findByPk(id);
+
       if (passage) {
-        passage.set({
-          level: level,
-          needs_dpi: needs_dpi
-        });
+        if(level !== undefined) {
+          passage.set('level', level)
+        }
+        if(needs_dpi !== undefined) {
+          passage.set('needs_dpi', needs_dpi)
+        }
         await passage.save();
         const response = new SuccessFactory().getMessage(SuccessEnum.PassageUpdatedSuccess).getResponse();
         res.status(response.status).json({ ...response, data: passage });

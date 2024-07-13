@@ -123,7 +123,7 @@ export const updateTransit = async (req: Request, res: Response, next: NextFunct
             const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
             res.status(response.status).json(response);
         }
-    } catch {
+    } catch (error) {
         next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
     }  
 };

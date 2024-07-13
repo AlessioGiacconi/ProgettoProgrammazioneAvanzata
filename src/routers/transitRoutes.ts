@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { getAllTransit, getTransit, createTransit, updateTransit, deleteTransit, getAccessStats, downloadPassageReport, downloadUserReport } from '../controllers/transitController';
 import { checkRoleAdmin, checkSuspended, checkRoleAdminOrVarco, checkRoleAdminOrUser ,checkJWT } from '../middleware/userMiddleware';    
+import { validateTransit } from '../middleware/transitMiddleware';
 
 const TransitRouter = Router();
 
 TransitRouter.get('/transits', checkJWT, checkRoleAdmin, getAllTransit);
 TransitRouter.get('/transit/:id', checkJWT, checkSuspended, getTransit);
-TransitRouter.post('/transit', checkJWT, checkRoleAdminOrVarco, createTransit);
+TransitRouter.post('/transit', checkJWT, checkRoleAdminOrVarco, validateTransit, createTransit);
 TransitRouter.put('/transit/:id', checkJWT, checkRoleAdmin, updateTransit);
 TransitRouter.delete('/transit/:id', checkJWT, checkRoleAdmin, deleteTransit);
 

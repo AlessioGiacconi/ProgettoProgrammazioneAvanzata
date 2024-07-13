@@ -25,7 +25,7 @@ app.use(errorHandler);
 app.use(genericErrorHandler);
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("Bruh arcoddio");
+    res.send("Register or Log into the system.");
 });
 
 app.post("/register", validateEmail, validateUsedEmail, validatePassword, validateRole, validatePassageReference, (req: Request, res: Response, next: NextFunction) => {

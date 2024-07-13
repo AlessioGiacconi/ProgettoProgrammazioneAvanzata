@@ -291,6 +291,36 @@ class RoleNotValid implements Message {
   }
 }
 
+class InvalidDateRange implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Invalid date range.',
+      type: 'application/json'
+    };
+  }
+}
+
+class StartDateGreaterThanEndDate implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Start date greater than end date.',
+      type: 'application/json'
+    };
+  }
+}
+
+class InvalidFormat implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Invalid format requested.',
+      type: 'application/json'
+    };
+  }
+}
+
 export class ErrorFactory extends MessageFactory {
   constructor() {
     super();
@@ -383,7 +413,15 @@ export class ErrorFactory extends MessageFactory {
       case ErrorEnum.AuthorizationNotFound:
         errorClass = new AuthorizationNotFound();
         break;
-
+      case ErrorEnum.InvalidDateRange:
+        errorClass = new InvalidDateRange();
+        break;
+      case ErrorEnum.StartDateGreaterThanEndDate:
+        errorClass = new StartDateGreaterThanEndDate();
+        break;
+      case ErrorEnum.InvalidFormat:
+        errorClass = new InvalidFormat();
+        break;
       default:
         errorClass = new DefaultError();
     }

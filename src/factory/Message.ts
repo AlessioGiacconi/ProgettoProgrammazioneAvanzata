@@ -62,6 +62,9 @@ export interface Response {
     RoleNotValid,
     ForbiddenRole,
     AuthorizationNotFound,
+    InvalidDateRange,
+    StartDateGreaterThanEndDate,
+    InvalidFormat,
     DefaultError
   }
   

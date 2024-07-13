@@ -146,6 +146,20 @@ export const getAccessStats = async (req: Request, res: Response, next: NextFunc
         const { badge_id} = req.params;
         const { start_date, end_date} = req.query;
 
+        const startDate = new Date(start_date as string);
+        const endDate = new Date(end_date as string);
+        const currentDate = new Date();
+
+        if(startDate > currentDate || endDate > currentDate) {
+            const errorResponse = new ErrorFactory().getMessage(ErrorEnum.InvalidDateRange).getResponse();
+            return res.status(errorResponse.status).json(errorResponse);
+        }
+
+        if(startDate > endDate) {
+            const errorResponse = new ErrorFactory().getMessage(ErrorEnum.StartDateGreaterThanEndDate).getResponse();
+            return res.status(errorResponse.status).json(errorResponse);
+        }
+
         const transits = await TransitsModel.findAll({
             where: {
                 badge: badge_id,
@@ -184,6 +198,21 @@ export const getAccessStats = async (req: Request, res: Response, next: NextFunc
 export const downloadPassageReport = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { start_date, end_date, format } = req.query;
+
+        const startDate = new Date(start_date as string);
+        const endDate = new Date(end_date as string);
+        const currentDate = new Date();
+
+        if(startDate > currentDate || endDate > currentDate) {
+            const errorResponse = new ErrorFactory().getMessage(ErrorEnum.InvalidDateRange).getResponse();
+            return res.status(errorResponse.status).json(errorResponse);
+        }
+
+        if(startDate > endDate) {
+            const errorResponse = new ErrorFactory().getMessage(ErrorEnum.StartDateGreaterThanEndDate).getResponse();
+            return res.status(errorResponse.status).json(errorResponse);
+        }
+
 
         const transits = await TransitsModel.findAll({
             where: {
@@ -235,10 +264,13 @@ export const downloadPassageReport = async (req: Request, res: Response, next: N
                 doc.text(`Passage: ${row.passage}, Authorized: ${row.authorized}, Uauthorized: ${row.unauthorized}, Violations: ${row.violations}`);
             });
             doc.end();
-        } else {
+        } else if(format === 'json') {
             res.header('Content-Type', 'application/json');
             res.attachment('report.json');
             return res.json(reportArray);
+        } else {
+            const errorResponse = new ErrorFactory().getMessage(ErrorEnum.InvalidFormat).getResponse();
+            return res.status(errorResponse.status).json(errorResponse);
         }
     } catch (error) {
         next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());;
@@ -249,6 +281,20 @@ export const downloadUserReport = async (req: Request, res: Response, next: Next
     try {
         const { start_date, end_date, format} = req.query;
         const decodedToken = (req as any).decodedToken;
+
+        const startDate = new Date(start_date as string);
+        const endDate = new Date(end_date as string);
+        const currentDate = new Date();
+
+        if(startDate > currentDate || endDate > currentDate) {
+            const errorResponse = new ErrorFactory().getMessage(ErrorEnum.InvalidDateRange).getResponse();
+            return res.status(errorResponse.status).json(errorResponse);
+        }
+
+        if(startDate > endDate) {
+            const errorResponse = new ErrorFactory().getMessage(ErrorEnum.StartDateGreaterThanEndDate).getResponse();
+            return res.status(errorResponse.status).json(errorResponse);
+        }
 
         if (!decodedToken) {
             return res.status(401).json({message: 'Unauthorized access'});
@@ -319,10 +365,13 @@ export const downloadUserReport = async (req: Request, res: Response, next: Next
                 doc.text(`Badge: ${row.badge}, Authorized: ${row.authorized}, Unauthorized: ${row.unauthorized}, Violations: ${row.violations}, Status: ${row.status}`);
             });
             doc.end();
-        } else {
+        } else if(format === 'json') {
             res.setHeader('Content-Type', 'application/json');
             res.attachment('report.json');
             return res.json(reportArray);
+        } else {
+            const errorResponse = new ErrorFactory().getMessage(ErrorEnum.InvalidFormat).getResponse();
+            return res.status(errorResponse.status).json(errorResponse);
         }
     } catch (error) {
         next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());

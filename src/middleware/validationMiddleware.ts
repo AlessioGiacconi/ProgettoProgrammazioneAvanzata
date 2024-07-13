@@ -20,6 +20,7 @@ const roles = ['user', 'passage'];
 
 export const validateEmail = [
   check('email')
+    .optional()
     .notEmpty()
     .withMessage('Email is required.')
     .isEmail()
@@ -39,6 +40,7 @@ export const validateEmail = [
 
 export const validateUsedEmail = [
   check('email')
+    .optional()
     .custom(async (email) => {
       const client = await pool.connect();
       try {
@@ -65,6 +67,7 @@ export const validateUsedEmail = [
 
 export const validatePassword = [
   check('passwd')
+    .optional()
     .notEmpty()
     .withMessage('Password is required.')
     .isString()
@@ -87,6 +90,7 @@ export const validatePassword = [
 
 export const validateRole = [
   check('role')
+  .optional()
   .notEmpty()
   .withMessage('Role is required.')
   .isString()
@@ -107,6 +111,7 @@ export const validateRole = [
 
 export const validatePassageReference = [
   check('passage_reference')
+  .optional()
   .custom(async (value, { req }) => {
     if(req.body.role === 'passage') {
       if(!value) {

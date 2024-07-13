@@ -88,12 +88,13 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
     const { email, passwd, tokens, passage_reference } = req.body;
     const user = await UsersModel.findByPk(id);
     if (user) {
-      user.set({
-        email: email !== undefined ? email : user.get('email'),
-        passwd: passwd !== undefined ? passwd : user.get('passwd'),
-        tokens: tokens !== undefined ? tokens : user.get('tokens'),
-        passage_reference: passage_reference !== undefined ? passage_reference : user.get('passage_reference')
-      });
+      const updateData: any = {};
+      if (email !== undefined) updateData.email = email;
+      if(passwd !== undefined) updateData.passwd = passwd;
+      if(tokens !== undefined) updateData.tokens = tokens;
+      if(passage_reference !== undefined) updateData.passage_reference = passage_reference;
+
+      user.set(updateData);
       await user.save();
       const response = new SuccessFactory().getMessage(SuccessEnum.UserUpdatedSuccess).getResponse();
       res.status(response.status).json({ ...response, data: user });

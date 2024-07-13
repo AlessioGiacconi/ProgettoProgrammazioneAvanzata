@@ -271,6 +271,16 @@ class PassageRoleNotValid implements Message {
   }
 }
 
+class AuthorizationNotFound implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.NOT_FOUND,
+      message: 'Authorization not Found.',
+      type: 'application/json'
+    };
+  }
+}
+
 class RoleNotValid implements Message {
   getResponse(): Response {
     return {
@@ -369,6 +379,9 @@ export class ErrorFactory extends MessageFactory {
         break;
       case ErrorEnum.RoleNotValid:
         errorClass = new RoleNotValid();
+        break;
+      case ErrorEnum.AuthorizationNotFound:
+        errorClass = new AuthorizationNotFound();
         break;
 
       default:

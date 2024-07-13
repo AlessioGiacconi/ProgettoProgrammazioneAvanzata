@@ -14,45 +14,65 @@ export const getAllPassages = async(req: Request, res: Response, next: NextFunct
     }
 };
 
-export const createPassage = async (req: Request, res: Response) => {
-    const { level, needs_dpi } = req.body;
-    const passage = await PassagesModel.create({ level, needs_dpi});
-    const response = new SuccessFactory().getMessage(SuccessEnum.PassageCreatedSuccess).getResponse();
-};
-
-export const getPassage = async (req: Request, res: Response) => {
-    const {id} = req.params;
-    const passage = await PassagesModel.findByPk(id);
-    if (passage) {
-        res.json(passage);
-    } else {
-        res.status(404).json({error: 'Passage not found'});
+export const createPassage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { level, needs_dpi } = req.body;
+      const passage = await PassagesModel.create({ level, needs_dpi });
+      const response = new SuccessFactory().getMessage(SuccessEnum.PassageCreatedSuccess).getResponse();
+      res.status(response.status).json({ ...response, data: passage });
+    } catch (error) {
+      next(new ErrorFactory().getMessage(ErrorEnum.PassageCreationFailed).getResponse());
     }
 };
 
-export const updatePassage = async (req: Request, res: Response) => {
-    const {id} = req.params;
-    const {level, needs_dpi} = req.body;
-    const passage = await PassagesModel.findByPk(id);
-    if (passage) {
+export const getPassage = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    try {
+      const passage = await PassagesModel.findByPk(id);
+      if (passage) {
+        const response = new SuccessFactory().getMessage(SuccessEnum.PassageRetrievedSuccess).getResponse();
+        res.status(response.status).json({ ...response, data: passage });
+      } else {
+        next(new ErrorFactory().getMessage(ErrorEnum.PassageNotFound).getResponse());
+      }
+    } catch (error) {
+      next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+    }
+};
+
+  export const updatePassage = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const { level, needs_dpi } = req.body;
+    try {
+      const passage = await PassagesModel.findByPk(id);
+      if (passage) {
         passage.set({
-            level: level,
-            is_suspended: needs_dpi
+          level: level,
+          needs_dpi: needs_dpi
         });
         await passage.save();
-        res.json(passage);
-    } else {
-        res.status(404).json({ error: 'Passage not found'})
+        const response = new SuccessFactory().getMessage(SuccessEnum.PassageUpdatedSuccess).getResponse();
+        res.status(response.status).json({ ...response, data: passage });
+      } else {
+        next(new ErrorFactory().getMessage(ErrorEnum.PassageNotFound).getResponse());
+      }
+    } catch (error) {
+      next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
     }
-}
+};
 
-export const deletePassage = async (req: Request, res: Response) => {
-    const {id} = req.params;
-    const passage = await PassagesModel.findByPk(id);
-    if (passage) {
+export const deletePassage = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    try {
+      const passage = await PassagesModel.findByPk(id);
+      if (passage) {
         await passage.destroy();
-        res.json({message: 'Passage deleted'});
-    } else {
-        res.status(404).json({error: 'Passage not found'})
+        const response = new SuccessFactory().getMessage(SuccessEnum.PassageDeletedSuccess).getResponse();
+        res.status(response.status).json(response);
+      } else {
+        next(new ErrorFactory().getMessage(ErrorEnum.PassageNotFound).getResponse());
+      }
+    } catch (error) {
+      next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
     }
-}
+};

@@ -170,6 +170,26 @@ class ReportGeneratedSuccess implements Message {
     }
 }
 
+class AuthorizationCreatedSuccess implements Message {
+    getResponse(): Response {
+        return {
+            status: HttpStatusEnum.CREATED,
+            message: "Authorization created successfully",
+            type: "application/json"
+        };
+    }
+}
+
+class AuthorizationDeletedSuccess implements Message {
+    getResponse(): Response {
+        return {
+            status: HttpStatusEnum.OK,
+            message: "Authorization deleted successfully",
+            type: "application/json"
+        };
+    }
+}
+
 class DefaultSuccess implements Message {
     getResponse(): Response {
         return {
@@ -237,6 +257,12 @@ export class SuccessFactory extends MessageFactory {
                 break;
             case SuccessEnum.ReportGeneratedSuccess:
                 successClass = new ReportGeneratedSuccess();
+                break;
+            case SuccessEnum.AuthorizationCreatedSuccess:
+                successClass = new AuthorizationCreatedSuccess();
+                break;
+            case SuccessEnum.AuthorizationDeletedSuccess:
+                successClass = new AuthorizationDeletedSuccess();
                 break;
 
             default:

@@ -27,6 +27,8 @@ export interface Response {
     TransitDeletedSuccess,
     AccessStatsRetrievedSuccess,
     ReportGeneratedSuccess,
+    AuthorizationCreatedSuccess,
+    AuthorizationDeletedSuccess,
     DefaultSuccess
   }
   
@@ -59,6 +61,7 @@ export interface Response {
     PassageRoleNotValid,
     RoleNotValid,
     ForbiddenRole,
+    AuthorizationNotFound,
     DefaultError
   }
   

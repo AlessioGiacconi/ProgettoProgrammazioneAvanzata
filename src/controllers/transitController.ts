@@ -100,25 +100,33 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
     } catch (error) {
         next(new ErrorFactory().getMessage(ErrorEnum.TransitCreationFailed).getResponse());
     }
-}
+};
 
-export const updateTransit = async (req: Request, res: Response) => {
-    const {id} = req.params;
-    const {transit_date, violation_dpi} = req.body;
-    const transit = await TransitsModel.findByPk(id);
-    if (transit) {
-        transit.set({
-            transit_date: transit_date,
-            violation_dpi: violation_dpi
-        });
-        await transit.save();
-        const response = new SuccessFactory().getMessage(SuccessEnum.TransitUpdatedSuccess).getResponse();
-        res.status(response.status).json({ ...response, data: transit });
-    } else {
-        const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
-        res.status(response.status).json(response);
-    }
-}
+export const updateTransit = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const {id} = req.params;
+        const {transit_date, violation_dpi} = req.body;
+
+        const transit = await TransitsModel.findByPk(id);
+
+        if (transit) {
+            if (transit_date !== undefined) {
+                transit.set('transit_date', transit_date);
+            }
+            if (violation_dpi !== undefined) {
+                transit.set('violation_dpi', violation_dpi)
+            }
+            await transit.save();
+            const response = new SuccessFactory().getMessage(SuccessEnum.TransitUpdatedSuccess).getResponse();
+            res.status(response.status).json({ ...response, data: transit });
+        } else {
+            const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
+            res.status(response.status).json(response);
+        }
+    } catch {
+        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+    }  
+};
 
 export const deleteTransit = async (req: Request, res: Response) => {
     const {id} = req.params;
@@ -131,7 +139,7 @@ export const deleteTransit = async (req: Request, res: Response) => {
         const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
         res.status(response.status).json(response);
     }
-}
+};
 
 export const getAccessStats = async (req: Request, res: Response, next: NextFunction) => {
     try {

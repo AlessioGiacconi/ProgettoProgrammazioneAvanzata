@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getAllUsers, getUser, updateUser, deleteUser, getSuspendedBadges, reactivateBadges } from '../controllers/userController';
 import { checkRoleAdmin, checkJWT } from '../middleware/userMiddleware';
+
 const userRouter = Router();
 
 userRouter.get('/users', checkJWT, checkRoleAdmin, getAllUsers);

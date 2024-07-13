@@ -30,7 +30,11 @@ export const getTransit = async (req: Request, res: Response) => {
 
 export const createTransit = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { passage, badge, transit_date, violation_dpi } = req.body;
+        const { passage, badge, violation_dpi } = req.body;
+        const decodedToken = (req as any).decodedToken;
+
+        const userRole = decodedToken.role;
+        const userBadge = decodedToken.badge_id;
 
         const user = await UsersModel.findByPk(badge);
 
@@ -38,9 +42,16 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
             return res.status(404).json({ message: 'User not found' });
         }
 
-        if (user.get('role') === 'passage' && user.get('passage_reference') !== passage) {
-            return res.status(403).json({ message: 'User with role "passage" can only insert transits for thei reference passage' })
+        if(userRole === 'passage') {
+            if(badge != userBadge) {
+                return res.status(403).json({message: 'Users with role "passage" can only insert transits for their own badge_id'});
+            }
+            
+            if (user.get('passage_reference') !== passage) {
+                return res.status(403).json({message: 'Users with role "passage" can only insert transits for their own passage_reference' });
+            }
         }
+
 
         const authorization = await AuthorizationModel.findOne({
             where: {
@@ -54,7 +65,7 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
         const transit = await TransitsModel.create({
             passage: passage,
             badge: badge,
-            transit_date: transit_date,
+            transit_date: new Date(),
             is_authorized: is_authorized,
             violation_dpi: violation_dpi
         });

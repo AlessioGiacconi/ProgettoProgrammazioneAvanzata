@@ -53,18 +53,6 @@ export const checkRoleAdminOrVarco = (req: Request, res: Response, next: NextFun
   }
 };
 
-// Middleware per la verifica del token di input
-export const checkInputToken = (req: Request, res: Response, next: NextFunction) => {
-  const { token } = req.body;
-
-  if (typeof token === 'number' && token > 0) {
-    next();
-  } else {
-    const errorResponse = errorFactory.getMessage(ErrorEnum.TokenChargeBadRequest).getResponse();
-    res.status(errorResponse.status).json(errorResponse);
-  }
-};
-
 export const checkSuspended = (req: Request, res: Response, next: NextFunction) => {
   const decoded: any = (req as any).decodedToken;
   console.log('Decoded Token:', decoded); // Debug: stampa il token decodificato
@@ -74,4 +62,16 @@ export const checkSuspended = (req: Request, res: Response, next: NextFunction) 
     return res.status(errorResponse.status).json(errorResponse);
   }
   next();
+};
+
+export const checkRoleAdminOrUser = (req: Request, res: Response, next: NextFunction) => {
+  const decoded: any = (req as any).decodedToken;
+  console.log('Decoded Token:', decoded); // Debug: stampa il token decodificato
+
+  if (decoded && (decoded.role === 'admin' || decoded.role === 'user')) {
+    next();
+  } else {
+    const errorResponse = errorFactory.getMessage(ErrorEnum.ForbiddenAdminOrPassageRole).getResponse();
+    res.status(errorResponse.status).json(errorResponse);
+  }
 };

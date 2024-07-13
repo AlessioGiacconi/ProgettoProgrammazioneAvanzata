@@ -1,19 +1,23 @@
 import { Request, Response, NextFunction } from 'express';
 import { PassagesModel } from '../models/PassagesModel';
+import { ErrorEnum, SuccessEnum } from '../factory/Message';
+import { ErrorFactory } from '../factory/Errors';
+import { SuccessFactory} from '../factory/Successes';
 
 export const getAllPassages = async(req: Request, res: Response, next: NextFunction) => {
     try {
         const passages = await PassagesModel.findAll();
-        res.json(passages);
+        const response = new SuccessFactory().getMessage(SuccessEnum.PassageRetrievedSuccess).getResponse();
+        res.status(response.status).json({ ...response, data: passages });
     } catch (error) {
-        next(error);
+        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
     }
 };
 
 export const createPassage = async (req: Request, res: Response) => {
     const { level, needs_dpi } = req.body;
     const passage = await PassagesModel.create({ level, needs_dpi});
-    res.json(passage);
+    const response = new SuccessFactory().getMessage(SuccessEnum.PassageCreatedSuccess).getResponse();
 };
 
 export const getPassage = async (req: Request, res: Response) => {

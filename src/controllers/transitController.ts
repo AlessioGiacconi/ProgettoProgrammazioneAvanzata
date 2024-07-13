@@ -6,15 +6,19 @@ import { AuthorizationModel } from '../models/AuthorizationModel';
 import { Op } from 'sequelize';
 import PDFDocument from 'pdfkit';
 import { stringify } from 'csv-stringify';
+import { ErrorEnum, SuccessEnum } from '../factory/Message';
+import { ErrorFactory } from '../factory/Errors';
+import { SuccessFactory} from '../factory/Successes';
 
 const MAX_UNAUTHORIZED_ATTEMPTS = parseInt(process.env.MAX_UNAUTHORIZED_ATTEMPTS || '5');
 
 export const getAllTransit = async(req: Request, res: Response, next: NextFunction) => {
     try{
         const transits = await TransitsModel.findAll();
-        res.json(transits);
+        const response = new SuccessFactory().getMessage(SuccessEnum.TransitRetrievedSuccess).getResponse();
+        res.status(response.status).json({ ...response, data: transits });
     } catch (error) {
-        next(error);
+        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());;
     }
 };
 
@@ -22,9 +26,11 @@ export const getTransit = async (req: Request, res: Response) => {
     const {id} = req.params;
     const transit = await TransitsModel.findByPk(id);
     if (transit) {
-        res.json(transit);
+        const response = new SuccessFactory().getMessage(SuccessEnum.TransitRetrievedSuccess).getResponse();
+        res.status(response.status).json({ ...response, data: transit });
     } else {
-        res.status(404).json({error: 'Transit not found'});
+        const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
+        res.status(response.status).json(response);
     }
 };
 
@@ -39,7 +45,8 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
         const user = await UsersModel.findByPk(badge);
 
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            const response = new ErrorFactory().getMessage(ErrorEnum.UserNotFound).getResponse();
+            return res.status(response.status).json(response);
         }
 
         if(userRole === 'passage') {
@@ -88,9 +95,10 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
 
         logger.info(`Transit created: Badge ${badge}, Status: ${is_authorized ? 'authorized' : 'unauthorized'}`);
 
-        res.status(201).json(transit);
+        const response = new SuccessFactory().getMessage(SuccessEnum.TransitCreatedSuccess).getResponse();
+        res.status(response.status).json({ ...response, data: transit });
     } catch (error) {
-        next(error);
+        next(new ErrorFactory().getMessage(ErrorEnum.TransitCreationFailed).getResponse());
     }
 }
 
@@ -104,9 +112,11 @@ export const updateTransit = async (req: Request, res: Response) => {
             violation_dpi: violation_dpi
         });
         await transit.save();
-        res.json(transit);
+        const response = new SuccessFactory().getMessage(SuccessEnum.TransitUpdatedSuccess).getResponse();
+        res.status(response.status).json({ ...response, data: transit });
     } else {
-        res.status(404).json({ error: 'Transit not found'})
+        const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
+        res.status(response.status).json(response);
     }
 }
 
@@ -115,9 +125,11 @@ export const deleteTransit = async (req: Request, res: Response) => {
     const transit = await TransitsModel.findByPk(id);
     if (transit) {
         await transit.destroy();
-        res.json({message: 'Transit deleted'});
+        const response = new SuccessFactory().getMessage(SuccessEnum.TransitDeletedSuccess).getResponse();
+        res.status(response.status).json(response);
     } else {
-        res.status(404).json({error: 'Transit not found'})
+        const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
+        res.status(response.status).json(response);
     }
 }
 
@@ -154,9 +166,10 @@ export const getAccessStats = async (req: Request, res: Response, next: NextFunc
 
         const totalUnauthorizedAttempts = transits.filter( transit => !transit.get('is_authorized')).length;
 
-        res.status(200).json({accessCount, totalUnauthorizedAttempts});
+        const response = new SuccessFactory().getMessage(SuccessEnum.AccessStatsRetrievedSuccess).getResponse();
+        res.status(response.status).json({ ...response, data: { accessCount, totalUnauthorizedAttempts } });
     } catch (error) {
-        next(error);
+        next(new ErrorFactory().getMessage(ErrorEnum.AccessStatsRetrieveFailed).getResponse());
     }
 };
 
@@ -220,7 +233,7 @@ export const downloadPassageReport = async (req: Request, res: Response, next: N
             return res.json(reportArray);
         }
     } catch (error) {
-        next(error);
+        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());;
     }
 };
 
@@ -242,7 +255,8 @@ export const downloadUserReport = async (req: Request, res: Response, next: Next
         let badgeFilter = {};
         if (userRole !== 'admin') {
             if(!userBadge) {
-                return res.status(400).json({ message: 'Badge ID not found in token' });
+                const response = new ErrorFactory().getMessage(ErrorEnum.UserNotFound).getResponse();
+                return res.status(response.status).json(response);
             }
             badgeFilter = { badge: userBadge};
         }
@@ -303,6 +317,6 @@ export const downloadUserReport = async (req: Request, res: Response, next: Next
             return res.json(reportArray);
         }
     } catch (error) {
-        next(error);
+        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
     }
 };

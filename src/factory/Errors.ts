@@ -100,6 +100,16 @@ class TransitNotFound implements Message {
   }
 }
 
+class TransitCreationFailed implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Transit creation Failed',
+      type: 'application/json'
+    };
+  }
+}
+
 class TransitUpdateFailed implements Message {
   getResponse(): Response {
     return {
@@ -115,6 +125,16 @@ class TransitDeletionFailed implements Message {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
       message: 'Transit Deletion Failed',
+      type: 'application/json'
+    };
+  }
+}
+
+class AccessStatsRetrieveFailed implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Access stats Failed',
       type: 'application/json'
     };
   }
@@ -241,11 +261,21 @@ class TokenChargeBadRequest implements Message {
   }
 }
 
+class PassageRoleNotValid implements Message {
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Passage role not valid.',
+      type: 'application/json'
+    };
+  }
+}
+
 class RoleNotValid implements Message {
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
-      message: 'Role Not Valid',
+      message: 'Role not valid.',
       type: 'application/json'
     };
   }
@@ -292,8 +322,14 @@ export class ErrorFactory extends MessageFactory {
       case ErrorEnum.TransitUpdateFailed:
         errorClass = new TransitUpdateFailed();
         break;
+      case ErrorEnum.TransitCreationFailed:
+        errorClass = new TransitCreationFailed();
+        break;
       case ErrorEnum.TransitDeletionFailed:
         errorClass = new TransitDeletionFailed();
+        break;
+      case ErrorEnum.AccessStatsRetrieveFailed:
+        errorClass = new AccessStatsRetrieveFailed();
         break;
       case ErrorEnum.Unauthorized:
         errorClass = new Unauthorized();
@@ -328,8 +364,12 @@ export class ErrorFactory extends MessageFactory {
       case ErrorEnum.ForbiddenSuspended:
         errorClass = new ForbiddenSuspended();
         break;
+      case ErrorEnum.PassageRoleNotValid:
+        errorClass = new PassageRoleNotValid();
+        break;
       case ErrorEnum.RoleNotValid:
-        
+        errorClass = new RoleNotValid();
+        break;
 
       default:
         errorClass = new DefaultError();

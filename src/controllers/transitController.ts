@@ -1,3 +1,7 @@
+/**
+ * @file transitController.ts
+ * @description Questo file contiene i controller per la gestione dei transiti.
+ */
 import { Request, Response, NextFunction } from 'express';
 import { TransitsModel } from '../models/TransitsModel';
 import logger from '../log/logger';
@@ -12,6 +16,13 @@ import { SuccessFactory} from '../factory/Successes';
 
 const MAX_UNAUTHORIZED_ATTEMPTS = parseInt(process.env.MAX_UNAUTHORIZED_ATTEMPTS || '5');
 
+/**
+ * @function getAllTransit
+ * @description Recupera tutti i transiti dal database.
+ * @param {Request} req - La richiesta HTTP.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const getAllTransit = async(req: Request, res: Response, next: NextFunction) => {
     try{
         const transits = await TransitsModel.findAll();
@@ -22,6 +33,12 @@ export const getAllTransit = async(req: Request, res: Response, next: NextFuncti
     }
 };
 
+/**
+ * @function getTransit
+ * @description Recupera un transito specifico dal database.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID del transito nei parametri della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ */
 export const getTransit = async (req: Request, res: Response) => {
     const {id} = req.params;
     const transit = await TransitsModel.findByPk(id);
@@ -34,6 +51,13 @@ export const getTransit = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @function createTransit
+ * @description Crea un nuovo transito nel database.
+ * @param {Request} req - La richiesta HTTP, che contiene il passaggio, il badge e la violazione DPI nel corpo della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const createTransit = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { passage, badge, violation_dpi } = req.body;
@@ -102,6 +126,13 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
     }
 };
 
+/**
+ * @function updateTransit
+ * @description Aggiorna un transito specifico nel database.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID del transito nei parametri della richiesta e la data del transito e la violazione DPI nel corpo della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const updateTransit = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {id} = req.params;
@@ -128,6 +159,12 @@ export const updateTransit = async (req: Request, res: Response, next: NextFunct
     }  
 };
 
+/**
+ * @function deleteTransit
+ * @description Elimina un transito specifico dal database.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID del transito nei parametri della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ */
 export const deleteTransit = async (req: Request, res: Response) => {
     const {id} = req.params;
     const transit = await TransitsModel.findByPk(id);
@@ -141,6 +178,13 @@ export const deleteTransit = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * @function getAccessStats
+ * @description Recupera le statistiche di accesso per un badge specifico in un intervallo di date.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID del badge nei parametri della richiesta e le date di inizio e fine nella query string.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const getAccessStats = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { badge_id} = req.params;
@@ -195,6 +239,13 @@ export const getAccessStats = async (req: Request, res: Response, next: NextFunc
     }
 };
 
+/**
+ * @function downloadPassageReport
+ * @description Genera un report dei passaggi in un intervallo di date specificato e lo restituisce nel formato richiesto (CSV, PDF o JSON).
+ * @param {Request} req - La richiesta HTTP, che contiene le date di inizio e fine e il formato del report nella query string.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const downloadPassageReport = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { start_date, end_date, format } = req.query;
@@ -277,6 +328,13 @@ export const downloadPassageReport = async (req: Request, res: Response, next: N
     }
 };
 
+/**
+ * @function downloadUserReport
+ * @description Genera un report degli utenti in un intervallo di date specificato e lo restituisce nel formato richiesto (CSV, PDF o JSON).
+ * @param {Request} req - La richiesta HTTP, che contiene le date di inizio e fine e il formato del report nella query string.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const downloadUserReport = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { start_date, end_date, format} = req.query;

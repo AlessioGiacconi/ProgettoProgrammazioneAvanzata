@@ -1,14 +1,35 @@
+/**
+ * @file Message.ts
+ * @description Questo file contiene le definizioni delle interfacce, enumerazioni e classi astratte per la gestione dei messaggi di risposta del server.
+*/
+
+/**
+ * @interface Response
+ * @description Interfaccia per rappresentare una risposta del server.
+ * @property {string} message - Messaggio della risposta.
+ * @property {number} status - Codice di stato HTTP.
+ * @property {string} [data] - Dati opzionali da restituire nella risposta.
+ * @property {string} type - Tipo di Content-Type da impostare nell'intestazione della risposta.
+ */
 export interface Response {
     message: string; // message of the response
     status: number; // HTTP status code
     data?: string; // data to return in the response
     type: string; // type of Content-Type to set into header response
   }
-  
+
+/**
+ * @interface Message
+ * @description Interfaccia per rappresentare un messaggio con un metodo per ottenere la risposta.
+ */
   export interface Message {
     getResponse(): Response;
   }
   
+/**
+ * @enum SuccessEnum
+ * @description Enumerazione dei tipi di messaggi di successo.
+ */
   export enum SuccessEnum {
     LoginSuccess,
     UserRegisteredSuccess,
@@ -32,6 +53,10 @@ export interface Response {
     DefaultSuccess
   }
   
+/**
+ * @enum ErrorEnum
+ * @description Enumerazione dei tipi di messaggi di errore.
+ */
   export enum ErrorEnum {
     LoginFailed,
     UserRegistrationFailed,
@@ -68,14 +93,18 @@ export interface Response {
     DefaultError
   }
   
+  /**
+  * @enum HttpStatusEnum
+  * @description Enumerazione dei codici di stato HTTP.
+  */
   export enum HttpStatusEnum {
-    // Informational responses (100–199)
+    // Risposte informative (100–199)
     CONTINUE = 100,
     SWITCHING_PROTOCOLS = 101,
     PROCESSING = 102,
     EARLY_HINTS = 103,
   
-    // Successful responses (200–299)
+    // Risposte di successo (200–299)
     OK = 200,
     CREATED = 201,
     ACCEPTED = 202,
@@ -87,7 +116,7 @@ export interface Response {
     ALREADY_REPORTED = 208,
     IM_USED = 226,
   
-    // Redirection messages (300–399)
+    // Messaggi di redirezione (300–399)
     MULTIPLE_CHOICES = 300,
     MOVED_PERMANENTLY = 301,
     FOUND = 302,
@@ -98,7 +127,7 @@ export interface Response {
     TEMPORARY_REDIRECT = 307,
     PERMANENT_REDIRECT = 308,
   
-    // Client error responses (400–499)
+    // Risposte di errore del client (400–499)
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
     PAYMENT_REQUIRED = 402,
@@ -129,7 +158,7 @@ export interface Response {
     REQUEST_HEADER_FIELDS_TOO_LARGE = 431,
     UNAVAILABLE_FOR_LEGAL_REASONS = 451,
   
-    // Server error responses (500–599)
+    // Risposte di errore del server (500–599)
     INTERNAL_SERVER_ERROR = 500,
     NOT_IMPLEMENTED = 501,
     BAD_GATEWAY = 502,
@@ -143,9 +172,18 @@ export interface Response {
     NETWORK_AUTHENTICATION_REQUIRED = 511
   }
   
-  // Abstract class for the messageFactory, used by ErrorFactory and SuccessFactory
+  /**
+ * @abstract class MessageFactory
+ * @description Classe astratta per la creazione di messaggi, utilizzata da ErrorFactory e SuccessFactory.
+ */
   export abstract class MessageFactory {
     constructor() {}
-  
+    
+    /**
+     * @abstract getMessage
+     * @description Metodo astratto per ottenere un messaggio.
+     * @param {number} type - Tipo di messaggio da ottenere.
+     * @returns {Message} Messaggio richiesto.
+     */
     abstract getMessage(type: number): Message;
   }

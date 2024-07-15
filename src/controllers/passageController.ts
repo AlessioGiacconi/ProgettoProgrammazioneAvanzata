@@ -1,9 +1,20 @@
+/**
+ * @file passageController.ts
+ * @description Questo file contiene i controller per la gestione dei varchi.
+ */
 import { Request, Response, NextFunction } from 'express';
 import { PassagesModel } from '../models/PassagesModel';
 import { ErrorEnum, SuccessEnum } from '../factory/Message';
 import { ErrorFactory } from '../factory/Errors';
 import { SuccessFactory} from '../factory/Successes';
 
+/**
+ * @function getAllPassages
+ * @description Recupera tutti i passaggi dal database.
+ * @param {Request} req - La richiesta HTTP.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const getAllPassages = async(req: Request, res: Response, next: NextFunction) => {
     try {
         const passages = await PassagesModel.findAll();
@@ -14,6 +25,13 @@ export const getAllPassages = async(req: Request, res: Response, next: NextFunct
     }
 };
 
+/**
+ * @function createPassage
+ * @description Crea un nuovo passaggio nel database.
+ * @param {Request} req - La richiesta HTTP, che contiene il livello e l'indicazione se è necessario il DPI nel corpo della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const createPassage = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { level, needs_dpi } = req.body;
@@ -25,6 +43,13 @@ export const createPassage = async (req: Request, res: Response, next: NextFunct
     }
 };
 
+/**
+ * @function getPassage
+ * @description Recupera un passaggio specifico dal database.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID del passaggio nei parametri della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const getPassage = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {
@@ -40,7 +65,14 @@ export const getPassage = async (req: Request, res: Response, next: NextFunction
     }
 };
 
-  export const updatePassage = async (req: Request, res: Response, next: NextFunction) => {
+/**
+ * @function updatePassage
+ * @description Aggiorna un passaggio specifico nel database.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID del passaggio nei parametri della richiesta e il livello e l'indicazione se è necessario il DPI nel corpo della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
+export const updatePassage = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
       const { level, needs_dpi } = req.body;
@@ -65,6 +97,13 @@ export const getPassage = async (req: Request, res: Response, next: NextFunction
     }
 };
 
+/**
+ * @function deletePassage
+ * @description Elimina un passaggio specifico dal database.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID del passaggio nei parametri della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const deletePassage = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {

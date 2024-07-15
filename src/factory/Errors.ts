@@ -1,6 +1,22 @@
+/**
+ * @file Errors.ts
+ * @description Definisce le classi di messaggi di errore e una factory per crearli.
+ */
+
 import { Message, Response, ErrorEnum, MessageFactory, HttpStatusEnum } from './Message';
 
+/**
+ * @class LoginFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di login fallito.
+ */
 class LoginFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un login fallito.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.UNAUTHORIZED,
@@ -10,7 +26,18 @@ class LoginFailed implements Message {
   }
 }
 
+/**
+ * @class UserRegistrationFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di registrazione utente fallita.
+ */
 class UserRegistrationFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per una registrazione utente fallita.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -20,7 +47,18 @@ class UserRegistrationFailed implements Message {
   }
 }
 
+/**
+ * @class UserNotFound
+ * @implements Message
+ * @description Classe per rappresentare un errore di utente non trovato.
+ */
 class UserNotFound implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un utente non trovato.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.NOT_FOUND,
@@ -30,7 +68,18 @@ class UserNotFound implements Message {
   }
 }
 
+/**
+ * @class UserUpdateFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di aggiornamento utente fallito.
+ */
 class UserUpdateFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un aggiornamento utente fallito.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -40,7 +89,18 @@ class UserUpdateFailed implements Message {
   }
 }
 
+/**
+ * @class UserDeletionFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di eliminazione utente fallita.
+ */
 class UserDeletionFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un'eliminazione utente fallita.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -50,7 +110,18 @@ class UserDeletionFailed implements Message {
   }
 }
 
+/**
+ * @class PassageCreationFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di creazione di un varco fallita.
+ */
 class PassageCreationFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per una creazione di un varco fallita.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -60,7 +131,18 @@ class PassageCreationFailed implements Message {
   }
 }
 
+/**
+ * @class PassageNotFound
+ * @implements Message
+ * @description Classe per rappresentare un errore di varco non trovato.
+ */
 class PassageNotFound implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un varco non trovato.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.NOT_FOUND,
@@ -70,7 +152,18 @@ class PassageNotFound implements Message {
   }
 }
 
+/**
+ * @class PassageUpdateFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di aggiornamento di un varco fallito.
+ */
 class PassageUpdateFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un aggiornamento di un varco fallito.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -80,7 +173,18 @@ class PassageUpdateFailed implements Message {
   }
 }
 
+/**
+ * @class PassageDeletionFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di eliminazione di un varco fallito.
+ */
 class PassageDeletionFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un'eliminazione di un varco fallito.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -90,7 +194,18 @@ class PassageDeletionFailed implements Message {
   }
 }
 
+/**
+ * @class TransitNotFound
+ * @implements Message
+ * @description Classe per rappresentare un errore di transito non trovato.
+ */
 class TransitNotFound implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un transito non trovato.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.NOT_FOUND,
@@ -100,7 +215,18 @@ class TransitNotFound implements Message {
   }
 }
 
+/**
+ * @class TransitCreationFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di creazione di un transito fallita.
+ */
 class TransitCreationFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per una creazione di un transito fallita.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -110,7 +236,18 @@ class TransitCreationFailed implements Message {
   }
 }
 
+/**
+ * @class TransitUpdateFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di aggiornamento di un transito fallito.
+ */
 class TransitUpdateFailed implements Message {
+
+   /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un aggiornamento di un transito fallito.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -120,7 +257,18 @@ class TransitUpdateFailed implements Message {
   }
 }
 
+/**
+ * @class TransitDeletionFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di eliminazione di un transito fallito.
+ */
 class TransitDeletionFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un'eliminazione di un transito fallito.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -130,7 +278,18 @@ class TransitDeletionFailed implements Message {
   }
 }
 
+/**
+ * @class AccessStatsRetrieveFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore di recupero delle statistiche di accesso fallito.
+ */
 class AccessStatsRetrieveFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un recupero delle statistiche di accesso fallito.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -140,7 +299,18 @@ class AccessStatsRetrieveFailed implements Message {
   }
 }
 
+/**
+ * @class Unauthorized
+ * @implements Message
+ * @description Classe per rappresentare un errore di non autorizzato.
+ */
 class Unauthorized implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per una richiesta non autorizzata.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.UNAUTHORIZED,
@@ -150,7 +320,18 @@ class Unauthorized implements Message {
   }
 }
 
+/**
+ * @class Forbidden
+ * @implements Message
+ * @description Classe per rappresentare un errore di accesso vietato.
+ */
 class Forbidden implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un accesso vietato.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.FORBIDDEN,
@@ -160,7 +341,18 @@ class Forbidden implements Message {
   }
 }
 
+/**
+ * @class ForbiddenAdminRole
+ * @implements Message
+ * @description Classe per rappresentare un errore di accesso vietato per ruolo admin.
+ */
 class ForbiddenAdminRole implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un accesso vietato ai soli amministratori.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.FORBIDDEN,
@@ -170,7 +362,18 @@ class ForbiddenAdminRole implements Message {
   }
 }
 
+/**
+ * @class ForbiddenAdminOrPassageRole
+ * @implements Message
+ * @description Classe per rappresentare un errore di accesso vietato per ruolo admin o varco.
+ */
 class ForbiddenAdminOrPassageRole implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un accesso vietato agli amministratori o agli utenti del varco.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.FORBIDDEN,
@@ -180,7 +383,18 @@ class ForbiddenAdminOrPassageRole implements Message {
   }
 }
 
+/**
+ * @class ForbiddenSuspended
+ * @implements Message
+ * @description Classe per rappresentare un errore di accesso vietato per utente sospeso.
+ */
 class ForbiddenSuspended implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un accesso vietato a causa di sospensione dell'utente.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.FORBIDDEN,
@@ -190,7 +404,18 @@ class ForbiddenSuspended implements Message {
   }
 }
 
+/**
+ * @class ValidationError
+ * @implements Message
+ * @description Classe per rappresentare un errore di validazione.
+ */
 class ValidationError implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per una validazione fallita.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -200,7 +425,18 @@ class ValidationError implements Message {
   }
 }
 
+/**
+ * @class InternalServerError
+ * @implements Message
+ * @description Classe per rappresentare un errore interno del server.
+ */
 class InternalServerError implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un errore interno del server.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.INTERNAL_SERVER_ERROR,
@@ -210,7 +446,18 @@ class InternalServerError implements Message {
   }
 }
 
+/**
+ * @class DefaultError
+ * @implements Message
+ * @description Classe per rappresentare un errore generico.
+ */
 class DefaultError implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un errore generico.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.INTERNAL_SERVER_ERROR,
@@ -220,8 +467,18 @@ class DefaultError implements Message {
   }
 }
 
-// New Error Classes
+/**
+ * @class EmailNotValidAddress
+ * @implements Message
+ * @description Classe per rappresentare un errore di indirizzo email non valido.
+ */
 class EmailNotValidAddress implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un indirizzo email non valido.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -231,7 +488,18 @@ class EmailNotValidAddress implements Message {
   }
 }
 
+/**
+ * @class LoginBadRequest
+ * @implements Message
+ * @description Classe per rappresentare un errore di richiesta di login non valida.
+ */
 class LoginBadRequest implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per una richiesta di login non valida.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -241,7 +509,18 @@ class LoginBadRequest implements Message {
   }
 }
 
+/**
+ * @class JwtNotValid
+ * @implements Message
+ * @description Classe per rappresentare un errore di JWT non valido.
+ */
 class JwtNotValid implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un JWT non valido.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.UNAUTHORIZED,
@@ -251,7 +530,18 @@ class JwtNotValid implements Message {
   }
 }
 
+/**
+ * @class TokenChargeBadRequest
+ * @implements Message
+ * @description Classe per rappresentare un errore di richiesta di addebito di token non valida.
+ */
 class TokenChargeBadRequest implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per una richiesta di addebito di token non valida.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -261,7 +551,18 @@ class TokenChargeBadRequest implements Message {
   }
 }
 
+/**
+ * @class PassageRoleNotValid
+ * @implements Message
+ * @description Classe per rappresentare un errore di ruolo di varco non valido.
+ */
 class PassageRoleNotValid implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un ruolo di varco non valido.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -271,7 +572,18 @@ class PassageRoleNotValid implements Message {
   }
 }
 
+/**
+ * @class AuthorizationNotFound
+ * @implements Message
+ * @description Classe per rappresentare un errore di autorizzazione non trovata.
+ */
 class AuthorizationNotFound implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un'autorizzazione non trovata.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.NOT_FOUND,
@@ -281,7 +593,18 @@ class AuthorizationNotFound implements Message {
   }
 }
 
+/**
+ * @class RoleNotValid
+ * @implements Message
+ * @description Classe per rappresentare un errore di ruolo non valido.
+ */
 class RoleNotValid implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un ruolo non valido.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -291,7 +614,18 @@ class RoleNotValid implements Message {
   }
 }
 
+/**
+ * @class InvalidDateRange
+ * @implements Message
+ * @description Classe per rappresentare un errore di intervallo di date non valido.
+ */
 class InvalidDateRange implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un intervallo di date non valido.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -301,7 +635,18 @@ class InvalidDateRange implements Message {
   }
 }
 
+/**
+ * @class StartDateGreaterThanEndDate
+ * @implements Message
+ * @description Classe per rappresentare un errore di data di inizio maggiore della data di fine.
+ */
 class StartDateGreaterThanEndDate implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per una data di inizio maggiore della data di fine.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -311,7 +656,18 @@ class StartDateGreaterThanEndDate implements Message {
   }
 }
 
+/**
+ * @class InvalidFormat
+ * @implements Message
+ * @description Classe per rappresentare un errore di formato non valido.
+ */
 class InvalidFormat implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per un formato richiesto non valido.
+   * @returns {Response} La risposta di errore.
+   */
   getResponse(): Response {
     return {
       status: HttpStatusEnum.BAD_REQUEST,
@@ -321,11 +677,22 @@ class InvalidFormat implements Message {
   }
 }
 
+/**
+ * @class ErrorFactory
+ * @extends MessageFactory
+ * @description Factory per creare istanze di messaggi di errore.
+ */
 export class ErrorFactory extends MessageFactory {
   constructor() {
     super();
   }
 
+  /**
+   * @method getMessage
+   * @description Restituisce un messaggio di errore basato sul tipo di errore fornito.
+   * @param {ErrorEnum} type - Tipo di errore.
+   * @returns {Message} Il messaggio di errore corrispondente.
+   */
   getMessage(type: ErrorEnum): Message {
     let errorClass: Message | null = null;
     switch (type) {

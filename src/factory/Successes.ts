@@ -1,6 +1,22 @@
+/**
+ * @file Successes.ts
+ * @description Definisce le classi di messaggi di successo e una factory per crearli.
+ */
+
 import { Message, Response, SuccessEnum, MessageFactory, HttpStatusEnum } from "./Message";
 
+/**
+ * @class LoginSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per il login.
+ */
 class LoginSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per il login.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -10,7 +26,18 @@ class LoginSuccess implements Message {
     }
 }
 
+/**
+ * @class UserRegisteredSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per la registrazione dell'utente.
+ */
 class UserRegisteredSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per la registrazione dell'utente.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.CREATED,
@@ -20,7 +47,18 @@ class UserRegisteredSuccess implements Message {
     }
 }
 
+/**
+ * @class UserRetrievedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per il recupero dell'utente.
+ */
 class UserRetrievedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per il recupero dell'utente.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -30,7 +68,18 @@ class UserRetrievedSuccess implements Message {
     }
 }
 
+/**
+ * @class UserUpdatedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per l'aggiornamento dell'utente.
+ */
 class UserUpdatedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per l'aggiornamento dell'utente.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -40,7 +89,18 @@ class UserUpdatedSuccess implements Message {
     }
 }
 
+/**
+ * @class UserActivatedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per l'attivazione dell'utente.
+ */
 class UserActivatedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per l'attivazione dell'utente.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -50,7 +110,18 @@ class UserActivatedSuccess implements Message {
     }
 }
 
+/**
+ * @class UsersSuspendedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per il recupero degli utenti sospesi.
+ */
 class UsersSuspendedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per il recupero degli utenti sospesi.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -60,7 +131,18 @@ class UsersSuspendedSuccess implements Message {
     }
 }
 
+/**
+ * @class UserDeletedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per la cancellazione dell'utente.
+ */
 class UserDeletedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per la cancellazione dell'utente.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -70,7 +152,18 @@ class UserDeletedSuccess implements Message {
     }
 }
 
+/**
+ * @class PassageCreatedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per la creazione del varco.
+ */
 class PassageCreatedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per la creazione del varco.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.CREATED,
@@ -80,7 +173,18 @@ class PassageCreatedSuccess implements Message {
     }
 }
 
+/**
+ * @class PassageRetrievedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per il recupero del varco.
+ */
 class PassageRetrievedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per il recupero del varco.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -90,7 +194,18 @@ class PassageRetrievedSuccess implements Message {
     }
 }
 
+/**
+ * @class PassageUpdatedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per l'aggiornamento del varco.
+ */
 class PassageUpdatedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per l'aggiornamento del varco.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -100,7 +215,18 @@ class PassageUpdatedSuccess implements Message {
     }
 }
 
+/**
+ * @class PassageDeletedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per la cancellazione del varco.
+ */
 class PassageDeletedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per la cancellazione del varco.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -110,7 +236,18 @@ class PassageDeletedSuccess implements Message {
     }
 }
 
+/**
+ * @class TransitRetrievedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per il recupero del transito.
+ */
 class TransitRetrievedSuccess implements Message {
+
+     /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per il recupero del transito.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -120,7 +257,18 @@ class TransitRetrievedSuccess implements Message {
     }
 }
 
+/**
+ * @class TransitUpdatedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per l'aggiornamento del transito.
+ */
 class TransitUpdatedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per l'aggiornamento del transito.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -130,7 +278,18 @@ class TransitUpdatedSuccess implements Message {
     }
 }
 
+/**
+ * @class TransitCreatedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per la creazione del transito.
+ */
 class TransitCreatedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per la creazione del transito.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -140,7 +299,18 @@ class TransitCreatedSuccess implements Message {
     }
 }
 
+/**
+ * @class TransitDeletedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per la cancellazione del transito.
+ */
 class TransitDeletedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per la cancellazione del transito.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -150,7 +320,18 @@ class TransitDeletedSuccess implements Message {
     }
 }
 
+/**
+ * @class AccessStatsRetrievedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per il recupero delle statistiche di accesso.
+ */
 class AccessStatsRetrievedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per il recupero delle statistiche di accesso.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -160,7 +341,18 @@ class AccessStatsRetrievedSuccess implements Message {
     }
 }
 
+/**
+ * @class ReportGeneratedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per la generazione del report.
+ */
 class ReportGeneratedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per la generazione del report.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -170,7 +362,18 @@ class ReportGeneratedSuccess implements Message {
     }
 }
 
+/**
+ * @class AuthorizationCreatedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per la creazione dell'autorizzazione.
+ */
 class AuthorizationCreatedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per la creazione dell'autorizzazione.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.CREATED,
@@ -180,7 +383,18 @@ class AuthorizationCreatedSuccess implements Message {
     }
 }
 
+/**
+ * @class AuthorizationDeletedSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo per la cancellazione dell'autorizzazione.
+ */
 class AuthorizationDeletedSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo per la cancellazione dell'autorizzazione.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -190,7 +404,18 @@ class AuthorizationDeletedSuccess implements Message {
     }
 }
 
+/**
+ * @class DefaultSuccess
+ * @implements Message
+ * @description Classe per rappresentare un messaggio di successo di default.
+ */
 class DefaultSuccess implements Message {
+
+    /**
+     * @method getResponse
+     * @description Restituisce la risposta di successo di default.
+     * @returns {Response} La risposta di successo.
+     */
     getResponse(): Response {
         return {
             status: HttpStatusEnum.OK,
@@ -200,9 +425,20 @@ class DefaultSuccess implements Message {
     }
 }
 
+/**
+ * @class SuccessFactory
+ * @extends MessageFactory
+ * @description Classe per la creazione di messaggi di successo.
+ */
 export class SuccessFactory extends MessageFactory {
     constructor() {super()}
 
+    /**
+     * @method getMessage
+     * @description Restituisce un'istanza della classe di successo appropriata in base al tipo fornito.
+     * @param {SuccessEnum} type - Il tipo di successo.
+     * @returns {Message} Il messaggio di successo corrispondente.
+     */
     getMessage(type: SuccessEnum): Message {
 
         let successClass: Message | null = null;

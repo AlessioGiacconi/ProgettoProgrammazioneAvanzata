@@ -1,3 +1,8 @@
+/**
+ * @file userController.ts
+ * @description Questo file contiene i controller per la gestione degli utenti.
+ */
+
 import { Request, Response, NextFunction } from 'express';
 import { UsersModel } from '../models/UsersModel';
 import jwt from 'jsonwebtoken';
@@ -7,6 +12,13 @@ import { SuccessFactory} from '../factory/Successes';
 
 const PK = process.env.PK || 'default_secret_key';
 
+/**
+ * @function getAllUsers
+ * @description Recupera tutti gli utenti dal database.
+ * @param {Request} req - La richiesta HTTP.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await UsersModel.findAll();
@@ -17,6 +29,13 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
+/**
+ * @function registerUser
+ * @description Registra un nuovo utente nel database.
+ * @param {Request} req - La richiesta HTTP, che contiene i dati dell'utente nel corpo della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await UsersModel.create({
@@ -34,6 +53,12 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
+/**
+ * @function loginUser
+ * @description Effettua il login di un utente generando un token JWT.
+ * @param {Request} req - La richiesta HTTP, che contiene l'email e la password nel corpo della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ */
 export const loginUser = async (req: Request, res: Response) => {
   const { email, passwd } = req.body;
   if (!email || !passwd) {
@@ -66,6 +91,13 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * @function getUser
+ * @description Recupera un utente specifico dal database.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID dell'utente nei parametri della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
@@ -82,6 +114,13 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
+/**
+ * @function updateUser
+ * @description Aggiorna i dati di un utente specifico nel database.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID dell'utente nei parametri della richiesta e i dati da aggiornare nel corpo della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
@@ -107,6 +146,13 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
   }
 };
 
+/**
+ * @function deleteUser
+ * @description Elimina un utente specifico dal database.
+ * @param {Request} req - La richiesta HTTP, che contiene l'ID dell'utente nei parametri della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
@@ -124,6 +170,13 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
   }
 };
 
+/**
+ * @function getSuspendedBadges
+ * @description Recupera tutti i badge sospesi dal database.
+ * @param {Request} req - La richiesta HTTP.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const getSuspendedBadges = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const suspendedUsers = await UsersModel.findAll({
@@ -143,6 +196,13 @@ export const getSuspendedBadges = async (req: Request, res: Response, next: Next
   }
 };
 
+/**
+ * @function reactivateBadges
+ * @description Riattiva i badge sospesi specificati nel database.
+ * @param {Request} req - La richiesta HTTP, che contiene gli ID dei badge nel corpo della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const reactivateBadges = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { badgeIds } = req.body;

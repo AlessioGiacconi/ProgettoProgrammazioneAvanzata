@@ -1,9 +1,20 @@
+/**
+ * @file AuthorizationController.ts
+ * @description Questo file contiene i controller per la gestione delle autorizzazioni.
+ */
 import { Request, Response, NextFunction} from 'express';
 import { AuthorizationModel } from '../models/AuthorizationModel';
 import { ErrorEnum, SuccessEnum } from '../factory/Message';
 import { ErrorFactory } from '../factory/Errors';
 import { SuccessFactory} from '../factory/Successes';
 
+/**
+ * @function insertAuthentication
+ * @description Inserisce una nuova autorizzazione nel database.
+ * @param {Request} req - La richiesta HTTP, che contiene il badge e il passaggio nel corpo della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
 export const insertAuthentication = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { badge, passage } = req.body;
@@ -15,7 +26,14 @@ export const insertAuthentication = async (req: Request, res: Response, next: Ne
     }
   };
 
-  export const deleteAuthentication = async (req: Request, res: Response, next: NextFunction) => {
+/**
+ * @function deleteAuthentication
+ * @description Elimina un'autorizzazione dal database.
+ * @param {Request} req - La richiesta HTTP, che contiene il badge e il passaggio nei parametri della richiesta.
+ * @param {Response} res - La risposta HTTP.
+ * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
+ */
+export const deleteAuthentication = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { badge, passage } = req.params;
       const authorization = await AuthorizationModel.findOne({ where: { badge, passage } });

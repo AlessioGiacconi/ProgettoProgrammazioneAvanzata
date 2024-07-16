@@ -90,6 +90,7 @@ export interface Response {
     InvalidDateRange,
     StartDateGreaterThanEndDate,
     InvalidFormat,
+    PassageReferenceRequired,
     DefaultError
   }
   

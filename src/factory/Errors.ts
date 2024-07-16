@@ -678,6 +678,27 @@ class InvalidFormat implements Message {
 }
 
 /**
+ * @class PassageReferenceRequired
+ * @implements Message
+ * @description Classe per rappresentare un errore nel caso in cui il riferimento ad un passaggio non sia stato inserito.
+ */
+class PassageReferenceRequired implements Message {
+
+    /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore nel caso in cui il riferimento ad un passaggio non sia stato inserito.
+   * @returns {Response} La risposta di errore.
+   */
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Passage reference required.',
+      type: 'application/json'
+    };
+  }
+}
+
+/**
  * @class ErrorFactory
  * @extends MessageFactory
  * @description Factory per creare istanze di messaggi di errore.
@@ -788,6 +809,9 @@ export class ErrorFactory extends MessageFactory {
         break;
       case ErrorEnum.InvalidFormat:
         errorClass = new InvalidFormat();
+        break;
+      case ErrorEnum.PassageReferenceRequired:
+        errorClass = new PassageReferenceRequired();
         break;
       default:
         errorClass = new DefaultError();

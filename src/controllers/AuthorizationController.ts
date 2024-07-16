@@ -9,13 +9,13 @@ import { ErrorFactory } from '../factory/Errors';
 import { SuccessFactory} from '../factory/Successes';
 
 /**
- * @function insertAuthentication
+ * @function insertAuthorization
  * @description Inserisce una nuova autorizzazione nel database.
  * @param {Request} req - La richiesta HTTP, che contiene il badge e il passaggio nel corpo della richiesta.
  * @param {Response} res - La risposta HTTP.
  * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
  */
-export const insertAuthentication = async (req: Request, res: Response, next: NextFunction) => {
+export const insertAuthorization = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { badge, passage } = req.body;
       const authorization = await AuthorizationModel.create({ badge, passage });
@@ -27,13 +27,13 @@ export const insertAuthentication = async (req: Request, res: Response, next: Ne
   };
 
 /**
- * @function deleteAuthentication
+ * @function deleteAuthorization
  * @description Elimina un'autorizzazione dal database.
  * @param {Request} req - La richiesta HTTP, che contiene il badge e il passaggio nei parametri della richiesta.
  * @param {Response} res - La risposta HTTP.
  * @param {NextFunction} next - La funzione next per passare il controllo al middleware di gestione degli errori.
  */
-export const deleteAuthentication = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteAuthorization = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { badge, passage } = req.params;
       const authorization = await AuthorizationModel.findOne({ where: { badge, passage } });

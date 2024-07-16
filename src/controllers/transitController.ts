@@ -294,15 +294,8 @@ export const downloadPassageReport = async (req: Request, res: Response, next: N
 
         if (format === 'csv') {
             res.header('Content-Type', 'text/csv');
-            //res.attachment('report.csv');
             res.setHeader('Content-Disposition', 'attachment; filename="passages_report.csv" ');
 
-            /*stringify(reportArray, { header: true}, (err, output) => {
-                if (err) {
-                    return next(err);
-                }
-                res.send(output);
-            });*/
             stringify(reportArray, { header: true}).pipe(res);
         } else if (format === 'pdf') {
             const doc = new PDFDocument();

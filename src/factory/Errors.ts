@@ -699,6 +699,27 @@ class PassageReferenceRequired implements Message {
 }
 
 /**
+ * @class AuthorizationCreationFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore nel caso in cui la creazione di un'autorizzazione ad un passaggio non sia completa.
+ */
+class AuthorizationCreationFailed implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore nel caso in cui la creazione di un'autorizzazione ad un passaggio non sia completa.
+   * @returns {Response} La risposta di errore.
+   */
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Insert both passage and badge id.',
+      type: 'application/json'
+    };
+  }
+}
+
+/**
  * @class ErrorFactory
  * @extends MessageFactory
  * @description Factory per creare istanze di messaggi di errore.
@@ -812,6 +833,9 @@ export class ErrorFactory extends MessageFactory {
         break;
       case ErrorEnum.PassageReferenceRequired:
         errorClass = new PassageReferenceRequired();
+        break;
+      case ErrorEnum.AuthorizationCreationFailed:
+        errorClass = new AuthorizationCreationFailed();
         break;
       default:
         errorClass = new DefaultError();

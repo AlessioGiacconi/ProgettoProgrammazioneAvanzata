@@ -18,6 +18,12 @@ import { SuccessFactory} from '../factory/Successes';
 export const insertAuthorization = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { badge, passage } = req.body;
+
+      if(!badge || !passage) {
+        const response = new ErrorFactory().getMessage(ErrorEnum.AuthorizationCreationFailed).getResponse()
+        return res.status(response.status).json(response)
+      }
+
       const authorization = await AuthorizationModel.create({ badge, passage });
       const response = new SuccessFactory().getMessage(SuccessEnum.AuthorizationCreatedSuccess).getResponse();
       res.status(response.status).json({ ...response, data: authorization });

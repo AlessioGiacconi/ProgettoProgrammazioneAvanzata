@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routers/userRoutes';
 import passageRoutes from './routers/passageRoutes';
 import transitRoutes from './routers/transitRoutes';
-import authorizationRouter from './routers/authorizationRoutes';
+import authorizationRoutes from './routers/authorizationRoutes';
 import { errorHandler, genericErrorHandler } from './middleware/errorMiddleware';
 import { registerUser, loginUser } from './controllers/userController';
 import './utils/cronJob';
@@ -34,7 +34,7 @@ app.use(express.json());
 app.use('/badges', userRoutes);
 app.use('/passages', passageRoutes);
 app.use('/transits', transitRoutes);
-app.use('/auth', authorizationRouter);
+app.use('/auth', authorizationRoutes);
 
 // Middleware per la gestione degli errori
 app.use(errorHandler);

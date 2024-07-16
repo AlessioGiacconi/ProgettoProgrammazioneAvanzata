@@ -91,6 +91,7 @@ export interface Response {
     StartDateGreaterThanEndDate,
     InvalidFormat,
     PassageReferenceRequired,
+    AuthorizationCreationFailed,
     DefaultError
   }
   

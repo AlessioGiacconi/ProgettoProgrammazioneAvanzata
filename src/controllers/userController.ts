@@ -47,12 +47,12 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
     }
 
     const user = await UsersModel.create({
-      email: req.body.email,
-      passwd: req.body.passwd,
-      role: req.body.role,
+      email,
+      passwd,
+      role,
       is_suspended: false,
       tokens: 100,
-      passage_reference: req.body.role === 'passage' ? req.body.passage_reference : null
+      passage_reference: role === 'passage' ? passage_reference : null
     });
     const response = new SuccessFactory().getMessage(SuccessEnum.UserRegisteredSuccess).getResponse();
     res.status(response.status).json({ ...response, data: user });

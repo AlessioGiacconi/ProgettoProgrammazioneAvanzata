@@ -44,7 +44,8 @@ CREATE TABLE IF NOT EXISTS authorizations (
     badge INT NOT NULL,
     passage INT NOT NULL,
     FOREIGN KEY (badge) REFERENCES users(badge_id),
-    FOREIGN KEY (passage) REFERENCES passages(passage_id)
+    FOREIGN KEY (passage) REFERENCES passages(passage_id),
+    PRIMARY KEY (badge, passage)
 );
 
 CREATE TABLE IF NOT EXISTS transits (

@@ -21,7 +21,7 @@ export const getAllPassages = async(req: Request, res: Response, next: NextFunct
         const response = new SuccessFactory().getMessage(SuccessEnum.PassageRetrievedSuccess).getResponse();
         res.status(response.status).json({ ...response, data: passages });
     } catch (error) {
-        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+        next(error);
     }
 };
 
@@ -61,7 +61,7 @@ export const getPassage = async (req: Request, res: Response, next: NextFunction
         next(new ErrorFactory().getMessage(ErrorEnum.PassageNotFound).getResponse());
       }
     } catch (error) {
-      next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+      next(error);
     }
 };
 
@@ -93,7 +93,7 @@ export const updatePassage = async (req: Request, res: Response, next: NextFunct
         next(new ErrorFactory().getMessage(ErrorEnum.PassageNotFound).getResponse());
       }
     } catch (error) {
-      next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+      next(error);
     }
 };
 
@@ -116,6 +116,6 @@ export const deletePassage = async (req: Request, res: Response, next: NextFunct
         next(new ErrorFactory().getMessage(ErrorEnum.PassageNotFound).getResponse());
       }
     } catch (error) {
-      next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+      next(error);
     }
 };

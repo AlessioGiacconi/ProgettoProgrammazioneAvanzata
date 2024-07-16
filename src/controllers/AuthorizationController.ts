@@ -28,7 +28,7 @@ export const insertAuthorization = async (req: Request, res: Response, next: Nex
       const response = new SuccessFactory().getMessage(SuccessEnum.AuthorizationCreatedSuccess).getResponse();
       res.status(response.status).json({ ...response, data: authorization });
     } catch (error) {
-      next(new ErrorFactory().getMessage(ErrorEnum.PassageCreationFailed).getResponse());
+      next(error);
     }
   };
 
@@ -51,7 +51,7 @@ export const deleteAuthorization = async (req: Request, res: Response, next: Nex
       const response = new SuccessFactory().getMessage(SuccessEnum.AuthorizationDeletedSuccess).getResponse();
       res.status(response.status).json(response);
     } catch (error) {
-      next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+      next(error);
     }
   };
 

@@ -29,7 +29,7 @@ export const getAllTransit = async(req: Request, res: Response, next: NextFuncti
         const response = new SuccessFactory().getMessage(SuccessEnum.TransitRetrievedSuccess).getResponse();
         res.status(response.status).json({ ...response, data: transits });
     } catch (error) {
-        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());;
+        next(error);;
     }
 };
 
@@ -122,7 +122,7 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
         const response = new SuccessFactory().getMessage(SuccessEnum.TransitCreatedSuccess).getResponse();
         res.status(response.status).json({ ...response, data: transit });
     } catch (error) {
-        next(new ErrorFactory().getMessage(ErrorEnum.TransitCreationFailed).getResponse());
+        next(error);
     }
 };
 
@@ -155,7 +155,7 @@ export const updateTransit = async (req: Request, res: Response, next: NextFunct
             res.status(response.status).json(response);
         }
     } catch (error) {
-        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+        next(error);
     }  
 };
 
@@ -193,6 +193,7 @@ export const getAccessStats = async (req: Request, res: Response, next: NextFunc
         const startDate = new Date(start_date as string);
         const endDate = new Date(end_date as string);
         const currentDate = new Date();
+
 
         if(startDate > currentDate || endDate > currentDate) {
             const errorResponse = new ErrorFactory().getMessage(ErrorEnum.InvalidDateRange).getResponse();
@@ -317,7 +318,7 @@ export const downloadPassageReport = async (req: Request, res: Response, next: N
             return res.status(errorResponse.status).json(errorResponse);
         }
     } catch (error) {
-        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());;
+        next(error);;
     }
 };
 
@@ -409,7 +410,7 @@ export const downloadUserReport = async (req: Request, res: Response, next: Next
             const doc = new PDFDocument();
             res.setHeader('Content-Type', 'application/pdf');
             res.setHeader('Content-Disposition', 'attachment; filename="user_report.pdf"');
-            //res.attachment('report.pdf');
+           
             doc.pipe(res);
             doc.text('User Report');
             reportArray.forEach(row => {
@@ -425,6 +426,6 @@ export const downloadUserReport = async (req: Request, res: Response, next: Next
             return res.status(errorResponse.status).json(errorResponse);
         }
     } catch (error) {
-        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+        next(error);
     }
 };

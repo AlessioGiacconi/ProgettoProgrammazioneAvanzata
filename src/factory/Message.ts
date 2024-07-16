@@ -92,7 +92,9 @@ export interface Response {
     InvalidFormat,
     PassageReferenceRequired,
     AuthorizationCreationFailed,
-    DefaultError
+    DefaultError,
+    UniqueConstraintViolation,
+    ForeignKeyConstraintViolation
   }
   
   /**

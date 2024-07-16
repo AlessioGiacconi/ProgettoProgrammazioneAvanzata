@@ -6,6 +6,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { ErrorFactory } from '../factory/Errors';
 import { ErrorEnum } from '../factory/Message';
+import { UniqueConstraintError, ValidationError, ForeignKeyConstraintError } from 'sequelize';
+
 
 // Istanza della factory di messaggi di errore
 const errorFactory: ErrorFactory = new ErrorFactory();
@@ -50,11 +52,32 @@ export function errorHandler(err: ErrorEnum, req: Request, res: Response, next: 
 export function genericErrorHandler(err: any, req: Request, res: Response, next: NextFunction) {
     console.error("Error Stack:", err.stack);
     console.error("Error Message:", err.message);
-    const errorResponse = errorFactory.getMessage(ErrorEnum.InternalServerError).getResponse();
-    
-    res.setHeader('Content-Type', errorResponse.type);
-    res.status(errorResponse.status).json({
-        response: errorResponse.message,
-        data: {}
-    });
+
+    if (err instanceof UniqueConstraintError) {
+        const errorResponse = errorFactory.getMessage(ErrorEnum.UniqueConstraintViolation).getResponse();
+        res.status(errorResponse.status).json({
+            response: errorResponse.message,
+            details: err.errors.map((e: any) => e.message)
+        });
+    } else if (err instanceof ValidationError) {
+        const errorResponse = errorFactory.getMessage(ErrorEnum.ValidationError).getResponse();
+        res.status(errorResponse.status).json({
+            response: errorResponse.message,
+            details: err.errors.map((e: any) => e.message)
+        });
+    } else if (err instanceof ForeignKeyConstraintError) {
+        const errorResponse = errorFactory.getMessage(ErrorEnum.ForeignKeyConstraintViolation).getResponse();
+        res.status(errorResponse.status).json({
+            response: errorResponse.message,
+            details: err.message
+        });
+    } else {
+        const errorResponse = errorFactory.getMessage(ErrorEnum.InternalServerError).getResponse();
+        
+        res.setHeader('Content-Type', errorResponse.type);
+        res.status(errorResponse.status).json({
+            response: errorResponse.message,
+            data: {}
+        });
+    }
 };

@@ -720,6 +720,27 @@ class AuthorizationCreationFailed implements Message {
 }
 
 /**
+ * @class AuthorizationCreationFailed
+ * @implements Message
+ * @description Classe per rappresentare un errore nel caso in cui venga violato il vincolo di unicità della chiave primaria.
+ */
+class UniqueConstraintViolation implements Message {
+
+    /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore nel caso in cui venga violato il vincolo di unicità della chiave primaria.
+   * @returns {Response} La risposta di errore.
+   */
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Unique Constraint Violation',
+      type: 'application/json'
+    };
+  }
+}
+
+/**
  * @class ErrorFactory
  * @extends MessageFactory
  * @description Factory per creare istanze di messaggi di errore.
@@ -836,6 +857,9 @@ export class ErrorFactory extends MessageFactory {
         break;
       case ErrorEnum.AuthorizationCreationFailed:
         errorClass = new AuthorizationCreationFailed();
+        break;
+      case ErrorEnum.UniqueConstraintViolation:
+        errorClass = new UniqueConstraintViolation();
         break;
       default:
         errorClass = new DefaultError();

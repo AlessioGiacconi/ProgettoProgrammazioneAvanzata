@@ -1,3 +1,9 @@
+/**
+ * @file TransitsModel.ts
+ * @description Questo file definisce il modello "transits" utilizzando Sequelize 
+ *              per interagire con la tabella corrispondente nel database.
+ */
+
 import { DataTypes} from 'sequelize';
 import { DatabaseConnection } from '../db/DatabaseConnection';
 
@@ -15,8 +21,19 @@ sequelize.authenticate().then(() => {
 
 
 /**
- * Definizione del modello "users" relativo alla tabella del db corrispondente.
+ * Definizione del modello "users" relativo alla tabella del database corrispondente.
+ * La tabella contiene le informazioni sugli utenti.
  * 
+ * @property {number} badge_id - L'ID del badge. È la chiave primaria e viene incrementata automaticamente.
+ * @property {string} email - L'email dell'utente.
+ * @property {string} passwd - La password dell'utente.
+ * @property {string} role - Il ruolo dell'utente (ad esempio, "admin", "user", "passage").
+ * @property {boolean} is_suspended - Indica se l'utente è sospeso.
+ * @property {number} tokens - Il numero di token dell'utente.
+ * @property {number|null} passage_reference - Riferimento al passaggio associato all'utente. È una chiave esterna che fa riferimento alla tabella "passages".
+ * @property {number} unauthorized_attempts - Il numero di tentativi non autorizzati dell'utente. Il valore predefinito è 0.
+ * @property {Date} created_at - La data di creazione dell'utente. Il valore predefinito è l'ora corrente.
+ * @property {Date} updated_at - La data di aggiornamento dell'utente. Il valore predefinito è l'ora corrente.
  */
 export const UsersModel = sequelize.define('users', {
     badge_id: {

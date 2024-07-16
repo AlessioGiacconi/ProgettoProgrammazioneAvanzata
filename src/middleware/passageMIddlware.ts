@@ -1,3 +1,8 @@
+/**
+ * @file passageMiddleware.ts
+ * @description Questo file contiene i middleware per la validazione delle richieste dei dati relative ai varchi.
+ */
+
 import {Request, Response, NextFunction } from 'express';
 import { check, validationResult } from 'express-validator';
 import { ErrorFactory } from '../factory/Errors';
@@ -6,6 +11,13 @@ import { error } from 'console';
 
 const errorFactory: ErrorFactory = new ErrorFactory();
 
+/**
+ * Middleware per la validazione dei campi di una richiesta di creazione di un nuovo "passage".
+ * Verifica che il campo "level" non sia vuoto e sia un intero, e che il campo "needs_dpi" non sia vuoto e sia un booleano.
+ * Se ci sono errori di validazione, risponde con un messaggio di errore.
+ * 
+ * @type {Array}
+ */
 export const validatePassage = [
     check('level')
     .notEmpty()
@@ -30,6 +42,13 @@ export const validatePassage = [
     }
 ];
 
+/**
+ * Middleware per la validazione dei campi di una richiesta di aggiornamento di un "passage".
+ * Verifica opzionalmente che il campo "level" sia un intero e che il campo "needs_dpi" sia un booleano.
+ * Se ci sono errori di validazione, risponde con un messaggio di errore.
+ * 
+ * @type {Array}
+ */
 export const validateUpdatePassage = [
     check('level')
     .optional()

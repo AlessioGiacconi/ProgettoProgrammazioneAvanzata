@@ -1,3 +1,8 @@
+/**
+ * @file validationMiddleware.ts
+ * @description Questo file contiene middleware per la validazione dei dati delle richieste.
+ */
+
 import { Request, Response, NextFunction } from 'express';
 import { check, validationResult } from 'express-validator';
 import { ErrorFactory } from '../factory/Errors';
@@ -18,6 +23,13 @@ const pool = new Pool({
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
 const roles = ['user', 'passage'];
 
+/**
+ * Middleware per la validazione del campo "email".
+ * Verifica che l'email non sia vuota e sia un indirizzo email valido.
+ * Se ci sono errori di validazione, risponde con un messaggio di errore.
+ * 
+ * @type {Array}
+ */
 export const validateEmail = [
   check('email')
     .optional()
@@ -38,6 +50,13 @@ export const validateEmail = [
   }
 ];
 
+/**
+ * Middleware per la validazione del campo "email" per verificare se è già in uso.
+ * Controlla nel database se l'email è già presente.
+ * Se ci sono errori di validazione o l'email è già in uso, risponde con un messaggio di errore.
+ * 
+ * @type {Array}
+ */
 export const validateUsedEmail = [
   check('email')
     .optional()
@@ -65,6 +84,13 @@ export const validateUsedEmail = [
   }
 ];
 
+/**
+ * Middleware per la validazione del campo "passwd".
+ * Verifica che la password non sia vuota, sia una stringa di massimo 30 caratteri e rispetti il pattern specificato.
+ * Se ci sono errori di validazione, risponde con un messaggio di errore.
+ * 
+ * @type {Array}
+ */
 export const validatePassword = [
   check('passwd')
     .optional()
@@ -88,6 +114,13 @@ export const validatePassword = [
   }
 ];
 
+/**
+ * Middleware per la validazione del campo "role".
+ * Verifica che il ruolo non sia vuoto, sia una stringa e sia uno dei ruoli consentiti.
+ * Se ci sono errori di validazione, risponde con un messaggio di errore.
+ * 
+ * @type {Array}
+ */
 export const validateRole = [
   check('role')
   .optional()
@@ -109,6 +142,13 @@ export const validateRole = [
   }
 ];
 
+/**
+ * Middleware per la validazione del campo "passage_reference".
+ * Verifica che il riferimento al passage sia valido e che non sia già utilizzato da un altro utente.
+ * Se ci sono errori di validazione, risponde con un messaggio di errore.
+ * 
+ * @type {Array}
+ */
 export const validatePassageReference = [
   check('passage_reference')
   .optional()

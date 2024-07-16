@@ -1,3 +1,8 @@
+/**
+ * @file userMiddleware.ts
+ * @description Questo file contiene i middleware relativi alla gestione dell'autenticazione e autorizzazione degli utenti.
+ */
+
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { ErrorFactory } from '../factory/Errors';
@@ -5,7 +10,16 @@ import { ErrorEnum } from '../factory/Message';
 
 const errorFactory: ErrorFactory = new ErrorFactory();
 
-// Middleware per la verifica del token JWT
+/**
+ * Middleware per la verifica del token JWT.
+ * Controlla se il token è presente nell'intestazione di autorizzazione della richiesta,
+ * lo verifica e decodifica il token. Se il token è valido, viene aggiunto l'oggetto decodificato
+ * alla richiesta; altrimenti, viene restituito un errore di autenticazione.
+ * 
+ * @param req - L'oggetto della richiesta
+ * @param res - L'oggetto della risposta
+ * @param next - La funzione next per passare al middleware successivo
+ */
 export const checkJWT = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
 
@@ -29,7 +43,15 @@ export const checkJWT = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-// Middleware per la verifica del ruolo Admin
+/**
+ * Middleware per la verifica del ruolo Admin.
+ * Controlla se l'utente ha il ruolo di amministratore. Se sì, passa al middleware successivo;
+ * altrimenti, restituisce un errore di autorizzazione.
+ * 
+ * @param req - L'oggetto della richiesta
+ * @param res - L'oggetto della risposta
+ * @param next - La funzione next per passare al middleware successivo
+ */
 export const checkRoleAdmin = (req: Request, res: Response, next: NextFunction) => {
   const decoded: any = (req as any).decodedToken;
 
@@ -41,6 +63,15 @@ export const checkRoleAdmin = (req: Request, res: Response, next: NextFunction) 
   }
 };
 
+/**
+ * Middleware per la verifica del ruolo Admin o Varco.
+ * Controlla se l'utente ha il ruolo di amministratore o varco. Se sì, passa al middleware successivo;
+ * altrimenti, restituisce un errore di autorizzazione.
+ * 
+ * @param req - L'oggetto della richiesta
+ * @param res - L'oggetto della risposta
+ * @param next - La funzione next per passare al middleware successivo
+ */
 export const checkRoleAdminOrVarco = (req: Request, res: Response, next: NextFunction) => {
   const decoded: any = (req as any).decodedToken;
   console.log('Decoded Token:', decoded); // Debug: stampa il token decodificato
@@ -53,6 +84,15 @@ export const checkRoleAdminOrVarco = (req: Request, res: Response, next: NextFun
   }
 };
 
+/**
+ * Middleware per la verifica se l'utente è sospeso.
+ * Controlla se l'utente è sospeso. Se sì, restituisce un errore di autorizzazione;
+ * altrimenti, passa al middleware successivo.
+ * 
+ * @param req - L'oggetto della richiesta
+ * @param res - L'oggetto della risposta
+ * @param next - La funzione next per passare al middleware successivo
+ */
 export const checkSuspended = (req: Request, res: Response, next: NextFunction) => {
   const decoded: any = (req as any).decodedToken;
   console.log('Decoded Token:', decoded); // Debug: stampa il token decodificato
@@ -64,6 +104,15 @@ export const checkSuspended = (req: Request, res: Response, next: NextFunction) 
   next();
 };
 
+/**
+ * Middleware per la verifica del ruolo Admin o Utente.
+ * Controlla se l'utente ha il ruolo di amministratore o utente. Se sì, passa al middleware successivo;
+ * altrimenti, restituisce un errore di autorizzazione.
+ * 
+ * @param req - L'oggetto della richiesta
+ * @param res - L'oggetto della risposta
+ * @param next - La funzione next per passare al middleware successivo
+ */
 export const checkRoleAdminOrUser = (req: Request, res: Response, next: NextFunction) => {
   const decoded: any = (req as any).decodedToken;
   console.log('Decoded Token:', decoded); // Debug: stampa il token decodificato

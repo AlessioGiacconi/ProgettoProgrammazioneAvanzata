@@ -1,3 +1,9 @@
+/**
+ * @file PassagesModel.ts
+ * @description Questo file definisce il modello "passages" utilizzando Sequelize 
+ *              per interagire con la tabella corrispondente nel database.
+ */
+
 import { DataTypes} from 'sequelize';
 import { DatabaseConnection } from '../db/DatabaseConnection';
 
@@ -15,8 +21,12 @@ sequelize.authenticate().then(() => {
 
 
 /**
- * Definizione del modello "passages" relativo alla tabella del db corrispondente.
+ * Definizione del modello "passages" relativo alla tabella del database corrispondente.
+ * La tabella contiene le informazioni sui passaggi.
  * 
+ * @property {number} passage_id - L'ID del passaggio. È la chiave primaria e viene incrementata automaticamente.
+ * @property {number} level - Il livello del passaggio.
+ * @property {boolean} needs_dpi - Indica se il passaggio richiede DPI (Dispositivi di Protezione Individuale).
  */
 export const PassagesModel = sequelize.define('passages', {
     passage_id: {

@@ -25,7 +25,7 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
     const response = new SuccessFactory().getMessage(SuccessEnum.UserRetrievedSuccess).getResponse();
     res.status(response.status).json({ ...response, data: users });
   } catch (error) {
-    next(error);
+    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
   }
 };
 
@@ -38,21 +38,13 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
  */
 export const registerUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-
-    const {email, passwd, role, passage_reference} = req.body;
-
-    if( role == 'passage' && !passage_reference) {
-      const response = new ErrorFactory().getMessage(ErrorEnum.PassageReferenceRequired).getResponse()
-      return res.status(response.status).json(response)
-    }
-
     const user = await UsersModel.create({
-      email,
-      passwd,
-      role,
+      email: req.body.email,
+      passwd: req.body.passwd,
+      role: req.body.role,
       is_suspended: false,
       tokens: 100,
-      passage_reference: role === 'passage' ? passage_reference : null
+      passage_reference: req.body.role === 'passage' ? req.body.passage_reference : null
     });
     const response = new SuccessFactory().getMessage(SuccessEnum.UserRegisteredSuccess).getResponse();
     res.status(response.status).json({ ...response, data: user });
@@ -118,7 +110,7 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
       res.status(response.status).json(response);
     }
   } catch (error) {
-    next(error);
+    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
   }
 };
 
@@ -150,7 +142,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
       res.status(response.status).json(response);
     }
   } catch (error) {
-    next(error);
+    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
   }
 };
 
@@ -174,7 +166,7 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
       res.status(response.status).json(response);
     }
   } catch (error) {
-    next(error);
+    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
   }
 };
 
@@ -200,7 +192,7 @@ export const getSuspendedBadges = async (req: Request, res: Response, next: Next
     const response = new SuccessFactory().getMessage(SuccessEnum.UsersSuspendedSuccess).getResponse();
     res.status(response.status).json({ ...response, data: suspendedBadges });
   } catch (error) {
-    next(error);
+    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
   }
 };
 
@@ -242,6 +234,6 @@ export const reactivateBadges = async (req: Request, res: Response, next: NextFu
     const response = new SuccessFactory().getMessage(SuccessEnum.UserActivatedSuccess).getResponse();
     res.status(response.status).json({ ...response, updatedCount: updatedUsers[0], data: reactivatedUsers });
   } catch (error) {
-    next(error);
+    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
   }
 };

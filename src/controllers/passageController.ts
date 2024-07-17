@@ -53,6 +53,10 @@ export const createPassage = async (req: Request, res: Response, next: NextFunct
 export const getPassage = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {
+      if (isNaN(Number(id))) {
+        const response = new ErrorFactory().getMessage(ErrorEnum.BadRequest).getResponse();
+        return res.status(response.status).json(response);
+      }
       const passage = await PassagesModel.findByPk(id);
       if (passage) {
         const response = new SuccessFactory().getMessage(SuccessEnum.PassageRetrievedSuccess).getResponse();
@@ -75,6 +79,10 @@ export const getPassage = async (req: Request, res: Response, next: NextFunction
 export const updatePassage = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
+      if (isNaN(Number(id))) {
+        const response = new ErrorFactory().getMessage(ErrorEnum.BadRequest).getResponse();
+        return res.status(response.status).json(response);
+      }
       const { level, needs_dpi } = req.body;
 
       const passage = await PassagesModel.findByPk(id);
@@ -107,6 +115,10 @@ export const updatePassage = async (req: Request, res: Response, next: NextFunct
 export const deletePassage = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
     try {
+      if (isNaN(Number(id))) {
+        const response = new ErrorFactory().getMessage(ErrorEnum.BadRequest).getResponse();
+        return res.status(response.status).json(response);
+      }
       const passage = await PassagesModel.findByPk(id);
       if (passage) {
         await passage.destroy();

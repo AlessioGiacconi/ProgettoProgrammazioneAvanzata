@@ -78,6 +78,7 @@ export interface Response {
     InternalServerError,
     EmailNotValidAddress,
     LoginBadRequest,
+    BadRequest,
     JwtNotValid,
     TokenChargeBadRequest,
     ForbiddenAdminRole,

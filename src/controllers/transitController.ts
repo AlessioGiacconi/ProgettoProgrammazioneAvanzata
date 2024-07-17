@@ -39,15 +39,23 @@ export const getAllTransit = async(req: Request, res: Response, next: NextFuncti
  * @param {Request} req - La richiesta HTTP, che contiene l'ID del transito nei parametri della richiesta.
  * @param {Response} res - La risposta HTTP.
  */
-export const getTransit = async (req: Request, res: Response) => {
+export const getTransit = async (req: Request, res: Response, next: NextFunction) => {
     const {id} = req.params;
-    const transit = await TransitsModel.findByPk(id);
-    if (transit) {
-        const response = new SuccessFactory().getMessage(SuccessEnum.TransitRetrievedSuccess).getResponse();
-        res.status(response.status).json({ ...response, data: transit });
-    } else {
-        const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
-        res.status(response.status).json(response);
+    try {
+        if (isNaN(Number(id))) {
+            const response = new ErrorFactory().getMessage(ErrorEnum.BadRequest).getResponse();
+            return res.status(response.status).json(response);
+          }
+        const transit = await TransitsModel.findByPk(id);
+        if (transit) {
+            const response = new SuccessFactory().getMessage(SuccessEnum.TransitRetrievedSuccess).getResponse();
+            res.status(response.status).json({ ...response, data: transit });
+        } else {
+            const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
+            res.status(response.status).json(response);
+        }
+    } catch (error) {
+        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
     }
 };
 
@@ -136,6 +144,10 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
 export const updateTransit = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {id} = req.params;
+        if (isNaN(Number(id))) {
+            const response = new ErrorFactory().getMessage(ErrorEnum.BadRequest).getResponse();
+            return res.status(response.status).json(response);
+          }
         const {transit_date, violation_dpi} = req.body;
 
         const transit = await TransitsModel.findByPk(id);
@@ -165,16 +177,24 @@ export const updateTransit = async (req: Request, res: Response, next: NextFunct
  * @param {Request} req - La richiesta HTTP, che contiene l'ID del transito nei parametri della richiesta.
  * @param {Response} res - La risposta HTTP.
  */
-export const deleteTransit = async (req: Request, res: Response) => {
+export const deleteTransit = async (req: Request, res: Response, next: NextFunction) => {
     const {id} = req.params;
+    if (isNaN(Number(id))) {
+        const response = new ErrorFactory().getMessage(ErrorEnum.BadRequest).getResponse();
+        return res.status(response.status).json(response);
+      }
     const transit = await TransitsModel.findByPk(id);
-    if (transit) {
-        await transit.destroy();
-        const response = new SuccessFactory().getMessage(SuccessEnum.TransitDeletedSuccess).getResponse();
-        res.status(response.status).json(response);
-    } else {
-        const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
-        res.status(response.status).json(response);
+    try {
+        if (transit) {
+            await transit.destroy();
+            const response = new SuccessFactory().getMessage(SuccessEnum.TransitDeletedSuccess).getResponse();
+            res.status(response.status).json(response);
+        } else {
+            const response = new ErrorFactory().getMessage(ErrorEnum.TransitNotFound).getResponse();
+            res.status(response.status).json(response);
+        }
+    } catch (error){
+        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
     }
 };
 

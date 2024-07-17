@@ -68,6 +68,22 @@ class UserNotFound implements Message {
   }
 }
 
+class BadRequest implements Message {
+
+  /**
+   * @method getResponse
+   * @description Restituisce la risposta di errore per una richiesta non valida.
+   * @returns {Response} La risposta di errore.
+   */
+  getResponse(): Response {
+    return {
+      status: HttpStatusEnum.BAD_REQUEST,
+      message: 'Request Not Valid',
+      type: 'application/json'
+    };
+  }
+}
+
 /**
  * @class UserUpdateFailed
  * @implements Message
@@ -800,6 +816,9 @@ export class ErrorFactory extends MessageFactory {
         break;
       case ErrorEnum.AccessStatsRetrieveFailed:
         errorClass = new AccessStatsRetrieveFailed();
+        break;
+      case ErrorEnum.BadRequest:
+        errorClass = new BadRequest();
         break;
       case ErrorEnum.Unauthorized:
         errorClass = new Unauthorized();

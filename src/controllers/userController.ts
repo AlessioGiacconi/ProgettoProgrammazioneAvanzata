@@ -101,6 +101,10 @@ export const loginUser = async (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    if (isNaN(Number(id))) {
+      const response = new ErrorFactory().getMessage(ErrorEnum.BadRequest).getResponse();
+      return res.status(response.status).json(response);
+    }
     const user = await UsersModel.findByPk(id);
     if (user) {
         const response = new SuccessFactory().getMessage(SuccessEnum.UserRetrievedSuccess).getResponse();
@@ -124,6 +128,10 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    if (isNaN(Number(id))) {
+      const response = new ErrorFactory().getMessage(ErrorEnum.BadRequest).getResponse();
+      return res.status(response.status).json(response);
+    }
     const { email, passwd, tokens, passage_reference } = req.body;
     const user = await UsersModel.findByPk(id);
     if (user) {
@@ -156,6 +164,10 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    if (isNaN(Number(id))) {
+      const response = new ErrorFactory().getMessage(ErrorEnum.BadRequest).getResponse();
+      return res.status(response.status).json(response);
+    }
     const user = await UsersModel.findByPk(id);
     if (user) {
       await user.destroy();

@@ -65,7 +65,7 @@ Nella tabella a seguire sono presentate tutte le rotte disponibili, i livelli di
 
 In questa sezione verrà fornita una descrizione di alcune delle rotte presentate precedentemente, oltre a un diagramma delle sequenze che mostri l'interazione tra i componenti del backend sviluppato. Verranno inoltre mostrati i parametri per ciascuna chiamata e gli output attesi in caso di successo.
 
-### POST /register
+#### POST /register
 
 Questa è la rotta di registrazione. Per ottenere una risposta, il corpo della richiesta dovrà essere del tipo:
 
@@ -102,4 +102,200 @@ Di seguito il diagramma delle sequenze:
 
 <p align= "center">
     <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Registrazione.png" alt="POST /register">
+</p>
+
+#### POST /login
+
+Questa è la rotta di login. Per ottenere una risposta, il corpo della richiesta dovrà essere del tipo:
+
+```json
+{
+    "email": "admin@admin.com",
+    "passwd": "Password1"
+}
+```
+In caso di accesso andato a buon fine, verrà mostrato il seguente risultato:
+
+```json
+{
+    "status": 200,
+    "message": "Login successful",
+    "type": "application/json",
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJiYWRnZV9pZCI6NiwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiYWRtaW4iLCJpc19zdXNwZW5kZWQiOmZhbHNlLCJpYXQiOjE3MjEyOTA2MDAsImV4cCI6MTcyMTI5NDIwMH0.ZpJ28X4X59-SiX6SmvX-zR-Xki9jpgO1ubn0n8rJfFI"
+}
+```
+
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Login.png" alt="POST /login">
+</p>
+
+#### PUT /badges/user/:id
+
+Questa è la rotta che permette l'aggiornamento dei dati relativi ad uno specifico utente. Una volta specificato l'ID dell'utente di interesse, occorre che il corpo della richiesta sia del seguente tipo:
+
+```json
+{
+  "email": "francesco@op.com",
+  "passwd": "Password5",
+  "tokens": 100,
+  "passage_reference": 3
+}
+```
+In caso di avvenuto aggiornamento dei dati dell'utente con i dati inseriti nel corpo della richiesta, verrà restituito il seguente messaggio:
+
+```json
+{
+    "status": 200,
+    "message": "User updated successfully",
+    "type": "application/json",
+    "data": {
+        "badge_id": 4,
+        "email": "francesco@opg.com",
+        "passwd": "Password5",
+        "role": "passage",
+        "is_suspended": false,
+        "tokens": 100,
+        "passage_reference": 3,
+        "unauthorized_attempts": 0,
+        "created_at": "2024-07-18T08:00:39.091Z",
+        "updated_at": "2024-07-11T11:00:00.000Z"
+    }
+}
+```
+
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Update_User.png" alt="PUT /badges/user/:id">
+</p>
+
+#### POST /passages/passage
+
+Questa è una rotta che consente la creazione di un nuovo varco nel sistema. Il corpo della richiesta dovrà essere del seguente tipo:
+
+```json
+{
+  "level": 2,
+  "needs_dpi": true
+}
+```
+In caso di inserimento del varco avvenuto con successo, l'output della richiesta è il seguente:
+
+```json
+{
+    "status": 201,
+    "message": "Passage created successfully",
+    "type": "application/json",
+    "data": {
+        "passage_id": 6,
+        "level": 2,
+        "needs_dpi": true
+    }
+}
+```
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Create_Passage.png" alt="POST /passages/passage">
+</p>
+
+#### PUT /passages/passage/:id
+
+Questa rotta permette di aggiornare i dati relativi ad uno specifico varco. Una volta specificato l'ID del varco di interesse, occorre che il corpo della richiesta sia del seguente tipo:
+
+```json
+{
+  "level": 3,
+  "needs_dpi": false
+}
+```
+In caso di aggiornamento andato a buon fine, verrà restituito il seguente messaggio:
+
+```json
+{
+    "status": 200,
+    "message": "Passage updated successfully",
+    "type": "application/json",
+    "data": {
+        "passage_id": 1,
+        "level": 3,
+        "needs_dpi": false
+    }
+}
+```
+
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Update_passage.png" alt="PUT /passages/passage/:id">
+</p>
+
+#### POST /transits/transit
+
+Questa rotta permette l'inserimento di un nuovo transito. Il corpo della richiesta deve essere del tipo:
+
+```json
+{
+  "passage": 1,
+  "badge": 2,
+  "transit_date": "2024-07-10T10:00:00",
+  "violation_dpi": false
+}
+```
+Se l'inserimento è andato a buon fine, verrà restituito il seguente output:
+
+```json
+{
+    "status": 200,
+    "message": "Transit created successfully",
+    "type": "application/json",
+    "data": {
+        "transit_id": 7,
+        "passage": 1,
+        "badge": 2,
+        "transit_date": "2024-07-18T09:15:37.608Z",
+        "is_authorized": false,
+        "violation_dpi": false
+    }
+}
+```
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Create_Transit.png" alt="POST /transits/transit">
+</p>
+
+#### GET /transits/transit-stats/:badge_id
+
+Questa rotta restituisce delle statistiche di accesso per un determinato badge ID. Una volta specificato il badge ID dell'utente di interesse, occorre passare i seguenti parametri:
+
+<p align= "center">
+    <img src="C:\Users\falco\Documents\Programmazione avanzata\progetto\ProgettoProgrammazioneAvanzata\images\parametri_getAccessStats.png" alt="parametri da inserire per questa rotta">
+</p>
+
+In caso di successo, viene restituito il seguente risultato:
+
+```json
+{
+    "status": 200,
+    "message": "Access statistics retrieved successfully",
+    "type": "application/json",
+    "data": {
+        "accessCount": {
+            "1": {
+                "authorized": 1,
+                "unauthorized": 0,
+                "violations": 1
+            }
+        },
+        "totalUnauthorizedAttempts": 0
+    }
+}
+```
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Get_Access_Stats.png" alt="GET /transits/transit-stats/:badge_id">
 </p>

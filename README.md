@@ -272,7 +272,7 @@ Di seguito il diagramma delle sequenze:
 Questa rotta restituisce delle statistiche di accesso per un determinato badge ID. Una volta specificato il badge ID dell'utente di interesse, occorre passare i seguenti parametri:
 
 <p align= "center">
-    <img src="C:\Users\falco\Documents\Programmazione avanzata\progetto\ProgettoProgrammazioneAvanzata\images\parametri_getAccessStats.png" alt="parametri da inserire per questa rotta">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/parametri_getAccessStats.png" alt="parametri da inserire per questa rotta">
 </p>
 
 In caso di successo, viene restituito il seguente risultato:

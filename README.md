@@ -61,3 +61,45 @@ Nella tabella a seguire sono presentate tutte le rotte disponibili, i livelli di
     <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/use-case-diagram.jpg" alt="Diagramma dei casi d'uso">
 </p>
 
+### Diagrammi delle sequenze
+
+In questa sezione verrà fornita una descrizione di alcune delle rotte presentate precedentemente, oltre a un diagramma delle sequenze che mostri l'interazione tra i componenti del backend sviluppato. Verranno inoltre mostrati i parametri per ciascuna chiamata e gli output attesi in caso di successo.
+
+### POST /register
+
+Questa è la rotta di registrazione. Per ottenere una risposta, il corpo della richiesta dovrà essere del tipo:
+
+```json
+{
+  "email": "francesco@mail.com",
+  "passwd": "Securepassword123",
+  "role": "user"
+}
+```
+In caso di registrazione andata a buon fine, verrà mostrato il seguente risultato:
+
+```json
+{
+    "status": 201,
+    "message": "User registered successfully",
+    "type": "application/json",
+    "data": {
+        "unauthorized_attempts": 0,
+        "created_at": "2024-07-18T08:07:58.020Z",
+        "updated_at": "2024-07-18T08:07:58.020Z",
+        "badge_id": 12,
+        "email": "francesco@mail.com",
+        "passwd": "Securepassword123",
+        "role": "user",
+        "is_suspended": false,
+        "tokens": 100,
+        "passage_reference": null
+    }
+}
+```
+
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Registrazione.png" alt="POST /register">
+</p>

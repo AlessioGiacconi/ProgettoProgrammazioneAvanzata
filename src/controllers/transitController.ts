@@ -10,7 +10,7 @@ import { AuthorizationModel } from '../models/AuthorizationModel';
 import { Op } from 'sequelize';
 import PDFDocument from 'pdfkit';
 import { stringify } from 'csv-stringify';
-import { ErrorEnum, SuccessEnum } from '../factory/Message';
+import { ErrorEnum, HttpStatusEnum, SuccessEnum } from '../factory/Message';
 import { ErrorFactory } from '../factory/Errors';
 import { SuccessFactory} from '../factory/Successes';
 
@@ -89,15 +89,15 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
 
         if(userRole === 'passage' || user.get('role') === 'passage') {
             if(user.get('role') === 'passage') {
-                return res.status(403).json({message: 'Insertion not allowed.'})
+                return res.status(HttpStatusEnum.FORBIDDEN).json({message: 'Insertion not allowed.'})
             }
             /*if(userRole === 'passage' && registeredUser.get('passage_reference') === passage && userBadge === badge){
                 return res.status(403).json({message: 'Insertion not allowed.'})
             }*/
             if (user.get('passage_reference') && user.get('passage_reference') !== passage) {
-                return res.status(403).json({message: 'Users with role "passage" can only insert transits for their own passage_reference'});
+                return res.status(HttpStatusEnum.FORBIDDEN).json({message: 'Users with role "passage" can only insert transits for their own passage_reference'});
             } else if (registeredUser.get('passage_reference') && registeredUser.get('passage_reference') !== passage) {
-                return res.status(403).json({message: 'Users with role "passage" can only insert transits for their own passage_reference' });
+                return res.status(HttpStatusEnum.FORBIDDEN).json({message: 'Users with role "passage" can only insert transits for their own passage_reference' });
             }
         }
 

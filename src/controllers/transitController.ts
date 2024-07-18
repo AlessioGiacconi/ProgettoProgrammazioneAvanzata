@@ -81,8 +81,8 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
             return res.status(response.status).json(response);
         }
 
-        if(userRole === 'passage') {
-            if(badge != userBadge) {
+        if(userRole === 'passage' || user.get('role') === 'passage') {
+            if(userRole === 'passage' && badge != userBadge) {
                 return res.status(HttpStatusEnum.FORBIDDEN).json({message: 'Users with role "passage" can only insert transits for their own badge_id'});
             }
             

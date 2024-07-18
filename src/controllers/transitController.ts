@@ -10,7 +10,7 @@ import { AuthorizationModel } from '../models/AuthorizationModel';
 import { Op } from 'sequelize';
 import PDFDocument from 'pdfkit';
 import { stringify } from 'csv-stringify';
-import { ErrorEnum, SuccessEnum } from '../factory/Message';
+import { ErrorEnum, SuccessEnum, HttpStatusEnum } from '../factory/Message';
 import { ErrorFactory } from '../factory/Errors';
 import { SuccessFactory} from '../factory/Successes';
 
@@ -83,11 +83,11 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
 
         if(userRole === 'passage') {
             if(badge != userBadge) {
-                return res.status(403).json({message: 'Users with role "passage" can only insert transits for their own badge_id'});
+                return res.status(HttpStatusEnum.FORBIDDEN).json({message: 'Users with role "passage" can only insert transits for their own badge_id'});
             }
             
             if (user.get('passage_reference') !== passage) {
-                return res.status(403).json({message: 'Users with role "passage" can only insert transits for their own passage_reference' });
+                return res.status(HttpStatusEnum.FORBIDDEN).json({message: 'Users with role "passage" can only insert transits for their own passage_reference' });
             }
         }
 

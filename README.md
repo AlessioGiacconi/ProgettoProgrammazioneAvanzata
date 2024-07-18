@@ -299,3 +299,191 @@ Di seguito il diagramma delle sequenze:
 <p align= "center">
     <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Get_Access_Stats.png" alt="GET /transits/transit-stats/:badge_id">
 </p>
+
+#### GET /transits/passage-report
+
+Questa rotta restituisce un report con tutte le informazioni relative ai varchi presenti. Questa funzionalità permette di ottenere tale report in formato .pdf, .csv o in JSON. Occorre fornire i parametri illustrati:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/parametri_getPassageReport.png" alt="parametro relativi a questa rotta">
+</p>
+
+In caso di successo, l'output restituito è il seguente (nel caso in cui si scelga di inserire .csv come formato di output):
+
+```
+passage,authorized,unauthorized,violations
+1,1,1,1
+2,0,1,1
+3,1,0,0
+4,1,0,0
+5,1,0,1
+```
+Nel caso in cui il formato scelto sia il pdf:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/output_pdfPassageReport.png" alt="output in pdf">
+</p>
+
+Nel caso in cui il formato scelto sia il JSON:
+
+```json
+[
+    {
+        "passage": 1,
+        "authorized": 1,
+        "unauthorized": 1,
+        "violations": 1
+    },
+    {
+        "passage": 2,
+        "authorized": 0,
+        "unauthorized": 1,
+        "violations": 1
+    },
+    {
+        "passage": 3,
+        "authorized": 1,
+        "unauthorized": 0,
+        "violations": 0
+    },
+    {
+        "passage": 4,
+        "authorized": 1,
+        "unauthorized": 0,
+        "violations": 0
+    },
+    {
+        "passage": 5,
+        "authorized": 1,
+        "unauthorized": 0,
+        "violations": 1
+    }
+]
+```
+
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Get_Passage_Report.png" alt="GET /transits/passage-report">
+</p>
+
+#### GET /transits/user-report
+
+Questa rotta restituisce un report circa le informazioni relative ai transiti effettuati da ciascun utente presente nel sistema. Anche qui è possibile impostare il formato dell'output atteso (.pdf, .csv o JSON). I parametri richiesti sono quelli illustrati di seguito:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/parametri_getPassageReport.png" alt="parametro relativi a questa rotta">
+</p>
+
+In caso di successo, l'output restituito è il seguente (nel caso in cui si scelga di inserire .csv come formato di output):
+
+```
+badge,authorized,unauthorized,violations,status
+1,1,1,1,active
+2,1,0,0,active
+3,0,1,1,active
+4,2,0,1,active
+```
+Nel caso in cui il formato scelto sia il pdf:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/output_pdfUserStats.png" alt="output in pdf">
+</p>
+
+Nel caso in cui il formato scelto sia il JSON:
+
+```json
+[
+    {
+        "badge": 1,
+        "authorized": 1,
+        "unauthorized": 1,
+        "violations": 1,
+        "status": "active"
+    },
+    {
+        "badge": 2,
+        "authorized": 1,
+        "unauthorized": 0,
+        "violations": 0,
+        "status": "active"
+    },
+    {
+        "badge": 3,
+        "authorized": 0,
+        "unauthorized": 1,
+        "violations": 1,
+        "status": "active"
+    },
+    {
+        "badge": 4,
+        "authorized": 2,
+        "unauthorized": 0,
+        "violations": 1,
+        "status": "active"
+    }
+]
+```
+
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Get_User_Report.png" alt="GET /transits/user-report">
+</p>
+
+#### GET /badges/suspended-badges
+
+Questa rotta restituisce un elenco degli utenti sospesi. L'output previsto in caso di successo è il seguente:
+
+```json
+{
+    "status": 200,
+    "message": "Suspended users returned successfully",
+    "type": "application/json",
+    "data": [
+        {
+            "badge_id": 10,
+            "email": "marco@gmail.com"
+        }
+    ]
+}
+```
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Get_suspended_badges.png" alt="GGET /badges/suspended-badges">
+</p>
+
+
+#### PUT /badges/reactivate-badges
+
+Questa rotta permette di riattivare uno o più badge id sospesi. Occorre che il corpo della richiesta sia del seguente tipo:
+
+```json
+{
+    "badgeIds": [1]
+}
+```
+Come si può vedere, è possibile passare anche una lista di badge ID sospesi. In caso di aggiornamento riuscito, l'output è il seguente:
+
+```json
+{
+    "status": 200,
+    "message": "User activated successfully",
+    "type": "application/json",
+    "updatedCount": 1,
+    "data": [
+        {
+            "badge_id": 10,
+            "email": "marco@gmail.com"
+        }
+    ]
+}
+```
+
+Di seguito il diagramma delle sequenze:
+
+<p align= "center">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Reactivate_users.png" alt="PUT /badges/reactivate-badges">
+</p>
+

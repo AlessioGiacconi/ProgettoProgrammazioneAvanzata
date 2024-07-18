@@ -75,22 +75,31 @@ export const createTransit = async (req: Request, res: Response, next: NextFunct
         const userBadge = decodedToken.badge_id;
 
         const user = await UsersModel.findByPk(badge);
+        const registeredUser = await UsersModel.findByPk(userBadge);
 
         if (!user) {
             const response = new ErrorFactory().getMessage(ErrorEnum.UserNotFound).getResponse();
             return res.status(response.status).json(response);
         }
 
+        if(!registeredUser) {
+            const response = new ErrorFactory().getMessage(ErrorEnum.UserNotFound).getResponse();
+            return res.status(response.status).json(response); 
+        }
+
         if(userRole === 'passage' || user.get('role') === 'passage') {
-            if(userRole === 'passage' && badge != userBadge) {
-                return res.status(403).json({message: 'Users with role "passage" can only insert transits for their own badge_id'});
+            if(user.get('role') === 'passage') {
+                return res.status(403).json({message: 'Insertion not allowed.'})
             }
-            
-            if (user.get('passage_reference') !== passage) {
+            /*if(userRole === 'passage' && registeredUser.get('passage_reference') === passage && userBadge === badge){
+                return res.status(403).json({message: 'Insertion not allowed.'})
+            }*/
+            if (user.get('passage_reference') && user.get('passage_reference') !== passage) {
+                return res.status(403).json({message: 'Users with role "passage" can only insert transits for their own passage_reference'});
+            } else if (registeredUser.get('passage_reference') && registeredUser.get('passage_reference') !== passage) {
                 return res.status(403).json({message: 'Users with role "passage" can only insert transits for their own passage_reference' });
             }
         }
-
 
         const authorization = await AuthorizationModel.findOne({
             where: {

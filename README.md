@@ -305,7 +305,7 @@ Di seguito il diagramma delle sequenze:
 Questa rotta restituisce un report con tutte le informazioni relative ai varchi presenti. Questa funzionalità permette di ottenere tale report in formato .pdf, .csv o in JSON. Occorre fornire i parametri illustrati:
 
 <p align= "center">
-    <img src="C:\Users\falco\Documents\Programmazione avanzata\progetto\ProgettoProgrammazioneAvanzata\images\parametri_getPassageReport.png" alt="parametro relativi a questa rotta">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/parametri_getPassageReport.png" alt="parametro relativi a questa rotta">
 </p>
 
 In caso di successo, l'output restituito è il seguente (nel caso in cui si scelga di inserire .csv come formato di output):
@@ -321,7 +321,7 @@ passage,authorized,unauthorized,violations
 Nel caso in cui il formato scelto sia il pdf:
 
 <p align= "center">
-    <img src="C:\Users\falco\Documents\Programmazione avanzata\progetto\ProgettoProgrammazioneAvanzata\images\output_pdfPassageReport.png" alt="output in pdf">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/output_pdfPassageReport.png" alt="output in pdf">
 </p>
 
 Nel caso in cui il formato scelto sia il JSON:
@@ -372,7 +372,7 @@ Di seguito il diagramma delle sequenze:
 Questa rotta restituisce un report circa le informazioni relative ai transiti effettuati da ciascun utente presente nel sistema. Anche qui è possibile impostare il formato dell'output atteso (.pdf, .csv o JSON). I parametri richiesti sono quelli illustrati di seguito:
 
 <p align= "center">
-    <img src="C:\Users\falco\Documents\Programmazione avanzata\progetto\ProgettoProgrammazioneAvanzata\images\parametri_getPassageReport.png" alt="parametro relativi a questa rotta">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/parametri_getPassageReport.png" alt="parametro relativi a questa rotta">
 </p>
 
 In caso di successo, l'output restituito è il seguente (nel caso in cui si scelga di inserire .csv come formato di output):
@@ -387,7 +387,7 @@ badge,authorized,unauthorized,violations,status
 Nel caso in cui il formato scelto sia il pdf:
 
 <p align= "center">
-    <img src="C:\Users\falco\Documents\Programmazione avanzata\progetto\ProgettoProgrammazioneAvanzata\images\output_pdfUserStats.png" alt="output in pdf">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/output_pdfUserStats.png" alt="output in pdf">
 </p>
 
 Nel caso in cui il formato scelto sia il JSON:
@@ -484,6 +484,6 @@ Come si può vedere, è possibile passare anche una lista di badge ID sospesi. I
 Di seguito il diagramma delle sequenze:
 
 <p align= "center">
-    <img src="C:\Users\falco\Documents\Programmazione avanzata\progetto\ProgettoProgrammazioneAvanzata\images\Reactivate_users.png" alt="PUT /badges/reactivate-badges">
+    <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Reactivate_users.png" alt="PUT /badges/reactivate-badges">
 </p>
 

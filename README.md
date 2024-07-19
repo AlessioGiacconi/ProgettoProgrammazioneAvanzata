@@ -509,3 +509,61 @@ La Chain of Responsability è un design pattern comportamentale che permette di 
 
 Il pattern DAO è un patterno architetturale che ha lo scopo di disaccoppiare l'accesso ai dati rispetto alla loro memorizzazione sottostante. In altre parole il DAO fornisce un'astrazione che permette di isolare il livello applicativ da quello della persistenza attraverso un'API. Tale API nasconde all'applicazione tutta la complessità delle operazione CRUD (Create, Read, Update, Delete) che avvengono nel sottostante meccanismo di memorizzazione. Solitamente, per implementare correttamente tale pattern, è necessario creare una classe DAO per ogni tablella presente nel database di riferimento, andando ad implementare come metodi delle classi le operazione CRUD. Nell'ambito del nostro progetto, il pattern DAO non è stato implementato direttamente, ma è stato adoperato l'ORM Sequelize, che consente di definire DAO, o Model, che espongono nativamente una serie di metodi per eseguire operazioni CRUD.
 
+## Avvio e Testing
+
+Per utilizzare la nostra applicazione è sufficiente seguire pochi e semplici passaggi:
+
+- **Scaricare il progetto**: Eseguire la clonazione di questa repository Github. Puoi fare ciò eseguendo il comando a seguire.
+
+```bash
+git clone https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata
+```
+
+- **Configurare il file ```.env```**: Se necessario, è possibile modificare le informazioni contenute sul file ```.env``` in base alle proprie personali esigenze (Consigliabile cambiare la chiave privata per la generazione dei token JWT).
+
+- **Importare la collection Postman**: Insieme ai file di progetto si può trovare il file ```PA2024.postman_collection.json```, all'interno delle quali sono presenti una serie di chiamate che è possibile importare su Postman per testare le varie funzionalità dell'app.
+
+- **Eseguire la build dei container**: Posizionandosi all'interno della cartella di progetto appena scaricata eseguire il seguente comando:
+
+```bash
+docker-compose build
+```
+
+- **Avviare il servizio tramite Docker**: Per avviare l'applicazione non rimane che eseguire il seguente comando:
+
+```bash
+docker-compose up -d
+```
+
+- **Avviare Postman e testare**: Usando Postman sarà possibile effettuare le chiamate desiderate seguendo le rotte che hai potuto osservare precedentemente.
+
+## Software per lo sviluppo
+
+Per lo sviluppo dell'applicativo sono stati utilizzati i seguenti strumento software:
+
+## Tools
+
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Postman](https://www.postman.com/)
+- [Docker](https://www.docker.com/)
+
+## Framework e Librerie
+
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [Sequelize](https://sequelize.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Nodemon](https://nodemon.io/)
+- [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken)
+- [Node-cron](https://www.npmjs.com/package/node-cron)
+- [Winston](https://www.npmjs.com/package/winston)
+- [Express-validator](https://express-validator.github.io/)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [csv-stringify](https://www.npmjs.com/package/csv-stringify)
+- [pdfkit](https://www.npmjs.com/package/pdfkit)
+
+## Autori
+
+- [Alessio Giacconi](https://github.com/AlessioGiacconi)
+- [Francesco Camplese](https://github.com/FrancescoCamplese00)
+

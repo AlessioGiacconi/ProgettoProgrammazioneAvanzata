@@ -487,3 +487,25 @@ Di seguito il diagramma delle sequenze:
     <img src="https://github.com/AlessioGiacconi/ProgettoProgrammazioneAvanzata/blob/master/images/Reactivate_users.png" alt="PUT /badges/reactivate-badges">
 </p>
 
+## Pattern Impiegati
+
+### MCV (Model-View-Controller)
+
+Il pattern MVC è un pattern architetturale che rappresenta la base per la gestione delle interaziomi tra molti sistemi web. Si basa sul principio di separazione delle responsabilità e suddivide l'applicazione in tre componenti principali: Model, responsabile dello stato e della business logic dell'applicazione; View, adibita alla sola gestione dell'interfaccia utente; e Controller, il cui compito è tradurre l'input dell'utente attraverso una gestione delle logiche di interazione.
+
+### Singleton
+
+Il pattern Singleton è un design pattern di tipo creazionale, ampiamente utilizzato qualora sia utile che una classe abbia un'unica istanza. Nel contesto del progetto, è stato impiegato per creare l'istanza di connessione al database, evitando la creazione di connessioni multiple che si sarebbero rivelate molto dispendiose dal punto di vista computazionale.
+
+### Factory
+
+Anche questo pattern fa parte della famiglia dei pattern creazionali ed è stato impiegato per l'implementazione di messaggi di errore e di successo personalizzati. Questo pattern fornisce un'interfaccia per la creazione di oggetti in una superclasse, consentendo alle sottoclassi di modificare il tipo di oggetti hce verranno creati. Un utilizzo classico di questo design pattern è proprio quello della gestione di messaggi di errore personalizzati, essendo constituiti tutti dalle medesime proprietà, status code e messaggio di errore.
+
+### Chain of Responsability
+
+La Chain of Responsability è un design pattern comportamentale che permette di passare richieste lungo una catena di handler. Quando una richiesta viene ricevuta, ogni handler decide se processarla o passarla al successivo handler nella catena. In altre parole, il Chain of Responsability è un pattern che disaccoppia il mittente dai suoi destinatati, dando a più di un oggetto la possibilità di gestire la richiesta. Nell'applicazione è stato impiegato questo pattern vista la grande quantità di controlli che era necessario effettuare per validare le richieste. Per implementare gli handler si sono rese utili le funzionalità di middleware messe a disposizione del framework Express ed è stato impiegato anche il modulo Express-Validator, pacchetto npm che formince un'ampia gamma di middleware per Express.js.    
+
+### DAO (Data Access Object)
+
+Il pattern DAO è un patterno architetturale che ha lo scopo di disaccoppiare l'accesso ai dati rispetto alla loro memorizzazione sottostante. In altre parole il DAO fornisce un'astrazione che permette di isolare il livello applicativ da quello della persistenza attraverso un'API. Tale API nasconde all'applicazione tutta la complessità delle operazione CRUD (Create, Read, Update, Delete) che avvengono nel sottostante meccanismo di memorizzazione. Solitamente, per implementare correttamente tale pattern, è necessario creare una classe DAO per ogni tablella presente nel database di riferimento, andando ad implementare come metodi delle classi le operazione CRUD. Nell'ambito del nostro progetto, il pattern DAO non è stato implementato direttamente, ma è stato adoperato l'ORM Sequelize, che consente di definire DAO, o Model, che espongono nativamente una serie di metodi per eseguire operazioni CRUD.
+

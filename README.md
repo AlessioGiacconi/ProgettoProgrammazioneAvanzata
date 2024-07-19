@@ -489,7 +489,7 @@ Di seguito il diagramma delle sequenze:
 
 ## Pattern Impiegati
 
-### MCV (Model-View-Controller)
+### MVC (Model-View-Controller)
 
 Il pattern MVC è un pattern architetturale che rappresenta la base per la gestione delle interaziomi tra molti sistemi web. Si basa sul principio di separazione delle responsabilità e suddivide l'applicazione in tre componenti principali: Model, responsabile dello stato e della business logic dell'applicazione; View, adibita alla sola gestione dell'interfaccia utente; e Controller, il cui compito è tradurre l'input dell'utente attraverso una gestione delle logiche di interazione.
 

@@ -25,7 +25,7 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
     const response = new SuccessFactory().getMessage(SuccessEnum.UserRetrievedSuccess).getResponse();
     res.status(response.status).json({ ...response, data: users });
   } catch (error) {
-    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+    next(error);
   }
 };
 
@@ -114,7 +114,7 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
       res.status(response.status).json(response);
     }
   } catch (error) {
-    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+    next(error);
   }
 };
 
@@ -150,7 +150,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
       res.status(response.status).json(response);
     }
   } catch (error) {
-    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+    next(error);
   }
 };
 
@@ -178,7 +178,7 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
       res.status(response.status).json(response);
     }
   } catch (error) {
-    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+    next(error);
   }
 };
 
@@ -204,7 +204,7 @@ export const getSuspendedBadges = async (req: Request, res: Response, next: Next
     const response = new SuccessFactory().getMessage(SuccessEnum.UsersSuspendedSuccess).getResponse();
     res.status(response.status).json({ ...response, data: suspendedBadges });
   } catch (error) {
-    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+    next(error);
   }
 };
 
@@ -246,6 +246,6 @@ export const reactivateBadges = async (req: Request, res: Response, next: NextFu
     const response = new SuccessFactory().getMessage(SuccessEnum.UserActivatedSuccess).getResponse();
     res.status(response.status).json({ ...response, updatedCount: updatedUsers[0], data: reactivatedUsers });
   } catch (error) {
-    next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+    next(error);
   }
 };

@@ -55,7 +55,7 @@ export const getTransit = async (req: Request, res: Response, next: NextFunction
             res.status(response.status).json(response);
         }
     } catch (error) {
-        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+        next(error);
     }
 };
 
@@ -199,7 +199,7 @@ export const deleteTransit = async (req: Request, res: Response, next: NextFunct
             res.status(response.status).json(response);
         }
     } catch (error){
-        next(new ErrorFactory().getMessage(ErrorEnum.InternalServerError).getResponse());
+        next(error);
     }
 };
 

@@ -7,7 +7,6 @@ import {Request, Response, NextFunction } from 'express';
 import { check, validationResult } from 'express-validator';
 import { ErrorFactory } from '../factory/Errors';
 import { ErrorEnum } from '../factory/Message';
-import { error } from 'console';
 
 const errorFactory: ErrorFactory = new ErrorFactory();
 

@@ -12,6 +12,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 /**
+ * 
+ * 
  * Durata della sospensione in millisecondi, letta dalle variabili d'ambiente.
  * Default è 3600 secondi (1 ora) se non specificato.
  */
